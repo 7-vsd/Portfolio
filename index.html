@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vipul Dhange – AI & Data Science Engineer. Machine Learning, Computer Vision, GenAI specialist based in Pune, India." />
+  <meta name="keywords" content="Vipul Dhange, AI Engineer, Data Science, Machine Learning, Computer Vision, GenAI, Python, TensorFlow, Portfolio" />
+  <meta name="author" content="Vipul Dhange" />
+  <meta property="og:title" content="Vipul Dhange | AI & Data Science Engineer" />
+  <meta property="og:description" content="AI & Data Science Engineer building intelligent systems with ML, Computer Vision & GenAI." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#050a14" />
+  <title>Vipul Dhange | AI & Data Science Engineer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Critical inline styles to prevent FOUC -->
+  <style>
+    body.loading #navbar,
+    body.loading section,
+    body.loading .cursor-dot,
+    body.loading .cursor-ring,
+    body.loading #backTop {
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+    #cinematic-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: transparent;
+      display: flex;
+    }
+  </style>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/loader.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-theme="dark" class="loading">
+  <script>
+    // Lock body immediately to prevent scrolling during load
+    document.body.style.overflow = 'hidden';
+  </script>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Neural Network Background (fixed for entire page) -->
+  <canvas id="neuralCanvas"></canvas>
+
+  <!-- ====== CINEMATIC AI LOADER ====== -->
+  <div id="cinematic-loader">
+    <div class="cl-dark-overlay"></div>
+    <div class="cl-grid"></div>
+    <div class="cl-scanline"></div>
+    <div class="cl-transition-overlay"></div>
+
+    <!-- Corner HUD -->
+    <div class="cl-corner tl"></div>
+    <div class="cl-corner tr"></div>
+    <div class="cl-corner bl"></div>
+    <div class="cl-corner br"></div>
+    <div class="cl-hud-tag tl">SYS:ONLINE &nbsp;|&nbsp; AI-v4.7</div>
+    <div class="cl-hud-tag tr">VIPUL_DHANGE.PORTFOLIO</div>
+
+    <!-- Scanning rings -->
+    <div class="cl-ring ring1"></div>
+    <div class="cl-ring ring2"></div>
+
+    <!-- SCENE -->
+    <div class="cl-scene">
+
+      <!-- Left holographic panel: Neural Net -->
+      <div class="cl-holo cl-holo-left">
+        <div class="holo-header">NEURAL NET</div>
+        <canvas id="holoNeuralCanvas" width="160" height="90"></canvas>
+      </div>
+
+      <!-- Center: Bot + Desk -->
+      <div class="cl-workspace">
+        <!-- AI Bot -->
+        <div class="cl-bot">
+          <div class="bot-aura"></div>
+          <div class="bot-head">
+            <div class="bot-visor">
+              <div class="bot-blink"></div>
+            </div>
+            <div class="bot-ear left"></div>
+            <div class="bot-ear right"></div>
+          </div>
+          <div class="bot-neck"></div>
+          <div class="bot-body">
+            <div class="bot-chest-light"></div>
+            <div class="bot-arm left"></div>
+            <div class="bot-arm right"></div>
+          </div>
+        </div>
+
+        <!-- Desk with laptop -->
+        <div class="cl-desk">
+          <div class="cl-laptop">
+            <div class="laptop-lid">
+              <div class="screen-inner">
+                <div class="screen-topbar">
+                  <span class="stb-dot"></span>
+                  <span class="stb-dot"></span>
+                  <span class="stb-dot"></span>
+                  <span class="stb-title">terminal — python3</span>
+                </div>
+                <div class="cl-terminal" id="cl-terminal-lines"></div>
+                <span class="cl-terminal-cursor"></span>
+              </div>
+            </div>
+            <div class="laptop-hinge"></div>
+            <div class="laptop-base">
+              <div class="key-row"></div>
+              <div class="key-row"></div>
+              <div class="key-row"></div>
+            </div>
+          </div>
+          <div class="desk-accessories">
+            <div class="desk-item"><span class="di-icon">☕</span>coffee.py</div>
+            <div class="desk-item"><span class="di-icon">📊</span>model.h5</div>
+            <div class="desk-item"><span class="di-icon">🧠</span>neural.pkl</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right holographic panel: ML Metrics -->
+      <div class="cl-holo cl-holo-right">
+        <div class="holo-header">ML METRICS</div>
+        <div class="holo-metrics">
+          <div class="hm-bar">
+            <div class="hm-label"><span>Accuracy</span><span>92%</span></div>
+            <div class="hm-track"><div class="hm-fill" data-w="92%"></div></div>
+          </div>
+          <div class="hm-bar">
+            <div class="hm-label"><span>Precision</span><span>88%</span></div>
+            <div class="hm-track"><div class="hm-fill" data-w="88%"></div></div>
+          </div>
+          <div class="hm-bar">
+            <div class="hm-label"><span>Recall</span><span>85%</span></div>
+            <div class="hm-track"><div class="hm-fill" data-w="85%"></div></div>
+          </div>
+          <div class="hm-bar">
+            <div class="hm-label"><span>F1 Score</span><span>90%</span></div>
+            <div class="hm-track"><div class="hm-fill" data-w="90%"></div></div>
+          </div>
+          <div style="margin-top:10px;">
+            <div class="holo-header" style="margin-bottom:8px;">ACHIEVEMENTS</div>
+            <div class="holo-stats">
+              <div class="hs-item"><span class="hs-label">Projects</span><span class="hs-val">7+</span></div>
+              <div class="hs-item"><span class="hs-label">Models</span><span class="hs-val">15+</span></div>
+              <div class="hs-item"><span class="hs-label">Published</span><span class="hs-val">JETIR</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /SCENE -->
+
+    <!-- Loading UI -->
+    <div class="cl-ui">
+      <div class="cl-brand">
+        <span class="cl-brand-vd">VD</span>
+        <div class="cl-brand-info">
+          <span class="cl-brand-name">VIPUL DHANGE</span>
+          <span class="cl-brand-role">AI &amp; DATA SCIENCE ENGINEER</span>
+        </div>
+      </div>
+      <p class="cl-status" id="cl-status">Initializing AI Systems…</p>
+      <div class="cl-progress-wrap">
+        <div class="cl-progress-bar">
+          <div class="cl-progress-fill" id="cl-progress-fill"></div>
+        </div>
+        <span class="cl-pct" id="cl-pct">0%</span>
+      </div>
+      <div class="cl-data-stream" id="cl-data-stream"></div>
+    </div>
+
+  </div>
+  <!-- ====== /CINEMATIC LOADER ====== -->
+
+  <!-- ======================== NAVBAR ======================== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <span class="logo-vd">VD</span>
+        <span class="logo-pulse"></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#research" class="nav-link">Research</a></li>
+        <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="Vipul_Dhange_Resume.pdf" download class="nav-cta">
+          <i class="fas fa-download"></i> Resume
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#research">Research</a>
+      <a href="#certifications">Certs</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ======================== HERO ======================== -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-grid">
+      <!-- Left Column: Content -->
+      <div class="hero-content">
+        <p class="hero-greeting">-- Hello, I'm</p>
+        <h1 class="hero-name">
+          <span class="name-v">Vipul</span> <span class="name-d">Dhange</span>
+        </h1>
+        <p class="hero-title">Artificial Intelligence &amp; Data Science Engineer</p>
+        <p class="hero-bio">
+          Building intelligent AI systems with Python, ML &amp; Computer Vision. From recommendation engines to
+          n8n automation workflows, I turn complex problems into deployed solutions. Fresh graduate with real-world
+          experience, ready to make impact.
+        </p>
+        <div class="hero-available">
+          <span class="avail-dot"></span>
+          Available For Full-Time Opportunities
+        </div>
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary">View Projects <i class="fas fa-arrow-right"></i></a>
+          <a href="#contact" class="btn-outline">Lets Connect <i class="fas fa-bolt"></i></a>
+        </div>
+        <div class="hero-socials">
+          <a href="mailto:dhange.vipul3082@gmail.com" aria-label="Email" class="soc-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+          <a href="tel:+917058826386" aria-label="Phone" class="soc-link">
+            <i class="fas fa-phone"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/vipul-dhange-827b14253/" target="_blank" rel="noopener" aria-label="LinkedIn" class="soc-link">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://github.com/7-vsd" target="_blank" rel="noopener" aria-label="GitHub" class="soc-link">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Visual -->
+      <div class="hero-visual">
+        <div class="av-wrapper">
+          <div class="av-ring r1"></div>
+          <div class="av-ring r2"></div>
+          <div class="av-ring r3"></div>
+          <div class="av-core">
+            <span>VD</span>
+          </div>
+          <div class="av-float fc1 glass-card">
+            <i class="fas fa-diagram-project"></i>
+            <div>
+              <b>n8n</b>
+              <small>AI Automation</small>
+            </div>
+          </div>
+          <div class="av-float fc2 glass-card">
+            <i class="fas fa-briefcase"></i>
+            <div>
+              <b><span class="hstat-n" data-count="18">0</span>+ Months</b>
+              <small>Internship Exp</small>
+            </div>
+          </div>
+          <div class="av-float fc3 glass-card">
+            <i class="fas fa-book-open"></i>
+            <div>
+              <b><span class="hstat-n" data-count="1">0</span> Research</b>
+              <small>Publication</small>
+            </div>
+          </div>
+          <div class="av-float fc4 glass-card">
+            <i class="fas fa-laptop-code"></i>
+            <div>
+              <b><span class="hstat-n" data-count="7">0</span>+</b>
+              <small>Projects</small>
+            </div>
+          </div>
+          <div class="av-float fc5 glass-card">
+            <i class="fas fa-rocket"></i>
+            <div>
+              <b><span class="hstat-n" data-count="2">0</span>+ AI Projects</b>
+              <small>Deployed</small>
+            </div>
+          </div>
+          <div class="av-float fc6 glass-card">
+            <i class="fas fa-chart-pie"></i>
+            <div>
+              <b><span class="hstat-n" data-count="5">0</span>+ Dashboards</b>
+              <small>Built</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="hero-scroll-hint">
+      <div class="scroll-line"><div class="scroll-ball"></div></div>
+      <span>Scroll</span>
+    </div> -->
+  </section>
+
+  <!-- ======================== ABOUT ======================== -->
+  <section id="about" class="section section-alt">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">Who I Am</span>
+        <h2 class="sec-title">About <em>Me</em></h2>
+        <div class="sec-line"></div>
+      </div>
+
+      <div class="about-layout">
+        <!-- Left Column: Highlight Cards -->
+        <div class="about-highlights">
+          <!-- Education Card -->
+          <div class="highlight-card glass-card">
+            <div class="hc-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="hc-content">
+              <h3 class="hc-title">Education</h3>
+              <p class="hc-degree">B.E. AI &amp; Data Science</p>
+              <p class="hc-college">D Y Patil College, Akurdi, Pune</p>
+              <div class="hc-meta">
+                <span class="hc-year"><i class="fas fa-calendar"></i> June 2024</span>
+                <span class="hc-cgpa"><i class="fas fa-star"></i> 7.76 CGPA</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience Card -->
+          <div class="highlight-card glass-card">
+            <div class="hc-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="hc-content">
+              <h3 class="hc-title">Experience</h3>
+              <p class="hc-exp-item"><strong>AI Variant</strong> - Data Science Intern</p>
+              <p class="hc-exp-item"><strong>Elenco Corp</strong> - Data Analyst Intern</p>
+              <p class="hc-exp-item"><strong>Elewayte-Wipro</strong> - ML Intern</p>
+              <div class="hc-meta">
+                <span><i class="fas fa-clock"></i> 18+ Months Total</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements Card -->
+          <div class="highlight-card glass-card">
+            <div class="hc-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="hc-content">
+              <h3 class="hc-title">Achievements</h3>
+              <div class="hc-achievement">
+                <i class="fas fa-book-open"></i>
+                <span>Published in <strong>JETIR</strong> (IF: 7.95)</span>
+              </div>
+              <div class="hc-achievement">
+                <i class="fas fa-project-diagram"></i>
+                <span>7+ ML/AI Projects Completed</span>
+              </div>
+              <div class="hc-achievement">
+                <i class="fas fa-chart-line"></i>
+                <span>5+ Dashboards Built</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Bio & Details -->
+        <div class="about-main">
+          <div class="about-bio">
+            <p>
+              My journey into AI started with a fascination for how machines learn and adapt. Through academic and real-world 
+              projects—from recommendation systems to computer vision—I learned that impactful AI starts with understanding
+              the problem, not just the algorithms.
+            </p>
+            <p>
+              I approach challenges with a <strong>data-first mindset</strong>explore deeply, experiment boldly, and iterate 
+              based on results. Whether debugging neural networks or designing dashboards, I focus on <strong>building practical
+              solutions</strong> with real business impact.
+            </p>
+            <p>
+              I’m looking for opportunities to <strong>grow alongside experienced engineers</strong>, solve meaningful problems,
+              and contribute to AI systems that make a difference. I thrive in collaborative, curiosity-driven environments
+              focused on continuous learning.
+            </p>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="about-contact">
+            <div class="ac-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span class="ac-value">Pune, Maharashtra, India</span>
+            </div>
+            <div class="ac-item">
+              <i class="fas fa-envelope"></i>
+              <span class="ac-value">dhange.vipul3082@gmail.com</span>
+            </div>
+            <div class="ac-item">
+              <i class="fas fa-phone"></i>
+              <span class="ac-value">+91 7058826386</span>
+            </div>
+            <div class="ac-item">
+              <i class="fas fa-language"></i>
+              <span class="ac-value">English, Hindi, Marathi, Kannada</span>
+            </div>
+            <div class="ac-item">
+              <i class="fas fa-user-check"></i>
+              <span class="ac-value">Immediately Available | Open to Relocation</span>
+            </div>
+          </div>
+
+          <!-- Soft Skills -->
+          <div class="about-skills-section">
+            <h4 class="about-skills-title">
+              <i class="fas fa-lightbulb"></i> Soft Skills
+            </h4>
+            <div class="about-soft">
+              <span class="soft-pill">Problem Solving</span>
+              <span class="soft-pill">Critical Thinking</span>
+              <span class="soft-pill">Leadership</span>
+              <span class="soft-pill">Research-Oriented</span>
+              <span class="soft-pill">Innovation</span>
+              <span class="soft-pill">Team Collaboration</span>
+              <span class="soft-pill">Public Speaking</span>
+              <span class="soft-pill">Adaptable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SKILLS ======================== -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">Capabilities</span>
+        <h2 class="sec-title">Technical <em>Skills</em></h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="skills-grid">
+        <!-- Card 1: Languages -->
+        <div class="skill-card glass-card">
+          <div class="sc-header">
+            <div class="sc-icon"><i class="fas fa-code"></i></div>
+            <h3>Programming Languages</h3>
+          </div>
+          <div class="sc-bars">
+            <div class="bar-item">
+              <div class="bar-label"><span>Python</span><span>75%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="75"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>SQL / MySQL</span><span>80%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>HTML / CSS</span><span>70%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="70"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2: Libraries & Frameworks -->
+        <div class="skill-card glass-card">
+          <div class="sc-header">
+            <div class="sc-icon"><i class="fas fa-layer-group"></i></div>
+            <h3>Libraries &amp; Frameworks</h3>
+          </div>
+          <div class="sc-bars">
+            <div class="bar-item">
+              <div class="bar-label"><span>TensorFlow / Keras</span><span>70%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="70"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Scikit-learn</span><span>75%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="75"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>NumPy / Pandas</span><span>80%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>OpenCV</span><span>85%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="85"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Streamlit / Flask</span><span>80%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3: ML & Deep Learning -->
+        <div class="skill-card glass-card">
+          <div class="sc-header">
+            <div class="sc-icon"><i class="fas fa-brain"></i></div>
+            <h3>ML &amp; Deep Learning</h3>
+          </div>
+          <div class="sc-bars">
+            <div class="bar-item">
+              <div class="bar-label"><span>Machine Learning</span><span>75%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="75"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Deep Learning (CNN / LSTM / GRU)</span><span>70%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="70"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>GenAI</span><span>65%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="65"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>NLP / LLMs</span><span>65%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="65"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4: ML Algorithms -->
+        <div class="skill-card glass-card">
+          <div class="sc-header">
+            <div class="sc-icon"><i class="fas fa-project-diagram"></i></div>
+            <h3>ML Algorithms</h3>
+          </div>
+          <div class="sc-tags">
+            <span class="stag">Linear Regression</span>
+            <span class="stag">Clustering</span>
+            <span class="stag">Logistic Regression</span>
+            <span class="stag">Random Forest</span>
+            <span class="stag">XGBoost</span>
+            <span class="stag">Gradient Boosting</span>
+            <span class="stag">SVM</span>
+            <span class="stag">KNN</span>
+            <span class="stag">Decision Tree</span>
+            <span class="stag">Naive Bayes</span>
+            <span class="stag">K-Means</span>
+            <span class="stag">Timeseries Forecasting</span>
+            <span class="stag">SARIMA</span>
+          </div>
+        </div>
+        <!-- Card 5: Data Analytics -->
+        <div class="skill-card glass-card">
+          <div class="sc-header">
+            <div class="sc-icon"><i class="fas fa-chart-bar"></i></div>
+            <h3>Data Analytics &amp; Visualization</h3>
+          </div>
+          <div class="sc-bars">
+            <div class="bar-item">
+              <div class="bar-label"><span>Power BI</span><span>80%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Tableau</span><span>75%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="75"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>EDA &amp; Feature Engineering</span><span>78%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="78"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Matplotlib / Seaborn / SciPy</span><span>85%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="85"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label"><span>Advanced Excel</span><span>80%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 6: Cloud & Dev Tools -->
+        <div class="skill-card glass-card">
+          <div class="sc-header">
+            <div class="sc-icon"><i class="fas fa-toolbox"></i></div>
+            <h3>Cloud &amp; Dev Tools</h3>
+          </div>
+          <div class="sc-tags">
+            <span class="stag">AWS (Basics)</span>
+            <span class="stag">Google Cloud (Basics)</span>
+            <span class="stag">Google OAuth 2.0</span>
+            <span class="stag">PySpark (Basics)</span>
+            <span class="stag">Git</span>
+            <span class="stag">Jupyter Notebook</span>
+            <span class="stag">PyCharm</span>
+            <span class="stag">Figma</span>
+            <span class="stag">Canva</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== EXPERIENCE ======================== -->
+  <section id="experience" class="section section-alt">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">Career</span>
+        <h2 class="sec-title">Work <em>Experience</em></h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="timeline">
+        <!-- Item 1: AI Variant (current) -->
+        <div class="tl-item">
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-card glass-card">
+            <div class="tl-top">
+              <div class="tl-logo"><i class="fas fa-microchip"></i></div>
+              <div class="tl-meta">
+                <h3>Data Science Intern</h3>
+                <span class="tl-company">AI Variant, Bangalore</span>
+                <div class="tl-pills">
+                  <span class="tl-pill">Remote</span>
+                </div>
+              </div>
+              <div class="tl-date">
+                <i class="fas fa-calendar-alt"></i>
+                June 2025 – Nov 2025
+              </div>
+            </div>
+            <div class="tl-tools">
+              <span class="tool-tag">Python</span>
+              <span class="tool-tag">PySpark</span>
+              <span class="tool-tag">AWS</span>
+              <span class="tool-tag">ML</span>
+              <span class="tool-tag">Deep Learning</span>
+            </div>
+            <ul class="tl-bullets">
+              <li>Implemented ML models including <strong>Linear Regression, Random Forest, SVM, and Gradient Boosting</strong> on real datasets</li>
+              <li>Built Deep Learning models using <strong>CNN, LSTM, and GRU</strong> architectures with hyperparameter optimization</li>
+              <li>Worked on AI prediction systems using Python, PySpark, and AWS cloud platform</li>
+              <li>Improved model accuracy through cross-validation, evaluation metrics, and data preprocessing techniques</li>
+              <li>Contributed to end-to-end ML pipeline development for business intelligence applications</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Item 2: Elenco Corporation -->
+        <div class="tl-item">
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-card glass-card">
+            <div class="tl-top">
+              <div class="tl-logo"><i class="fas fa-building"></i></div>
+              <div class="tl-meta">
+                <h3>Data Analyst Intern</h3>
+                <span class="tl-company">Elenco Corporation, Pune</span>
+                <div class="tl-pills">
+                  <span class="tl-pill">Hybrid</span>
+                </div>
+              </div>
+              <div class="tl-date">
+                <i class="fas fa-calendar-alt"></i>
+                Aug 2024 – Apr 2025
+              </div>
+            </div>
+            <div class="tl-tools">
+              <span class="tool-tag">Python</span>
+              <span class="tool-tag">SQL</span>
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">Excel</span>
+              <span class="tool-tag">NLP</span>
+            </div>
+            <ul class="tl-bullets">
+              <li>Performed data analysis using Python, SQL, and Excel to <strong>identify trends, patterns, and operational insights</strong>, supporting data-driven business decisions</li>
+              <li>Built interactive <strong>Power BI dashboards</strong> to monitor <strong>KPIs</strong>, project performance, delivery status, and resource utilization for weekly operational reviews</li>
+              <li>Conducted data cleaning, validation, and reconciliation across multiple datasets to ensure reporting accuracy and maintain data integrity</li>
+              <li>Applied statistical analysis and machine learning techniques, including <strong>regression and NLP-based analysis</strong>, to generate actionable insights and improve reporting efficiency</li>
+              <li>Translated complex analytical findings into clear executive summaries and business reports aligned with operational and strategic objectives</li>
+              <li>Collaborated with cross-functional teams and implementation managers to validate reporting logic, data assumptions, and dashboard accuracy against real-world workflows</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Item 3: Elewayte / Wipro -->
+        <div class="tl-item">
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-card glass-card">
+            <div class="tl-top">
+              <div class="tl-logo"><i class="fas fa-laptop-code"></i></div>
+              <div class="tl-meta">
+                <h3>Machine Learning Intern</h3>
+                <span class="tl-company">Elewayte – Wipro (Online Course)</span>
+                <div class="tl-pills">
+                  <span class="tl-pill">Online</span>
+                </div>
+              </div>
+              <div class="tl-date">
+                <i class="fas fa-calendar-alt"></i>
+                Feb 2024 – Apr 2024
+              </div>
+            </div>
+            <div class="tl-tools">
+              <span class="tool-tag">Python</span>
+              <span class="tool-tag">SQL</span>
+              <span class="tool-tag">ML</span>
+              <span class="tool-tag">OpenCV</span>
+            </div>
+            <ul class="tl-bullets">
+              <li>Learned and implemented <strong>7+ ML algorithms</strong> and preprocessing techniques on real-world case studies</li>
+              <li>Developed <strong>Color Detection</strong> using OpenCV reducing manual processing time by <em class="num">40%</em></li>
+              <li>Trained and evaluated models on <em class="num">5,000+</em> records, achieving <em class="num">85%+</em> pilot accuracy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== PROJECTS ======================== -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">Portfolio</span>
+        <h2 class="sec-title">Featured <em>Projects</em></h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="proj-grid">
+        <!-- AI Executive Agent (newest) -->
+        <div class="proj-card glass-card featured-card">
+          <div class="proj-glow"></div>
+          <div class="proj-top">
+            <div class="proj-icon"><i class="fas fa-robot"></i></div>
+            <div class="proj-badges">
+              <span class="badge-feat">Latest</span>
+              <span class="proj-yr">May 2026</span>
+            </div>
+          </div>
+          <h3 class="proj-name">AI Executive Agent</h3>
+          <p class="proj-sub">AI Automation · Gmail & Calendar Integration · Productivity</p>
+          <p class="proj-desc">
+            Intelligent productivity assistant automating executive workflows with <strong>AI-powered email management</strong>,
+            calendar scheduling, and task automation. Integrates <strong>Gmail API</strong> and <strong>Google Calendar API</strong>
+            with OpenRouter for contextual AI responses. Features conversational memory, workflow automation, and
+            real-time chat interface for autonomous task execution.
+          </p>
+          <div class="proj-metrics">
+            <div class="pm"><span class="pm-v">2</span><span class="pm-l">APIs</span></div>
+            <div class="pm"><span class="pm-v">AI</span><span class="pm-l">Memory System</span></div>
+            <div class="pm"><span class="pm-v">n8n</span><span class="pm-l">Automation</span></div>
+          </div>
+          <div class="proj-tech">
+            <span class="ptag">Python</span>
+            <span class="ptag">OpenRouter API</span>
+            <span class="ptag">Gmail API</span>
+            <span class="ptag">Calendar API</span>
+            <span class="ptag">HTML/CSS/JS</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/7-vsd/AI_Executive_Agent" target="_blank" rel="noopener" class="proj-link">
+              <i class="fab fa-github"></i> View Project
+            </a>
+          </div>
+        </div>
+        <!-- Global Development AI Platform -->
+        <div class="proj-card glass-card">
+          <div class="proj-glow"></div>
+          <div class="proj-top">
+            <div class="proj-icon"><i class="fas fa-globe-americas"></i></div>
+            <div class="proj-badges">
+              <span class="proj-yr">March 2026</span>
+            </div>
+          </div>
+          <h3 class="proj-name">Global Development AI Intelligence Platform</h3>
+          <p class="proj-sub">ML Clustering · Interactive Analytics · Streamlit</p>
+          <p class="proj-desc">
+            AI-powered interactive analytics platform for clustering countries using global economic and development indicators.
+            Implements <strong>6 ML clustering algorithms</strong> (KMeans, DBSCAN, Agglomerative, Gaussian Mixture, Spectral, Mean Shift)
+            with dimensionality reduction (PCA, t-SNE, UMAP), interactive choropleth maps, and automated AI insights generation.
+            Features futuristic glassmorphism UI with real-time KPI analytics.
+          </p>
+          <div class="proj-metrics">
+            <div class="pm"><span class="pm-v">6</span><span class="pm-l">ML Algorithms</span></div>
+            <div class="pm"><span class="pm-v">3</span><span class="pm-l">Reduction Methods</span></div>
+            <div class="pm"><span class="pm-v">Live</span><span class="pm-l">Streamlit App</span></div>
+          </div>
+          <div class="proj-tech">
+            <span class="ptag">Python</span>
+            <span class="ptag">Scikit-learn</span>
+            <span class="ptag">Plotly</span>
+            <span class="ptag">Streamlit</span>
+            <span class="ptag">UMAP</span>
+            <span class="ptag">PCA</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/7-vsd/Global_Development_AI_Platform" target="_blank" rel="noopener" class="proj-link">
+              <i class="fab fa-github"></i> View Project
+            </a>
+            <a href="https://aiintelligence-global-development-platform-vipul-dhange.streamlit.app/" target="_blank" rel="noopener" class="proj-link proj-link-live">
+              <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+          </div>
+        </div>
+        <!-- Course Recommendation -->
+        <div class="proj-card glass-card">
+          <div class="proj-glow"></div>
+          <div class="proj-top">
+            <div class="proj-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="proj-badges">
+              <span class="proj-yr">Feb 2026</span>
+            </div>
+          </div>
+          <h3 class="proj-name">Online Course Recommendation System</h3>
+          <p class="proj-sub">AI Recommendation · Streamlit · Collaborative Filtering</p>
+          <p class="proj-desc">
+            Intelligent AI-powered recommendation platform for personalized online course suggestions.
+            Built and compared <strong>5 recommendation models</strong> — Content-Based (TF-IDF), KNN+PCA,
+            User-Based Collaborative Filtering, Matrix Factorization (SVD), and a Hybrid system.
+            Deployed with <strong>Streamlit</strong> for interactive use.
+          </p>
+          <div class="proj-metrics">
+            <div class="pm"><span class="pm-v">5</span><span class="pm-l">Models Built</span></div>
+            <div class="pm"><span class="pm-v">KNN</span><span class="pm-l">Best Model</span></div>
+            <div class="pm"><span class="pm-v">Live</span><span class="pm-l">Streamlit App</span></div>
+          </div>
+          <div class="proj-tech">
+            <span class="ptag">Python</span>
+            <span class="ptag">TensorFlow</span>
+            <span class="ptag">NumPy</span>
+            <span class="ptag">Streamlit</span>
+            <span class="ptag">Collaborative Filtering</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/7-vsd/Online_Course_Recommendation_System" target="_blank" rel="noopener" class="proj-link">
+              <i class="fab fa-github"></i> View Project
+            </a>
+            <a href="https://onlinecourserecommendationsystem-vipul-dhange.streamlit.app/" target="_blank" rel="noopener" class="proj-link proj-link-live">
+              <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+          </div>
+        </div>
+        <!-- Apple Stock Prediction -->
+        <div class="proj-card glass-card">
+          <div class="proj-glow"></div>
+          <div class="proj-top">
+            <div class="proj-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="proj-badges">
+              <span class="proj-yr">Dec 2025</span>
+            </div>
+          </div>
+          <h3 class="proj-name">Apple Stock Market Prediction</h3>
+          <p class="proj-sub">Time-Series Forecasting · LSTM · GRU</p>
+          <p class="proj-desc">
+            Time-series forecasting system predicting Apple stock market trends using ML &amp; Deep Learning.
+            Built and evaluated <strong>5 models</strong> — XGBoost, Random Forest, SARIMA, LSTM, GRU —
+            with full EDA, feature engineering, and deployed on <strong>Streamlit</strong>.
+          </p>
+          <div class="proj-metrics">
+            <div class="pm"><span class="pm-v">5</span><span class="pm-l">Models</span></div>
+            <div class="pm"><span class="pm-v">LSTM</span><span class="pm-l">Best DL Model</span></div>
+            <div class="pm"><span class="pm-v">Live</span><span class="pm-l">Streamlit App</span></div>
+          </div>
+          <div class="proj-tech">
+            <span class="ptag">Python</span>
+            <span class="ptag">LSTM</span>
+            <span class="ptag">GRU</span>
+            <span class="ptag">XGBoost</span>
+            <span class="ptag">SARIMA</span>
+            <span class="ptag">Streamlit</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/7-vsd/AAPL_TimeSeries_Forcasting" target="_blank" rel="noopener" class="proj-link">
+              <i class="fab fa-github"></i> View Project
+            </a>
+            <a href="https://vipul-dhange-aapl-stock-forecast.streamlit.app/" target="_blank" rel="noopener" class="proj-link proj-link-live">
+              <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+          </div>
+        </div>
+        <!-- EngiPilot -->
+        <div class="proj-card glass-card">
+          <div class="proj-glow"></div>
+          <div class="proj-top">
+            <div class="proj-icon"><i class="fas fa-compass"></i></div>
+            <div class="proj-badges">
+              <span class="proj-yr">Mar 2024</span>
+            </div>
+          </div>
+          <h3 class="proj-name">EngiPilot – AI Career Guidance</h3>
+          <p class="proj-sub">ML Recommendation · MySQL · Figma</p>
+          <p class="proj-desc">
+            AI-powered career guidance platform inspired by Coursera/Udemy with an ML-based
+            recommendation engine achieving <strong>92% accuracy</strong> for career path prediction
+            across Engineering, Medical, Commerce &amp; Arts domains. Designed with 10+ Figma screens.
+          </p>
+          <div class="proj-metrics">
+            <div class="pm"><span class="pm-v">92%</span><span class="pm-l">Model Acc.</span></div>
+            <div class="pm"><span class="pm-v">10+</span><span class="pm-l">UI Screens</span></div>
+            <div class="pm"><span class="pm-v">+25%</span><span class="pm-l">vs Rule-Based</span></div>
+          </div>
+          <div class="proj-tech">
+            <span class="ptag">ML</span>
+            <span class="ptag">MySQL</span>
+            <span class="ptag">Figma</span>
+            <span class="ptag">Python</span>
+          </div>
+        </div>
+        <!-- Traffic Sign -->
+        <div class="proj-card glass-card">
+          <div class="proj-glow"></div>
+          <div class="proj-top">
+            <div class="proj-icon"><i class="fas fa-traffic-light"></i></div>
+            <div class="proj-badges">
+              <span class="proj-yr">Dec 2022</span>
+            </div>
+          </div>
+          <h3 class="proj-name">Traffic Sign Recognition</h3>
+          <p class="proj-sub">Computer Vision · CNN</p>
+          <p class="proj-desc">
+            CNN-based traffic sign recognition trained on <strong>12,631+ images</strong> across 45+
+            preprocessed datasets achieving 89% model accuracy. Built confusion matrices with 90%+ F1-score
+            for 3 major sign categories.
+          </p>
+          <div class="proj-metrics">
+            <div class="pm"><span class="pm-v">89%</span><span class="pm-l">CNN Accuracy</span></div>
+            <div class="pm"><span class="pm-v">12k+</span><span class="pm-l">Images</span></div>
+            <div class="pm"><span class="pm-v">90%+</span><span class="pm-l">F1 Score</span></div>
+          </div>
+          <div class="proj-tech">
+            <span class="ptag">CNN</span>
+            <span class="ptag">TensorFlow</span>
+            <span class="ptag">OpenCV</span>
+            <span class="ptag">Python</span>
+          </div>
+        </div>
+        <!-- COVID -->
+        <div class="proj-card glass-card">
+          <div class="proj-glow"></div>
+          <div class="proj-top">
+            <div class="proj-icon"><i class="fas fa-lungs"></i></div>
+            <div class="proj-badges">
+              <span class="proj-yr">Nov 2021</span>
+            </div>
+          </div>
+          <h3 class="proj-name">COVID-19 X-Ray Detection</h3>
+          <p class="proj-sub">Medical AI · Deep Learning</p>
+          <p class="proj-desc">
+            AI-based medical imaging solution for COVID-19 detection from chest X-rays achieving
+            <strong>~95% accuracy</strong>. Reduced radiologist verification effort by ~50% and
+            outperformed SVM/Logistic Regression by ~30% with data augmentation techniques.
+          </p>
+          <div class="proj-metrics">
+            <div class="pm"><span class="pm-v">95%</span><span class="pm-l">Detection Acc.</span></div>
+            <div class="pm"><span class="pm-v">50%</span><span class="pm-l">Effort Saved</span></div>
+            <div class="pm"><span class="pm-v">+30%</span><span class="pm-l">vs Baseline</span></div>
+          </div>
+          <div class="proj-tech">
+            <span class="ptag">CNN</span>
+            <span class="ptag">Python</span>
+            <span class="ptag">Data Augmentation</span>
+            <span class="ptag">Medical AI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== RESEARCH ======================== -->
+  <section id="research" class="section section-alt">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">Academia</span>
+        <h2 class="sec-title">Research <em>Publication</em></h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="research-card glass-card">
+        <div class="research-glow"></div>
+        <div class="research-layout">
+          <div class="res-left">
+            <div class="res-icon"><i class="fas fa-book-open"></i></div>
+            <div class="res-if">
+              <span class="if-val">7.95</span>
+              <span class="if-label">Impact Factor</span>
+            </div>
+            <span class="res-ugc">UGC Approved</span>
+          </div>
+          <div class="res-right">
+            <div class="res-journal">
+              Journal of Emerging Technologies and Innovative Research (JETIR)
+              <span class="res-vol">Vol. 12, Issue 6 &middot; June 2025</span>
+            </div>
+            <h3 class="res-title">
+              Redefining Intelligence: The Rise of Voice, Vision and GenAI in the New Technological Era
+            </h3>
+            <p class="res-abstract">
+              A peer-reviewed analysis of Generative AI's role in multimodal interaction (voice, vision, text).
+              Explores AI applications in education, healthcare, and design, while examining India's AI ecosystem —
+              BharatGen, Sarvam-1, and Bhashini — and their impact on the digital economy.
+            </p>
+            <div class="res-doi">
+              <span>DOI:</span>
+              <span>10.56975/jetir.v12i6.564988</span>
+            </div>
+            <div class="res-topics">
+              <span class="rtag">GenAI</span>
+              <span class="rtag">Voice AI</span>
+              <span class="rtag">Computer Vision</span>
+              <span class="rtag">India AI</span>
+              <span class="rtag">BharatGen</span>
+              <span class="rtag">Multimodal</span>
+            </div>
+            <div class="res-action">
+              <a href="https://www.researchgate.net/publication/393010690_Redefining_Intelligence_The_Rise_of_Voice_Vision_and_Generative_AI_in_the_New_Technological_Era" target="_blank" rel="noopener" class="res-btn">
+                <i class="fa-brands fa-researchgate"></i> View Research Paper
+              </a>
+              <a href="https://www.jetir.org/certificatemanager.php?a_rid=564988" target="_blank" rel="noopener" class="res-btn">
+                <i class="fa-solid fa-medal"></i> View Certificate
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== CERTIFICATIONS ======================== -->
+  <section id="certifications" class="section">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">Achievements</span>
+        <h2 class="sec-title">Certifi<em>cations</em></h2>
+        <div class="sec-line"></div>
+      </div>
+
+      <!-- ALTERNATIVE LAYOUT: List Version (currently hidden) -->
+      <div class="cert-list">
+        <!-- Data Science Programme -->
+        <div class="cert-list-item glass-card">
+          <div class="cert-list-left">
+            <div class="cert-list-icon"><i class="fas fa-database"></i></div>
+            <div class="cert-list-badge">
+              <i class="fas fa-award"></i>
+              <span>Dec 2025</span>
+            </div>
+          </div>
+          <div class="cert-list-content">
+            <div class="cert-list-header">
+              <h3>Data Science Programme</h3>
+              <span class="cert-list-org">ExcelR Bangalore</span>
+              <span class="cert-list-duration"><i class="fas fa-clock"></i> 6 Months</span>
+            </div>
+            <p class="cert-list-desc">
+              Advanced Data Science and Analytics certification covering Python, SQL, Machine Learning, and Data Visualization.
+              Developed expertise in building predictive models, feature engineering, and creating interactive dashboards with Power BI and Tableau.
+              Gained hands-on experience in transforming complex datasets into actionable business insights through AI-driven solutions.
+            </p>
+            <a href="Vipul Dhange.pdf" target="_blank" rel="noopener" class="cert-link">
+              View Certificate <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Business Analytics -->
+        <div class="cert-list-item glass-card">
+          <div class="cert-list-left">
+            <div class="cert-list-icon"><i class="fas fa-chart-bar"></i></div>
+            <div class="cert-list-badge">
+              <i class="fas fa-award"></i>
+              <span>Oct 2024</span>
+            </div>
+          </div>
+          <div class="cert-list-content">
+            <div class="cert-list-header">
+              <h3>Business Analytics Certification 2024</h3>
+              <span class="cert-list-org">Tutorialspoint</span>
+              <span class="cert-list-duration"><i class="fas fa-clock"></i> 63 hours</span>
+            </div>
+            <p class="cert-list-desc">
+              Comprehensive certification in business analytics and data-driven decision-making.
+              Developed expertise in Advanced Excel, Tableau, and Power BI for dashboard creation,
+              KPI analysis, and business intelligence reporting.
+            </p>
+            <a href="https://www.tutorialspoint.com/market/certificate.jsp/TP-HM9SYYJU" target="_blank" rel="noopener" class="cert-link">
+              View Certificate <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Machine Learning A-Z -->
+        <div class="cert-list-item glass-card">
+          <div class="cert-list-left">
+            <div class="cert-list-icon"><i class="fas fa-robot"></i></div>
+            <div class="cert-list-badge">
+              <i class="fas fa-award"></i>
+              <span>Oct 2023</span>
+            </div>
+          </div>
+          <div class="cert-list-content">
+            <div class="cert-list-header">
+              <h3>Machine Learning A-Z™: AI, Python &amp; R + ChatGPT</h3>
+              <span class="cert-list-org">Udemy</span>
+              <span class="cert-list-duration"><i class="fas fa-clock"></i> 43 hours</span>
+            </div>
+            <p class="cert-list-desc">
+              Complete hands-on ML certification covering supervised/unsupervised learning, deep learning,
+              NLP, and model deployment. Built practical ML projects using Python, R, and AWS cloud services,
+              with real-world applications in predictive analytics.
+            </p>
+            <a href="https://www.udemy.com/certificate/UC-136e4ca1-c50f-42cd-8485-be1e69e7bc5b/" target="_blank" rel="noopener" class="cert-link">
+              View Certificate <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Google Data Analytics -->
+        <div class="cert-list-item glass-card">
+          <div class="cert-list-left">
+            <div class="cert-list-icon"><i class="fab fa-google"></i></div>
+            <div class="cert-list-badge">
+              <i class="fas fa-award"></i>
+              <span>Oct 2022</span>
+            </div>
+          </div>
+          <div class="cert-list-content">
+            <div class="cert-list-header">
+              <h3>Google Data Analytics Professional Certificate</h3>
+              <span class="cert-list-org">Coursera | Google</span>
+              <span class="cert-list-duration"><i class="fas fa-clock"></i> 180 hours</span>
+            </div>
+            <p class="cert-list-desc">
+              Industry-recognized certification covering the complete data analysis lifecycle.
+              Gained practical skills in SQL, Tableau, R Programming, data cleaning, visualization,
+              and business insights generation through capstone projects and case studies.
+            </p>
+            <a href="https://www.coursera.org/account/accomplishments/professional-cert/LYNFXCG9DJ4W" target="_blank" rel="noopener" class="cert-link">
+              View Certificate <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== CONTACT ======================== -->
+  <section id="contact" class="section section-alt">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">Get In Touch</span>
+        <h2 class="sec-title">Let's <em>Connect</em></h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-left">
+          <div class="contact-links">
+            <a href="mailto:dhange.vipul3082@gmail.com" class="cl-item glass-card">
+              <div class="cl-icon"><i class="fas fa-envelope"></i></div>
+              <div><span class="cl-label">Email</span><span class="cl-val">dhange.vipul3082@gmail.com</span></div>
+            </a>
+            <a href="tel:+917058826386" class="cl-item glass-card">
+              <div class="cl-icon"><i class="fas fa-phone"></i></div>
+              <div><span class="cl-label">Phone</span><span class="cl-val">+91 7058826386</span></div>
+            </a>
+            <a href="https://www.linkedin.com/in/vipul-dhange-827b14253/" target="_blank" rel="noopener" class="cl-item glass-card">
+              <div class="cl-icon"><i class="fab fa-linkedin-in"></i></div>
+              <div><span class="cl-label">LinkedIn</span><span class="cl-val">linkedin.com/in/vipul-dhange</span></div>
+            </a>
+            <a href="https://github.com/7-vsd" target="_blank" rel="noopener" class="cl-item glass-card">
+              <div class="cl-icon"><i class="fab fa-github"></i></div>
+              <div><span class="cl-label">GitHub</span><span class="cl-val">github.com/7-vsd</span></div>
+            </a>
+          </div>
+        </div>
+        <form class="contact-form glass-card" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Name</label>
+              <input type="text" id="fname" name="name" placeholder="Your Name" required />
+            </div>
+            <div class="form-group">
+              <label for="femail">Email</label>
+              <input type="email" id="femail" name="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fsubject">Subject</label>
+            <input type="text" id="fsubject" name="subject" placeholder="Job Opportunity / Collaboration" />
+          </div>
+          <div class="form-group">
+            <label for="fmessage">Message</label>
+            <textarea id="fmessage" name="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary full">
+            Send Message <i class="fas fa-paper-plane"></i>
+          </button>
+          <p class="form-note">Submitting opens your email client</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <p class="footer-name">Vipul Dhange</p>
+          <p class="footer-role">AI &amp; Data Science Engineer</p>
+        </div>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
+          <a href="#projects">Projects</a>
+          <a href="#research">Research</a>
+          <a href="#certifications">Certifications</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-socials">
+          <a href="mailto:dhange.vipul3082@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          <a href="tel:+917058826386" aria-label="Phone"><i class="fas fa-phone"></i></a>
+          <a href="https://www.linkedin.com/in/vipul-dhange-827b14253/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/7-vsd" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+        <p class="footer-copy">&copy; 2026 Vipul Dhange. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="backTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- Loader must run first -->
+  <script src="js/loader.js"></script>
+
+  <!-- Other Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/dist/typed.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
