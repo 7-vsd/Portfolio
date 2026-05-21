@@ -12,37 +12,6 @@ setTimeout(() => {
   }
 }, 5000);
 
-/* ── Custom Cursor ─────────── */
-(function initCursor() {
-  const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  let rx = 0, ry = 0, mx = 0, my = 0;
-
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-  function animCursor() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    dot.style.left = mx + 'px';
-    dot.style.top  = my + 'px';
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(animCursor);
-  }
-  animCursor();
-
-  const hoverable = 'a, button, .glass-card, .proj-card, .cert-card, .cert-list-item, .cl-item, .soc-link, input, textarea';
-  document.addEventListener('mouseover', e => {
-    if (e.target.closest(hoverable)) ring.classList.add('hovered');
-  });
-  document.addEventListener('mouseout', e => {
-    if (e.target.closest(hoverable)) ring.classList.remove('hovered');
-  });
-
-  document.addEventListener('mouseleave', () => { dot.style.opacity = 0; ring.style.opacity = 0; });
-  document.addEventListener('mouseenter', () => { dot.style.opacity = 1; ring.style.opacity = 1; });
-})();
-
 /* ── Neural Network Canvas ── */
 (function initNeural() {
   const canvas = document.getElementById('neuralCanvas');

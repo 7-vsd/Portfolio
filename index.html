@@ -24,8 +24,6 @@
   <style>
     body.loading #navbar,
     body.loading section,
-    body.loading .cursor-dot,
-    body.loading .cursor-ring,
     body.loading #backTop {
       visibility: hidden !important;
       opacity: 0 !important;
@@ -48,10 +46,6 @@
     // Lock body immediately to prevent scrolling during load
     document.body.style.overflow = 'hidden';
   </script>
-
-  <!-- Custom Cursor -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- Neural Network Background (fixed for entire page) -->
   <canvas id="neuralCanvas"></canvas>
