@@ -648,9 +648,7 @@
     if (loopsStarted) return; loopsStarted = true;
     loops.forEach(function (l) { if (!l) return; l.play(); if (l.extra) l.extra.play(); });
   }
-  if (animate) {
-    ScrollTrigger.create({ trigger: "#projects", start: "top bottom", once: true, onEnter: startLoops });
-  }
+  if (animate) startLoops(); // start right away; nothing depends on scrolling
 
   /* =====================================================
      PROJECTS: horizontal scroll (desktop), swipe (mobile), arrow buttons
