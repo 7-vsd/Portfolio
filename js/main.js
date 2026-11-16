@@ -770,60 +770,99 @@
      ===================================================== */
   (function gallery() {
     var root = $("#gallery"); if (!root) return;
-    var slides = $$(".gslide", root), thumbs = $$(".gthumb", root), dots = $$(".gallery__dots span", root);
-    var cur = 0, busy = false, timer = null, prog = null, inView = false, hovering = false, DELAY = 5;
-    dots[0].classList.add("is-on");
+    var slides = $$(".gslide", root), thumbs = $$(".gthumb", root), stage = $(".gallery__stage", root);
+    var curEl = $("#gCur"), prevBtn = $("#gPrev"), nextBtn = $("#gNext");
+    var cur = 0, busy = false, prog = null, inView = false, hovering = false, DELAY = 6, pulse = null, revealTl = null, pending = null;
     function mark(i) {
       thumbs.forEach(function (t, k) { t.classList.toggle("is-on", k === i); t.setAttribute("aria-selected", k === i ? "true" : "false"); });
-      dots.forEach(function (d, k) { d.classList.toggle("is-on", k === i); });
+      curEl.textContent = i + 1;
+      var last = i === slides.length - 1;
+      nextBtn.innerHTML = last ? '<i class="fa-solid fa-rotate-right" aria-hidden="true"></i>' : '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>';
+      nextBtn.setAttribute("aria-label", last ? "Start again from the first certificate" : "Next certificate");
+      prevBtn.style.opacity = i === 0 ? ".35" : "1";
     }
-    function celebrate(sl) {
-      if (!sl.classList.contains("gslide--gold")) return;
-      sl.classList.remove("is-shining"); void sl.offsetWidth; sl.classList.add("is-shining");
-      if (animate) gsap.fromTo($(".gcert__medal", sl), { rotationY: 0, scale: .4 }, { rotationY: 360, scale: 1, duration: 1.1, ease: "back.out(1.6)" });
+    function confetti() {
+      var r = stage.getBoundingClientRect(), c = $(".gslide.is-active .gcert", root).getBoundingClientRect();
+      var cx = c.left - r.left + c.width / 2, cy = c.top - r.top + c.height / 2, cols = ["#4CC9F0", "#F5A524", "#4ADE80", "#E85D75", "#A78BFA"];
+      for (var k = 0; k < 36; k++) {
+        var d = document.createElement("span"); d.className = "gconf"; d.style.background = cols[k % 5]; d.style.left = cx + "px"; d.style.top = cy + "px"; stage.appendChild(d);
+        var a = Math.random() * Math.PI * 2, dist = 120 + Math.random() * 200;
+        gsap.to(d, { x: Math.cos(a) * dist, y: Math.sin(a) * dist * .7 - 40, rotation: Math.random() * 540, duration: 1 + Math.random() * .6, ease: "power3.out" });
+        gsap.to(d, { y: "+=120", opacity: 0, duration: .9, delay: .9, ease: "power1.in", onComplete: (function (el) { return function () { el.remove(); }; })(d) });
+      }
     }
-    function show(i, fromUser) {
+    function reveal(sl) { // parts of the certificate appear in order, then the seal stamps down
+      var tl = gsap.timeline();
+      tl.fromTo($$(".gc-iss, .gc-kind, .gc-title, .gc-aw", sl), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: .4, stagger: .07, ease: "power2.out" })
+        .fromTo($(".gc-name", sl), { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: .8, ease: "power1.inOut" })
+        .fromTo($(".gc-nameline", sl), { scaleX: 0 }, { scaleX: 1, duration: .4 }, "-=.3")
+        .fromTo($$(".gc-for, .gc-by, .gc-date", sl), { opacity: 0 }, { opacity: 1, duration: .4, stagger: .06 }, "-=.2")
+        .fromTo($(".gc-seal", sl), { scale: 2.4, opacity: 0, rotation: -35 }, { scale: 1, opacity: 1, rotation: 0, duration: .4, ease: "power4.in" }, "-=.1")
+        .to($(".gcert", sl), { x: 3, duration: .05, yoyo: true, repeat: 3 });
+      if (sl.classList.contains("gslide--gold")) {
+        tl.fromTo($(".gc-ribbon", sl), { scaleY: 0, transformOrigin: "50% 0%" }, { scaleY: 1, duration: .35 }, "-=.1")
+          .add(function () { sl.classList.remove("is-shining"); void sl.offsetWidth; sl.classList.add("is-shining"); confetti(); })
+          .to($(".gc-seal", sl), { rotationY: 360, duration: 1, ease: "power2.inOut" });
+      }
+      return tl;
+    }
+    function show(i) {
       i = (i + slides.length) % slides.length;
-      if (i === cur || busy) return;
+      if (busy) { pending = i; return; }
+      if (i === cur) return;
       var out = slides[cur], inn = slides[i], dir = i > cur ? 1 : -1;
       mark(i);
       if (!animate) { out.hidden = true; out.classList.remove("is-active"); inn.hidden = false; inn.classList.add("is-active"); cur = i; return; }
       busy = true;
-      var tl = gsap.timeline({ onComplete: function () { busy = false; celebrate(inn); } });
-      tl.to($(".gcert", out), { rotationY: -90 * dir, opacity: 0, duration: .45, ease: "power2.in" })
-        .to($(".gslide__info", out), { x: -30 * dir, opacity: 0, duration: .35, ease: "power2.in" }, 0)
-        .add(function () { out.hidden = true; out.classList.remove("is-active"); gsap.set([$(".gcert", out), $(".gslide__info", out)], { clearProps: "all" }); inn.hidden = false; inn.classList.add("is-active"); })
-        .fromTo($(".gcert", inn), { rotationY: 90 * dir, opacity: 0 }, { rotationY: 0, opacity: 1, duration: .6, ease: "power3.out" })
-        .fromTo($$(".gslide__info > *", inn), { x: 30 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: .5, stagger: .07, ease: "power3.out" }, "-=.4");
+      if (revealTl) { revealTl.progress(1).kill(); revealTl = null; }
+      var tl = gsap.timeline();
+      tl.to($(".gcert", out), { rotationY: -90 * dir, opacity: 0, duration: .4, ease: "power2.in" })
+        .to($(".gslide__info", out), { x: -30 * dir, opacity: 0, duration: .3, ease: "power2.in" }, 0)
+        .add(function () { out.hidden = true; out.classList.remove("is-active", "is-shining"); gsap.set([$(".gcert", out), $(".gslide__info", out)], { clearProps: "all" }); inn.hidden = false; inn.classList.add("is-active"); })
+        .fromTo($(".gcert", inn), { rotationY: 90 * dir, opacity: 0 }, { rotationY: 0, opacity: 1, duration: .55, ease: "power3.out" })
+        .add(function () { revealTl = reveal(inn); }, "-=.45")
+        .fromTo($$(".gslide__info > *", inn), { x: 30 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: .45, stagger: .07, ease: "power3.out" }, "<")
+        .add(function () { busy = false; if (pending !== null) { var p = pending; pending = null; show(p); } });
       cur = i;
       restart();
     }
+    function userGo(i) { if (pulse) { pulse.kill(); pulse = null; gsap.set(nextBtn, { clearProps: "boxShadow" }); } show(i); }
     function restart() {
       if (!animate) return;
-      if (prog) prog.kill(); thumbs.forEach(function (t) { gsap.set($(".gthumb__bar", t), { scaleX: 0 }); });
+      if (prog) { prog.kill(); prog = null; } thumbs.forEach(function (t) { gsap.set($(".gthumb__bar", t), { scaleX: 0 }); });
       if (!inView || hovering) return;
-      prog = gsap.fromTo($(".gthumb__bar", thumbs[cur]), { scaleX: 0 }, { scaleX: 1, duration: DELAY, ease: "none", onComplete: function () { show(cur + 1); } });
+      var mine = cur;
+      prog = gsap.fromTo($(".gthumb__bar", thumbs[cur]), { scaleX: 0 }, { scaleX: 1, duration: DELAY, ease: "none", onComplete: function () { if (cur === mine) show(cur + 1); } });
     }
-    thumbs.forEach(function (t, k) { t.addEventListener("click", function () { show(k, true); }); });
+    mark(0);
+    thumbs.forEach(function (t, k) { t.addEventListener("click", function () { userGo(k); }); });
+    prevBtn.addEventListener("click", function () { if (cur > 0) userGo(cur - 1); });
+    nextBtn.addEventListener("click", function () { userGo(cur + 1); });
+    $$(".gnext", root).forEach(function (b) { b.addEventListener("click", function () { userGo(+b.dataset.go); }); });
     root.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowRight") { e.preventDefault(); show(cur + 1, true); thumbs[cur].focus(); }
-      if (e.key === "ArrowLeft") { e.preventDefault(); show(cur - 1, true); thumbs[cur].focus(); }
+      if (e.key === "ArrowRight") { e.preventDefault(); userGo(cur + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); if (cur > 0) userGo(cur - 1); }
     });
     if (!animate) return;
+    pulse = gsap.to(nextBtn, { boxShadow: "0 0 0 12px rgba(245,165,36,0), 0 10px 24px -10px rgba(0,0,0,.7)", startAt: { boxShadow: "0 0 0 0 rgba(245,165,36,.45), 0 10px 24px -10px rgba(0,0,0,.7)" }, duration: 1.4, repeat: -1, ease: "power2.out" });
     root.addEventListener("pointerenter", function () { hovering = true; if (prog) prog.pause(); });
     root.addEventListener("pointerleave", function () { hovering = false; if (prog) prog.resume(); else restart(); });
-    // the stage gets a 3D tilt that follows the pointer
     if (finePointer) {
-      var stage = $(".gallery__stage", root);
       stage.addEventListener("pointermove", function (e) {
-        var r = stage.getBoundingClientRect(), c = $(".gslide.is-active .gcert", root); if (!c || busy) return;
-        gsap.to(c, { rotationY: ((e.clientX - r.left) / r.width - .5) * 12, rotationX: -((e.clientY - r.top) / r.height - .5) * 8, duration: .6, ease: "power3", overwrite: "auto" });
+        if (busy || e.target.closest("button, a")) return;
+        var r = stage.getBoundingClientRect(), c = $(".gslide.is-active .gcert", root); if (!c) return;
+        gsap.to(c, { rotationY: ((e.clientX - r.left) / r.width - .5) * 10, rotationX: -((e.clientY - r.top) / r.height - .5) * 7, duration: .6, ease: "power3", overwrite: "auto" });
       });
       stage.addEventListener("pointerleave", function () { var c = $(".gslide.is-active .gcert", root); if (c) gsap.to(c, { rotationY: 0, rotationX: 0, duration: .8, ease: "power3" }); });
     }
+    var firstSeen = false;
     ScrollTrigger.create({ trigger: root, start: "top 75%", end: "bottom 15%",
-      onToggle: function (st) { inView = st.isActive; if (inView) { if (prog && prog.paused() && !hovering) prog.resume(); else if (!prog) restart(); } else if (prog) prog.pause(); } });
-    gsap.from([$(".gallery__stage", root), $(".gallery__thumbs", root)], { y: 50, opacity: 0, duration: .8, stagger: .12, ease: "power3.out", scrollTrigger: { trigger: root, start: "top 82%" } });
+      onToggle: function (st) {
+        inView = st.isActive;
+        if (inView && !firstSeen) { firstSeen = true; revealTl = reveal(slides[0]); }
+        if (inView) { if (prog && prog.paused() && !hovering) prog.resume(); else if (!prog) restart(); } else if (prog) prog.pause();
+      } });
+    gsap.from([stage, $(".gallery__thumbs", root)], { y: 50, opacity: 0, duration: .8, stagger: .12, ease: "power3.out", scrollTrigger: { trigger: root, start: "top 82%" } });
   })();
 
   /* =====================================================
