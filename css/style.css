@@ -484,3 +484,14 @@ body.intro-on { overflow: hidden; }
 [data-theme="light"] .intro::before { background: radial-gradient(42vmin 52vmin at 50% 58%, rgba(255,201,60,.18), transparent 70%); }
 [data-theme="light"] .v-ab, [data-theme="light"] .v-rank { fill: #2746E8; }
 [data-theme="light"] .v-link { stroke: #2746E8; }
+
+/* table lamp + pull cord */
+.pullcord { cursor: grab; outline: none; touch-action: none; }
+.pullcord:active { cursor: grabbing; }
+.pullcord:focus-visible #cordBead { stroke: #fff; stroke-width: 4; }
+.pullhint { font: 600 15px var(--body); fill: var(--amber); transition: opacity .4s; pointer-events: none; }
+.i-svg .pullhint, .c-svg .pullhint { display: none; }
+.i-svg .pullcord, .c-svg .pullcord { pointer-events: none; }
+[data-theme="light"] .tcone { visibility: hidden; }
+[data-theme="light"] .tbulb { fill: #D7DDE8; }
+[data-theme="light"] .tshade { fill: #E8B04A; }

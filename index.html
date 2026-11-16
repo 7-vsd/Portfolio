@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="vendor/fa/css/fontawesome.min.css">
   <link rel="stylesheet" href="vendor/fa/css/solid.min.css">
   <link rel="stylesheet" href="vendor/fa/css/brands.min.css">
-  <link rel="stylesheet" href="css/style.css?v=20261116h">
+  <link rel="stylesheet" href="css/style.css?v=20261116i">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -220,13 +220,30 @@
             </g>
 
             <!-- plant -->
-            <g id="plant">
+            <g id="plant" transform="translate(32 232)">
               <path d="M1112 430 h50 l-6 40 h-38z" fill="#6B5446"/>
               <g id="leaves" fill="#3FA37A">
                 <path d="M1136 430 C1110 400 1104 370 1112 350 C1130 372 1138 400 1136 430Z"/>
                 <path d="M1138 430 C1150 392 1170 372 1186 368 C1180 396 1160 420 1138 430Z"/>
                 <path d="M1137 430 C1130 392 1138 358 1150 340 C1158 370 1150 404 1137 430Z" fill="#2F8A63"/>
               </g>
+            </g>
+
+
+            <!-- table lamp with a pull cord (pulling it switches light / dark) -->
+            <g id="tlamp">
+              <path class="tcone" d="M1090 350 L1030 468 L1215 468 L1160 350 Z" fill="url(#cone)"/>
+              <rect x="1093" y="457" width="64" height="10" rx="5" fill="#2A3358"/>
+              <ellipse cx="1125" cy="458" rx="26" ry="5" fill="#3A4270"/>
+              <path d="M1125 458 L1125 352" stroke="#3A4270" stroke-width="7" stroke-linecap="round"/>
+              <path class="tshade" d="M1083 350 Q1125 286 1167 350 Z" fill="#F5A524"/>
+              <ellipse class="tbulb" cx="1125" cy="350" rx="42" ry="6" fill="#FFE2A0"/>
+              <g id="pullCord" class="pullcord" role="button" tabindex="0" aria-label="Pull the lamp cord to switch between light and dark theme">
+                <line id="cordLine" x1="1152" y1="352" x2="1152" y2="396" stroke="#C9D3F0" stroke-width="2.5"/>
+                <circle id="cordBead" cx="1152" cy="402" r="7" fill="#F5A524" stroke="#FFE2A0" stroke-width="2"/>
+                <circle class="cordhit" cx="1152" cy="392" r="26" fill="transparent"/>
+              </g>
+              <text class="pullhint" x="1166" y="420">pull</text>
             </g>
 
             <!-- ===== intro-only characters (hidden in the hero) ===== -->
@@ -632,6 +649,6 @@
   <script src="js/vendor/gsap.min.js" defer></script>
   <script src="js/vendor/ScrollTrigger.min.js" defer></script>
   <script src="js/vendor/lenis.min.js" defer></script>
-  <script src="js/main.js?v=20261116h" defer></script>
+  <script src="js/main.js?v=20261116i" defer></script>
 </body>
 </html>

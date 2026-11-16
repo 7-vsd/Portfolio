@@ -106,11 +106,47 @@
     }
   }
   applyTheme(document.documentElement.getAttribute("data-theme") === "light", false);
-  themeBtn.addEventListener("click", function () {
+  function toggleTheme() {
     var light = document.documentElement.getAttribute("data-theme") !== "light";
     applyTheme(light, true);
     try { localStorage.setItem("vd-theme", light ? "light" : "dark"); } catch (e) {}
-  });
+  }
+  themeBtn.addEventListener("click", toggleTheme);
+
+  // the table lamp's pull cord in the hero scene does the same thing
+  (function pullCord() {
+    var cord = $("#pullCord"); if (!cord) return;
+    var line = $("#cordLine"), bead = $("#cordBead"), hint = $("#scene .pullhint"), svgEl = $("#scene");
+    var Y2 = 396, CY = 402, dragging = false, startY = 0, dy = 0, swing = null;
+    function setPull(d) { line.setAttribute("y2", Y2 + d); bead.setAttribute("cy", CY + d); }
+    function release(toggle) {
+      if (toggle) toggleTheme();
+      if (hint) { hint.style.opacity = 0; }
+      if (swing) { swing.kill(); swing = null; gsap.set(cord, { rotation: 0, svgOrigin: "1152 352" }); }
+      if (window.gsap && animate) { var o = { d: dy }; gsap.to(o, { d: 0, duration: .8, ease: "elastic.out(1, .3)", onUpdate: function () { setPull(o.d); } }); }
+      else setPull(0);
+      dy = 0;
+    }
+    function quickPull() {
+      if (!(window.gsap && animate)) { toggleTheme(); return; }
+      var o = { d: 0 };
+      gsap.to(o, { d: 30, duration: .14, ease: "power2.in", onUpdate: function () { setPull(o.d); }, onComplete: function () { dy = 30; release(true); } });
+    }
+    cord.addEventListener("pointerdown", function (e) { dragging = true; startY = e.clientY; dy = 0; cord.setPointerCapture(e.pointerId); e.preventDefault(); });
+    cord.addEventListener("pointermove", function (e) {
+      if (!dragging) return;
+      var m = svgEl.getScreenCTM(), k = m ? m.d : 1;
+      dy = Math.max(0, Math.min(46, (e.clientY - startY) / k)); setPull(dy);
+    });
+    cord.addEventListener("pointerup", function () {
+      if (!dragging) return; dragging = false;
+      if (dy < 4) { setPull(0); dy = 0; quickPull(); }  // a simple click or tap
+      else release(dy > 10);                            // a real pull
+    });
+    cord.addEventListener("pointercancel", function () { dragging = false; release(false); });
+    cord.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); quickPull(); } });
+    if (animate) swing = gsap.fromTo(cord, { rotation: -5, svgOrigin: "1152 352" }, { rotation: 5, svgOrigin: "1152 352", duration: 1.3, yoyo: true, repeat: -1, ease: "sine.inOut" });
+  })();
 
   /* ---------------- cursor + magnetic buttons ---------------- */
   if (animate && finePointer) {
@@ -118,7 +154,7 @@
     var dx = gsap.quickTo(dot, "x", { duration: .1 }), dy = gsap.quickTo(dot, "y", { duration: .1 });
     var rx = gsap.quickTo(ring, "x", { duration: .45, ease: "power3" }), ry = gsap.quickTo(ring, "y", { duration: .45, ease: "power3" });
     window.addEventListener("pointermove", function (e) { dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
-    document.addEventListener("pointerover", function (e) { cur.classList.toggle("is-link", !!e.target.closest("a, button")); });
+    document.addEventListener("pointerover", function (e) { cur.classList.toggle("is-link", !!e.target.closest("a, button, [role=button]")); });
 
     $$(".magnetic").forEach(function (m) {
       var mx = gsap.quickTo(m, "x", { duration: .5, ease: "elastic.out(1, .4)" }), my = gsap.quickTo(m, "y", { duration: .5, ease: "elastic.out(1, .4)" });
@@ -171,7 +207,7 @@
     $$("#steam path").forEach(function (p, i) {
       gsap.fromTo(p, { y: 8, opacity: 0 }, { y: -18, opacity: .7, duration: 2.2, repeat: -1, delay: i * 1.1, ease: "sine.out", yoyo: false });
     });
-    gsap.to("#leaves path", { rotation: function (i) { return i % 2 ? 4 : -4; }, svgOrigin: "1137 430", duration: 3, yoyo: true, repeat: -1, ease: "sine.inOut", stagger: .4 });
+    gsap.to("#leaves path", { rotation: function (i) { return i % 2 ? 4 : -4; }, transformOrigin: "50% 100%", duration: 3, yoyo: true, repeat: -1, ease: "sine.inOut", stagger: .4 });
     gsap.to("#cityLights rect", { opacity: .25, duration: .8, yoyo: true, repeat: -1, stagger: { each: .45, from: "random", repeat: -1, yoyo: true } });
     gsap.to("#lightCone", { opacity: .85, duration: 2.6, yoyo: true, repeat: -1, ease: "sine.inOut" });
     $$(".chip").forEach(function (c, i) { gsap.to(c, { y: i % 2 ? 10 : -10, duration: 2.4 + i * .4, yoyo: true, repeat: -1, ease: "sine.inOut" }); });
@@ -211,7 +247,7 @@
 
   // Full hero build (used when the intro was already seen this visit)
   function heroFull() {
-    gsap.set(["#window", "#chair", "#desk", "#monitor", "#monitor2", "#mug", "#plant", "#laptop"], { opacity: 0 });
+    gsap.set(["#window", "#chair", "#desk", "#monitor", "#monitor2", "#mug", "#plant", "#laptop", "#tlamp"], { opacity: 0 });
     gsap.set("#lamp", { y: -160 });
     gsap.set("#man", { opacity: 0, x: -60 });
     gsap.set("#screen", { fill: "#000" });
@@ -225,7 +261,7 @@
       .fromTo("#desk", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .8 }, .45)
       .fromTo("#chair", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .7 }, .6)
       .fromTo(["#monitor", "#monitor2", "#laptop"], { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .8, stagger: .12 }, .65)
-      .fromTo(["#mug", "#plant"], { opacity: 0, scale: .6, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, duration: .6, stagger: .1, ease: "back.out(2)" }, .85)
+      .fromTo(["#mug", "#plant", "#tlamp"], { opacity: 0, scale: .6, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, duration: .6, stagger: .1, ease: "back.out(2)" }, .85)
       .to("#man", { opacity: 1, x: 0, duration: 1, ease: "power4.out" }, .9)
       .to("#screen", { fill: "#E8ECF7", duration: .08 }, 1.5)
       .to("#screen", { fill: "#0D1530", duration: .35 }, 1.58)
@@ -239,6 +275,7 @@
   function sceneCopy(prefix) {
     var svg = heroScene.cloneNode(true);
     svg.removeAttribute("id"); svg.removeAttribute("role"); svg.removeAttribute("aria-label");
+    $$("[tabindex]", svg).forEach(function (n) { n.removeAttribute("tabindex"); n.removeAttribute("role"); n.removeAttribute("aria-label"); });
     svg.setAttribute("aria-hidden", "true"); svg.setAttribute("class", prefix + "-svg");
     $$("[id]", svg).forEach(function (n) { n.id = prefix + "-" + n.id; });
     $$("*", svg).forEach(function (n) {
@@ -264,7 +301,7 @@
     document.body.classList.add("intro-on");
     if (lenis) lenis.stop();
 
-    var room = ["window", "chair", "desk", "monitor", "monitor2", "laptop", "mug", "plant"].map(I);
+    var room = ["window", "chair", "desk", "monitor", "monitor2", "laptop", "mug", "plant", "tlamp"].map(I);
     I("bagFloor").style.display = "none"; // the bag only belongs to the contact scene
     var stand = I("stand"), walker = I("walker"), bubble = I("bubble"), man = I("man");
     var b1 = I("b1"), b2 = I("b2"), mouthO = I("mouthO");
@@ -320,7 +357,7 @@
       .to(I("standHead"), { rotation: 9, svgOrigin: "620 250", duration: .5, ease: "sine.inOut" }, 1.6)
       .fromTo(I("chair"), { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: .6 }, 1.45)
       .fromTo([I("monitor"), I("monitor2"), I("laptop")], { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .6, stagger: .12 }, 1.55)
-      .fromTo([I("mug"), I("plant")], { opacity: 0, scale: .4, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, duration: .5, stagger: .1, ease: "back.out(2)" }, 1.85)
+      .fromTo([I("mug"), I("plant"), I("tlamp")], { opacity: 0, scale: .4, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, duration: .5, stagger: .1, ease: "back.out(2)" }, 1.85)
       .to(I("standHead"), { rotation: 0, svgOrigin: "620 250", duration: .4, ease: "sine.inOut" }, 2.2)
       // 3. he waves and says hi
       .to(I("standArmR"), { rotation: -145, transformOrigin: "0% 0%", duration: .55, ease: "back.out(1.6)" }, 2.5)
