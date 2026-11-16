@@ -313,7 +313,11 @@ ul, ol, dl, dd { margin: 0; padding: 0; list-style: none; }
 .contact__lede { color: var(--muted); max-width: 30rem; margin-top: 1.5rem; font-size: 1.1rem; }
 .contact__cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
 .contact__stage { position: relative; aspect-ratio: 860 / 720; width: 100%; }
+.contact__scene { position: absolute; inset: 0; z-index: 1; }
 .contact__scene svg { width: 100%; height: 100%; overflow: visible; }
+.contact__front { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; overflow: visible; }
+.contact__front .rig { display: inline; }
+.orb.is-behind { filter: brightness(.7) saturate(.8); }
 .contact__scene .rig { display: inline; }
 .contact__scene .hide { display: none; }
 

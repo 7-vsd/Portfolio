@@ -712,11 +712,17 @@
     var svg = contactSvg, stage = $("#cStage");
     svg.setAttribute("viewBox", "200 40 860 720");
     $("#cScene").appendChild(svg);
-    function C(id) { return svg.querySelector("#c-" + id); }
+    function C(id) { return stage.querySelector("#c-" + id); }
+    // a second layer holding only him (and his speech bubble), so icons can pass behind him
+    var front = document.createElementNS(NS, "svg");
+    front.setAttribute("viewBox", "200 40 860 720"); front.setAttribute("class", "contact__front"); front.setAttribute("aria-hidden", "true");
+    front.appendChild(svg.querySelector("#c-stand")); front.appendChild(svg.querySelector("#c-bubble"));
+    stage.insertBefore(front, $(".orb", stage));
     C("walker").classList.add("hide");
     var stand = C("stand"), bubble = C("bubble"), man = C("man");
     var orbs = $$(".orb", stage);
     var st = { angle: -0.6, speed: 1, spread: 0 };
+    var ready = !animate; // icons can't be opened until they have flown out around him
 
     function place() {
       var W = stage.offsetWidth, H = stage.offsetHeight, cx = W * .488, cy = H * .56, rx = W * .41, ry = H * .3;
@@ -726,7 +732,9 @@
         var sc = (.82 + .28 * depth) * (.2 + .8 * Math.min(1, st.spread));
         o.style.left = "0px"; o.style.top = "0px";
         o.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) scale(" + sc.toFixed(3) + ")";
-        if (!o.classList.contains("is-open")) o.style.zIndex = depth > .5 ? 6 : 4;
+        var behind = Math.sin(a) < 0 && st.spread > .5; // top half of the orbit = behind him
+        o.classList.toggle("is-behind", behind);
+        if (!o.classList.contains("is-open")) o.style.zIndex = behind ? 4 : 6;
       });
     }
 
@@ -787,7 +795,7 @@
       .to(C("mouthO"), { opacity: 1, duration: .09, yoyo: true, repeat: 11, ease: "none" }, 3.25)
       .to(C("standArmR"), { rotation: 0, duration: .5, ease: "power2.inOut" }, 4.4)
       // the contact icons burst out and start circling him
-      .to(st, { spread: 1, duration: 1.1, ease: "back.out(1.4)" }, 3.9)
+      .to(st, { spread: 1, duration: 1.1, ease: "back.out(1.4)", onComplete: function () { ready = true; } }, 3.9)
       // small idle life
       .add(function () {
         gsap.to(stand, { y: -4, duration: 1.6, yoyo: true, repeat: -1, ease: "sine.inOut" });
@@ -803,14 +811,15 @@
     window.addEventListener("resize", place);
 
     // hover / focus / tap: stop the orbit and show that detail
-    function open(o) { orbs.forEach(function (x) { x.classList.toggle("is-open", x === o); }); gsap.to(st, { speed: 0, duration: .45, overwrite: true }); }
-    function close(o) { o.classList.remove("is-open"); if (!$(".orb.is-open", stage)) gsap.to(st, { speed: 1, duration: .8, overwrite: true }); }
+    function open(o) { if (!ready) return; orbs.forEach(function (x) { x.classList.toggle("is-open", x === o); }); gsap.to(st, { speed: 0, duration: .45, overwrite: "auto" }); }
+    function close(o) { o.classList.remove("is-open"); if (!$(".orb.is-open", stage)) gsap.to(st, { speed: 1, duration: .8, overwrite: "auto" }); }
     orbs.forEach(function (o) {
       o.addEventListener("pointerenter", function (e) { if (e.pointerType !== "touch") open(o); });
       o.addEventListener("pointerleave", function (e) { if (e.pointerType !== "touch") close(o); });
       o.addEventListener("focus", function () { open(o); });
       o.addEventListener("blur", function () { close(o); });
       o.addEventListener("click", function (e) {
+        if (!ready) { e.preventDefault(); return; }
         if (!o.classList.contains("is-open")) { e.preventDefault(); open(o); } // first tap on touch shows the detail
       });
     });
