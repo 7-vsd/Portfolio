@@ -766,32 +766,65 @@
   }
 
   /* =====================================================
-     CERTIFICATES: frames drop onto their nails and swing
+     CERTIFICATES: spotlight gallery (auto-plays, gold medal last)
      ===================================================== */
-  var frames = $$(".frame");
-  frames.forEach(function (f) {
-    var tilt = parseFloat(f.dataset.tilt) || 0;
-    if (!animate) { f.style.transform = "rotate(" + tilt + "deg)"; return; }
-    gsap.set(f, { rotation: tilt, transformOrigin: "50% -26px" });
-    f.addEventListener("pointerenter", function () { f.style.zIndex = 10; gsap.to(f, { rotation: 0, y: -6, scale: 1.03, duration: .5, ease: "power3.out", overwrite: "auto" }); });
-    f.addEventListener("pointerleave", function () { f.style.zIndex = ""; gsap.to(f, { rotation: tilt, y: 0, scale: 1, duration: 1.2, ease: "elastic.out(1, .35)", overwrite: "auto" }); });
-    f.addEventListener("focusin", function () { gsap.to(f, { rotation: 0, duration: .4, overwrite: "auto" }); });
-    f.addEventListener("focusout", function () { gsap.to(f, { rotation: tilt, duration: .8, ease: "elastic.out(1, .4)", overwrite: "auto" }); });
-  });
-  if (animate && frames.length) {
-    var wtl = gsap.timeline({ scrollTrigger: { trigger: ".wall", start: "top 80%" } });
-    wtl.from(".frame__nail", { scale: 0, duration: .35, stagger: .1, ease: "back.out(3)" })
-      .from(".frame__hang", { opacity: 0, scaleY: 0, transformOrigin: "50% 0%", duration: .4, stagger: .1 }, .2);
-    // drop the gold frame first, then the others
-    var order = [$(".frame--gold")].concat(frames.filter(function (f) { return !f.classList.contains("frame--gold"); }));
-    order.forEach(function (f, i) {
-      var tilt = parseFloat(f.dataset.tilt) || 0, side = i % 2 ? 1 : -1;
-      wtl.fromTo($(".frame__border", f), { y: -160, opacity: 0 }, { y: 0, opacity: 1, duration: .5, ease: "power2.in" }, .45 + i * .16)
-        .fromTo(f, { rotation: side * 16 }, { rotation: tilt, duration: 2.2, ease: "elastic.out(1, .22)" }, .9 + i * .16);
+  (function gallery() {
+    var root = $("#gallery"); if (!root) return;
+    var slides = $$(".gslide", root), thumbs = $$(".gthumb", root), dots = $$(".gallery__dots span", root);
+    var cur = 0, busy = false, timer = null, prog = null, inView = false, hovering = false, DELAY = 5;
+    dots[0].classList.add("is-on");
+    function mark(i) {
+      thumbs.forEach(function (t, k) { t.classList.toggle("is-on", k === i); t.setAttribute("aria-selected", k === i ? "true" : "false"); });
+      dots.forEach(function (d, k) { d.classList.toggle("is-on", k === i); });
+    }
+    function celebrate(sl) {
+      if (!sl.classList.contains("gslide--gold")) return;
+      sl.classList.remove("is-shining"); void sl.offsetWidth; sl.classList.add("is-shining");
+      if (animate) gsap.fromTo($(".gcert__medal", sl), { rotationY: 0, scale: .4 }, { rotationY: 360, scale: 1, duration: 1.1, ease: "back.out(1.6)" });
+    }
+    function show(i, fromUser) {
+      i = (i + slides.length) % slides.length;
+      if (i === cur || busy) return;
+      var out = slides[cur], inn = slides[i], dir = i > cur ? 1 : -1;
+      mark(i);
+      if (!animate) { out.hidden = true; out.classList.remove("is-active"); inn.hidden = false; inn.classList.add("is-active"); cur = i; return; }
+      busy = true;
+      var tl = gsap.timeline({ onComplete: function () { busy = false; celebrate(inn); } });
+      tl.to($(".gcert", out), { rotationY: -90 * dir, opacity: 0, duration: .45, ease: "power2.in" })
+        .to($(".gslide__info", out), { x: -30 * dir, opacity: 0, duration: .35, ease: "power2.in" }, 0)
+        .add(function () { out.hidden = true; out.classList.remove("is-active"); gsap.set([$(".gcert", out), $(".gslide__info", out)], { clearProps: "all" }); inn.hidden = false; inn.classList.add("is-active"); })
+        .fromTo($(".gcert", inn), { rotationY: 90 * dir, opacity: 0 }, { rotationY: 0, opacity: 1, duration: .6, ease: "power3.out" })
+        .fromTo($$(".gslide__info > *", inn), { x: 30 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: .5, stagger: .07, ease: "power3.out" }, "-=.4");
+      cur = i;
+      restart();
+    }
+    function restart() {
+      if (!animate) return;
+      if (prog) prog.kill(); thumbs.forEach(function (t) { gsap.set($(".gthumb__bar", t), { scaleX: 0 }); });
+      if (!inView || hovering) return;
+      prog = gsap.fromTo($(".gthumb__bar", thumbs[cur]), { scaleX: 0 }, { scaleX: 1, duration: DELAY, ease: "none", onComplete: function () { show(cur + 1); } });
+    }
+    thumbs.forEach(function (t, k) { t.addEventListener("click", function () { show(k, true); }); });
+    root.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); show(cur + 1, true); thumbs[cur].focus(); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); show(cur - 1, true); thumbs[cur].focus(); }
     });
-    wtl.from(".frame__medal", { rotationY: 360, scale: 0, duration: 1.1, ease: "back.out(1.6)" }, 1.2)
-      .add(function () { var g = $(".frame--gold"); g.classList.add("is-shining"); setTimeout(function () { g.classList.remove("is-shining"); }, 1200); }, 1.9);
-  }
+    if (!animate) return;
+    root.addEventListener("pointerenter", function () { hovering = true; if (prog) prog.pause(); });
+    root.addEventListener("pointerleave", function () { hovering = false; if (prog) prog.resume(); else restart(); });
+    // the stage gets a 3D tilt that follows the pointer
+    if (finePointer) {
+      var stage = $(".gallery__stage", root);
+      stage.addEventListener("pointermove", function (e) {
+        var r = stage.getBoundingClientRect(), c = $(".gslide.is-active .gcert", root); if (!c || busy) return;
+        gsap.to(c, { rotationY: ((e.clientX - r.left) / r.width - .5) * 12, rotationX: -((e.clientY - r.top) / r.height - .5) * 8, duration: .6, ease: "power3", overwrite: "auto" });
+      });
+      stage.addEventListener("pointerleave", function () { var c = $(".gslide.is-active .gcert", root); if (c) gsap.to(c, { rotationY: 0, rotationX: 0, duration: .8, ease: "power3" }); });
+    }
+    ScrollTrigger.create({ trigger: root, start: "top 75%", end: "bottom 15%",
+      onToggle: function (st) { inView = st.isActive; if (inView) { if (prog && prog.paused() && !hovering) prog.resume(); else if (!prog) restart(); } else if (prog) prog.pause(); } });
+    gsap.from([$(".gallery__stage", root), $(".gallery__thumbs", root)], { y: 50, opacity: 0, duration: .8, stagger: .12, ease: "power3.out", scrollTrigger: { trigger: root, start: "top 82%" } });
+  })();
 
   /* =====================================================
      CONTACT: he closes the laptop, grabs his bag and says "Hire me!"
