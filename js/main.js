@@ -869,6 +869,7 @@
   /* =====================================================
      CONTACT: he closes the laptop, grabs his bag and says "Hire me!"
      ===================================================== */
+  if (animate) gsap.from(".avail, .contact__lede, .perks li, .contact__cta .btn", { y: 24, opacity: 0, stagger: .08, duration: .6, ease: "power3.out", scrollTrigger: { trigger: ".contact__text", start: "top 75%" } });
   (function contactScene() {
     var svg = contactSvg, stage = $("#cStage");
     svg.setAttribute("viewBox", "200 40 860 720");

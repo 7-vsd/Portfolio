@@ -710,3 +710,18 @@ body.intro-on { overflow: hidden; }
 .gmedal__burst { transform-origin: 60px 60px; }
 .gslide--gold .gc-ribbon { width: 64px; height: 62px; margin-left: -32px; bottom: -2px; }
 .gallery__hint { display: none; }
+
+/* contact: casual "hire me" bits */
+.avail { display: inline-flex; align-items: center; gap: .6rem; margin-bottom: 1.4rem; padding: .45rem .95rem; border-radius: 999px;
+  font: 600 .9rem var(--body); color: #4ADE80; background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.35); }
+.avail__dot { position: relative; width: 9px; height: 9px; border-radius: 50%; background: #4ADE80; }
+.avail__dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #4ADE80; animation: availPing 1.6s ease-out infinite; }
+@keyframes availPing { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(3); opacity: 0; } }
+.contact__title { max-width: 11ch; font-size: clamp(2.4rem, 3.9vw, 3.7rem); }
+.perks { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+.perks li { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem .9rem; border-radius: 12px; font-weight: 600; font-size: .92rem;
+  background: var(--bg2); border: 1px solid var(--line); }
+.perks i { color: var(--amber); }
+.contact__cta .btn i { margin-left: .5rem; }
+[data-theme="light"] .avail { color: #15803D; background: rgba(21,128,61,.08); border-color: rgba(21,128,61,.3); }
+[data-theme="light"] .avail__dot, [data-theme="light"] .avail__dot::after { background: #16A34A; }
