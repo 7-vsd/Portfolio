@@ -317,30 +317,30 @@
       .to(stand, { scaleX: 0, transformOrigin: "50% 100%", duration: .18, ease: "power2.in" }, 5.8)
       .set(walker, { opacity: 1 }, 5.98)
       .to(walker, { scaleX: -1, duration: .18, ease: "power2.out" }, 5.98)
-      .to(walker, { x: 318, duration: 1.9, ease: "power1.inOut" }, 6.15)
-      .fromTo(legs[0], { rotation: -24 }, { rotation: 24, duration: .32, yoyo: true, repeat: 5, ease: "sine.inOut" }, 6.15)
-      .fromTo(legs[1], { rotation: 24 }, { rotation: -24, duration: .32, yoyo: true, repeat: 5, ease: "sine.inOut" }, 6.15)
-      .fromTo(arms[0], { rotation: 18 }, { rotation: -18, duration: .32, yoyo: true, repeat: 5, ease: "sine.inOut" }, 6.15)
-      .fromTo(arms[1], { rotation: -18 }, { rotation: 18, duration: .32, yoyo: true, repeat: 5, ease: "sine.inOut" }, 6.15)
-      .to(walker, { y: 460, duration: .16, yoyo: true, repeat: 11, ease: "sine.inOut" }, 6.15)
-      .to(legs.concat(arms), { rotation: 0, duration: .15 }, 8.07)
+      .to(walker, { x: 318, duration: 1.0, ease: "power1.inOut" }, 6.15)
+      .fromTo(legs[0], { rotation: -24 }, { rotation: 24, duration: .2, yoyo: true, repeat: 4, ease: "sine.inOut" }, 6.15)
+      .fromTo(legs[1], { rotation: 24 }, { rotation: -24, duration: .2, yoyo: true, repeat: 4, ease: "sine.inOut" }, 6.15)
+      .fromTo(arms[0], { rotation: 18 }, { rotation: -18, duration: .2, yoyo: true, repeat: 4, ease: "sine.inOut" }, 6.15)
+      .fromTo(arms[1], { rotation: -18 }, { rotation: 18, duration: .2, yoyo: true, repeat: 4, ease: "sine.inOut" }, 6.15)
+      .to(walker, { y: 460, duration: .125, yoyo: true, repeat: 7, ease: "sine.inOut" }, 6.15)
+      .to(legs.concat(arms), { rotation: 0, duration: .15 }, 7.17)
       // 5. he sits down
-      .to(walker, { y: 500, opacity: 0, duration: .35, ease: "power2.in" }, 8.2)
-      .fromTo(man, { opacity: 0, y: -26 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 8.25)
-      .to(I("chair"), { y: 6, duration: .14, yoyo: true, repeat: 1, ease: "sine.inOut" }, 8.45)
+      .to(walker, { y: 500, opacity: 0, duration: .35, ease: "power2.in" }, 7.3)
+      .fromTo(man, { opacity: 0, y: -26 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 7.35)
+      .to(I("chair"), { y: 6, duration: .14, yoyo: true, repeat: 1, ease: "sine.inOut" }, 7.55)
       // 6. the camera moves in and he opens the laptop
-      .to(svg, { scale: 1.4, transformOrigin: "45% 56%", duration: 2.2, ease: "power2.inOut" }, 8.4)
-      .to(I("foreNear"), { rotation: -22, svgOrigin: "396 430", duration: .35 }, 8.8)
-      .to(I("lapLid"), { rotation: 106, svgOrigin: "594 456", duration: .9, ease: "power2.inOut" }, 9.0)
-      .to(I("foreNear"), { rotation: 0, svgOrigin: "396 430", duration: .35 }, 9.7)
-      .to(I("lapScreen"), { fill: "#E8FBFF", duration: .1 }, 9.75)
-      .to(I("lapScreen"), { fill: "#4CC9F0", duration: .3 }, 9.85)
-      .to(I("lapGlow"), { opacity: 1, duration: .5 }, 9.75)
-      .to(I("screen"), { fill: "#E8ECF7", duration: .08 }, 10.0)
-      .to(I("screen"), { fill: "#0D1530", duration: .3 }, 10.08)
-      .to(I("screenUI"), { opacity: 1, duration: .3 }, 10.15)
+      .to(svg, { scale: 1.4, transformOrigin: "45% 56%", duration: 2.2, ease: "power2.inOut" }, 7.5)
+      .to(I("foreNear"), { rotation: -22, svgOrigin: "396 430", duration: .35 }, 7.9)
+      .to(I("lapLid"), { rotation: 106, svgOrigin: "594 456", duration: .9, ease: "power2.inOut" }, 8.1)
+      .to(I("foreNear"), { rotation: 0, svgOrigin: "396 430", duration: .35 }, 8.8)
+      .to(I("lapScreen"), { fill: "#E8FBFF", duration: .1 }, 8.85)
+      .to(I("lapScreen"), { fill: "#4CC9F0", duration: .3 }, 8.95)
+      .to(I("lapGlow"), { opacity: 1, duration: .5 }, 8.85)
+      .to(I("screen"), { fill: "#E8ECF7", duration: .08 }, 9.1)
+      .to(I("screen"), { fill: "#0D1530", duration: .3 }, 9.18)
+      .to(I("screenUI"), { opacity: 1, duration: .3 }, 9.25)
       // 7. the portfolio opens out of the laptop screen
-      .add(function () { reveal(false); }, 10.7);
+      .add(function () { reveal(false); }, 9.8);
 
     $(".intro__skip", ov).addEventListener("click", function () { tl.pause(); reveal(true); });
     document.addEventListener("keydown", function esc(e) { if (e.key === "Escape") { document.removeEventListener("keydown", esc); tl.pause(); reveal(true); } });
@@ -621,9 +621,23 @@
     var l = builders[key](s);
     return animate ? l : null;
   });
+  // a project's animation runs only while it is the one in view, or while it is hovered
+  var projActive = false, hovered = [], running = [];
+  function updateLoops() {
+    loops.forEach(function (l, k) {
+      if (!l) return;
+      var on = projActive && (k === pIndex || hovered[k]);
+      if (on && !running[k]) { l.restart(); if (l.extra) l.extra.play(); running[k] = true; }
+      else if (!on && running[k]) { l.pause(); if (l.extra) l.extra.pause(); running[k] = false; }
+    });
+  }
   if (animate) {
-    ScrollTrigger.create({ trigger: "#projects", start: "top bottom", end: "bottom top",
-      onToggle: function (st) { loops.forEach(function (l) { if (!l) return; [l, l.extra].forEach(function (x) { if (x) { if (st.isActive) x.play(); else x.pause(); } }); }); } });
+    ScrollTrigger.create({ trigger: "#projects", start: "top 75%", end: "bottom 25%",
+      onToggle: function (st) { projActive = st.isActive; updateLoops(); } });
+    $$(".pcard").forEach(function (c, k) {
+      c.addEventListener("pointerenter", function (e) { if (e.pointerType === "touch") return; hovered[k] = true; if (k !== pIndex) { running[k] = false; } updateLoops(); });
+      c.addEventListener("pointerleave", function () { hovered[k] = false; updateLoops(); });
+    });
   }
 
   /* =====================================================
@@ -635,6 +649,7 @@
     pIndex = Math.max(0, Math.min(pcards.length - 1, i));
     pCur.textContent = pIndex + 1;
     pPrev.disabled = pIndex === 0; pNext.disabled = pIndex === pcards.length - 1;
+    if (animate) updateLoops();
   }
   setIndex(0);
   function goTo(i) {
