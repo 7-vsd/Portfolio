@@ -296,7 +296,7 @@ body, .nav, .tile, .pcard, .ecard, .skill, .paper, .pnav, .orb, .marquee__row sp
 .skill p { color: var(--muted); font-size: .97rem; }
 
 /* Research + certs */
-.research__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 1.5rem; align-items: start; }
+.research__grid { display: grid; grid-template-columns: 1fr; gap: clamp(3rem, 6vw, 5rem); }
 .paper { position: relative; background: linear-gradient(160deg, #1A2550, var(--bg2)); border: 1px solid var(--line); border-radius: 26px; padding: clamp(1.6rem, 3.5vw, 3rem); transform-style: preserve-3d; will-change: transform; }
 .paper__venue { color: var(--amber); font-weight: 500; }
 .paper h3 { font-size: clamp(1.6rem, 2.7vw, 2.3rem); letter-spacing: -.02em; margin: .9rem 0 1.1rem; max-width: 22ch; }
@@ -495,3 +495,77 @@ body.intro-on { overflow: hidden; }
 [data-theme="light"] .tcone { visibility: hidden; }
 [data-theme="light"] .tbulb { fill: #D7DDE8; }
 [data-theme="light"] .tshade { fill: #E8B04A; }
+
+/* =========================================================
+   Certificates: a wall of hanging frames
+   ========================================================= */
+.wall {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-areas: "a g b" "c g d"; gap: 3.5rem 2.5rem; align-items: start; padding-top: 2.5rem;
+}
+.frame { position: relative; list-style: none; transform-origin: 50% -26px; outline: none; }
+.frame--gold { align-self: center; }
+.frame__hang { position: absolute; left: 22%; width: 56%; top: -30px; height: 34px; overflow: visible; }
+.frame__hang path { fill: none; stroke: #8E96B5; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.frame__nail { position: absolute; left: 50%; top: -34px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #F1F3FA, #8E96B5 60%, #4A5170); box-shadow: 0 2px 4px rgba(0,0,0,.5); z-index: 2; }
+.frame__border {
+  position: relative; padding: 12px; border-radius: 6px;
+  background: linear-gradient(145deg, #5A4134, #3A2A21 45%, #2C1F18);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.06), inset 0 0 0 7px rgba(0,0,0,.25), 0 24px 40px -18px rgba(0,0,0,.8), 0 4px 10px rgba(0,0,0,.35);
+  transition: box-shadow .45s;
+}
+.frame__paper {
+  position: relative; overflow: hidden; border-radius: 2px; min-height: 220px; padding: 1.4rem 1.2rem 1.2rem;
+  background: #F7F1E3; color: #1F2A44; text-align: center; display: flex; flex-direction: column; align-items: center;
+  box-shadow: inset 0 0 0 6px #F7F1E3, inset 0 0 0 7px rgba(31,42,68,.25), inset 0 0 0 10px #F7F1E3, inset 0 0 0 11px rgba(31,42,68,.15);
+}
+.frame__paper::after { /* light sweep on hover */
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.65), transparent); opacity: 0;
+}
+.frame:hover .frame__paper::after, .frame:focus-within .frame__paper::after, .frame.is-shining .frame__paper::after { animation: sweep 1.1s ease forwards; }
+@keyframes sweep { 0% { left: -60%; opacity: 1; } 100% { left: 130%; opacity: 1; } }
+.frame__icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: rgba(39,70,232,.1); color: #2746E8; font-size: 1.1rem; }
+.frame__org { margin-top: .7rem; font: 600 .74rem/1.3 var(--body); color: #8A5A12; letter-spacing: .02em; }
+.frame h3 { margin-top: .5rem; font: 700 1.08rem/1.25 Georgia, "Times New Roman", serif; color: #172342; }
+.frame__meta { margin-top: .45rem; font: italic 400 .85rem/1.3 Georgia, "Times New Roman", serif; color: #55627A; }
+.frame__seal { margin-top: auto; width: 34px; height: 34px; border-radius: 50%; border: 2px dashed rgba(39,70,232,.5); position: relative; top: 6px; }
+
+/* the gold frame */
+.frame--gold .frame__border { padding: 16px; background: linear-gradient(145deg, #F8DB86, #C98D17 35%, #F6CF62 60%, #A86F0C); box-shadow: inset 0 0 0 2px rgba(255,255,255,.3), inset 0 0 0 8px rgba(120,80,5,.25), 0 30px 50px -20px rgba(0,0,0,.85), 0 0 50px -10px rgba(245,165,36,.35); }
+.frame--gold .frame__paper { min-height: 330px; padding-top: 1.8rem; }
+.frame--gold .frame__icon { width: 54px; height: 54px; font-size: 1.4rem; background: rgba(214,140,20,.15); color: #B7791F; }
+.frame--gold h3 { font-size: 1.45rem; }
+.frame__medal { margin-top: auto; width: 64px; height: 64px; border-radius: 50%; position: relative; z-index: 1;
+  background: radial-gradient(circle at 35% 30%, #FFF1BF 0 12%, transparent 40%), conic-gradient(from 20deg, #E8B740, #FFE08A, #C98D17, #F6CF62, #B97A10, #F0C451, #E8B740);
+  box-shadow: 0 0 0 3px #D9A22E, 0 0 0 5px #F7E1A0, 0 8px 18px -6px rgba(90,58,5,.7); }
+.frame__ribbon { position: absolute; bottom: 4px; left: 50%; width: 58px; height: 46px; margin-left: -29px;
+  background: linear-gradient(90deg, #B7301F 0 48%, transparent 48% 52%, #CF3E2A 52%);
+  clip-path: polygon(0 0, 46% 0, 46% 100%, 23% 80%, 0 100%, 54% 0, 100% 0, 100% 100%, 77% 80%, 54% 100%); }
+
+/* the plaque that slides out on hover */
+.plaque {
+  display: grid; gap: .8rem; justify-items: start; margin: 0 12px; padding: 0 1rem; max-height: 0; overflow: hidden; opacity: 0;
+  background: var(--bg2); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px;
+  transition: max-height .5s cubic-bezier(.2,.8,.2,1), opacity .35s, padding .5s;
+}
+.plaque p { color: var(--muted); font-size: .93rem; }
+.frame:hover .plaque, .frame:focus-within .plaque { max-height: 220px; opacity: 1; padding: 1rem; }
+.frame:hover .frame__border, .frame:focus-within .frame__border { box-shadow: inset 0 0 0 2px rgba(255,255,255,.06), inset 0 0 0 7px rgba(0,0,0,.25), 0 34px 60px -18px rgba(0,0,0,.85), 0 0 60px -6px rgba(245,165,36,.4); }
+.frame--gold .plaque { border-color: rgba(245,165,36,.4); }
+@media (hover: hover) {
+  .plaque { position: absolute; left: 0; right: 0; top: 100%; z-index: 5; box-shadow: 0 24px 40px -20px rgba(0,0,0,.7); }
+  .frame:focus-within { z-index: 10; }
+}
+@media (hover: none) { .plaque { max-height: none; opacity: 1; padding: 1rem; } }
+
+@media (max-width: 900px) {
+  .wall { grid-template-columns: 1fr 1fr; grid-template-areas: "g g" "a b" "c d"; gap: 3.5rem 1.25rem; }
+  .frame--gold { max-width: 380px; justify-self: center; width: 100%; }
+}
+@media (max-width: 600px) {
+  .wall { grid-template-columns: 1fr; grid-template-areas: "g" "a" "b" "c" "d"; }
+  .frame { max-width: 360px; width: 100%; justify-self: center; }
+  .frame__paper { min-height: 0; }
+}
+[data-theme="light"] .frame__hang path { stroke: #9AA6C7; }

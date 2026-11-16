@@ -760,11 +760,37 @@
       paper.addEventListener("pointermove", function (e) { var r = paper.getBoundingClientRect(); tx(((e.clientX - r.left) / r.width - .5) * 10); ty(-((e.clientY - r.top) / r.height - .5) * 10); });
       paper.addEventListener("pointerleave", function () { tx(0); ty(0); });
     }
-    gsap.timeline({ scrollTrigger: { trigger: ".research__grid", start: "top 78%" } })
+    gsap.timeline({ scrollTrigger: { trigger: ".paper", start: "top 80%" } })
       .from(".paper", { y: 70, opacity: 0, duration: 1, ease: "power3.out" })
-      .from(".paper__stamp", { scale: 2.4, opacity: 0, rotate: -40, duration: .5, ease: "power4.in" }, "-=.3")
-      .from(".cert", { x: 50, opacity: 0, duration: .6, stagger: .08, ease: "power3.out" }, .2)
-      .from(".cert--gold .medal", { rotationY: 360, scale: 0, duration: 1.2, ease: "back.out(1.6)" }, .4);
+      .from(".paper__stamp", { scale: 2.4, opacity: 0, rotate: -40, duration: .5, ease: "power4.in" }, "-=.3");
+  }
+
+  /* =====================================================
+     CERTIFICATES: frames drop onto their nails and swing
+     ===================================================== */
+  var frames = $$(".frame");
+  frames.forEach(function (f) {
+    var tilt = parseFloat(f.dataset.tilt) || 0;
+    if (!animate) { f.style.transform = "rotate(" + tilt + "deg)"; return; }
+    gsap.set(f, { rotation: tilt, transformOrigin: "50% -26px" });
+    f.addEventListener("pointerenter", function () { f.style.zIndex = 10; gsap.to(f, { rotation: 0, y: -6, scale: 1.03, duration: .5, ease: "power3.out", overwrite: "auto" }); });
+    f.addEventListener("pointerleave", function () { f.style.zIndex = ""; gsap.to(f, { rotation: tilt, y: 0, scale: 1, duration: 1.2, ease: "elastic.out(1, .35)", overwrite: "auto" }); });
+    f.addEventListener("focusin", function () { gsap.to(f, { rotation: 0, duration: .4, overwrite: "auto" }); });
+    f.addEventListener("focusout", function () { gsap.to(f, { rotation: tilt, duration: .8, ease: "elastic.out(1, .4)", overwrite: "auto" }); });
+  });
+  if (animate && frames.length) {
+    var wtl = gsap.timeline({ scrollTrigger: { trigger: ".wall", start: "top 80%" } });
+    wtl.from(".frame__nail", { scale: 0, duration: .35, stagger: .1, ease: "back.out(3)" })
+      .from(".frame__hang", { opacity: 0, scaleY: 0, transformOrigin: "50% 0%", duration: .4, stagger: .1 }, .2);
+    // drop the gold frame first, then the others
+    var order = [$(".frame--gold")].concat(frames.filter(function (f) { return !f.classList.contains("frame--gold"); }));
+    order.forEach(function (f, i) {
+      var tilt = parseFloat(f.dataset.tilt) || 0, side = i % 2 ? 1 : -1;
+      wtl.fromTo($(".frame__border", f), { y: -160, opacity: 0 }, { y: 0, opacity: 1, duration: .5, ease: "power2.in" }, .45 + i * .16)
+        .fromTo(f, { rotation: side * 16 }, { rotation: tilt, duration: 2.2, ease: "elastic.out(1, .22)" }, .9 + i * .16);
+    });
+    wtl.from(".frame__medal", { rotationY: 360, scale: 0, duration: 1.1, ease: "back.out(1.6)" }, 1.2)
+      .add(function () { var g = $(".frame--gold"); g.classList.add("is-shining"); setTimeout(function () { g.classList.remove("is-shining"); }, 1200); }, 1.9);
   }
 
   /* =====================================================
