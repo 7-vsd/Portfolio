@@ -701,3 +701,12 @@ body.intro-on { overflow: hidden; }
   .gallery__hint { font-size: .75rem; bottom: .7rem; padding: 0 1rem; }
 }
 [data-theme="light"] .garrow { background: #fff; }
+
+/* richer gold medal rosette */
+.gslide--gold .gc-seal.gc-seal--gold { width: 116px; height: 116px; margin-bottom: -14px; background: none; box-shadow: none; filter: drop-shadow(0 8px 12px rgba(90,58,5,.45)); }
+.gc-seal--gold::before { display: none; }
+.gmedal { width: 100%; height: 100%; overflow: visible; }
+.gmedal__text { font: 700 7.6px var(--body); letter-spacing: 1.4px; fill: #7A4A05; }
+.gmedal__burst { transform-origin: 60px 60px; }
+.gslide--gold .gc-ribbon { width: 64px; height: 62px; margin-left: -32px; bottom: -2px; }
+.gallery__hint { display: none; }

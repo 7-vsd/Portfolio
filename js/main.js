@@ -794,15 +794,14 @@
     function reveal(sl) { // parts of the certificate appear in order, then the seal stamps down
       var tl = gsap.timeline();
       tl.fromTo($$(".gc-iss, .gc-kind, .gc-title, .gc-aw", sl), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: .4, stagger: .07, ease: "power2.out" })
-        .fromTo($(".gc-name", sl), { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: .8, ease: "power1.inOut" })
-        .fromTo($(".gc-nameline", sl), { scaleX: 0 }, { scaleX: 1, duration: .4 }, "-=.3")
         .fromTo($$(".gc-for, .gc-by, .gc-date", sl), { opacity: 0 }, { opacity: 1, duration: .4, stagger: .06 }, "-=.2")
         .fromTo($(".gc-seal", sl), { scale: 2.4, opacity: 0, rotation: -35 }, { scale: 1, opacity: 1, rotation: 0, duration: .4, ease: "power4.in" }, "-=.1")
         .to($(".gcert", sl), { x: 3, duration: .05, yoyo: true, repeat: 3 });
       if (sl.classList.contains("gslide--gold")) {
         tl.fromTo($(".gc-ribbon", sl), { scaleY: 0, transformOrigin: "50% 0%" }, { scaleY: 1, duration: .35 }, "-=.1")
           .add(function () { sl.classList.remove("is-shining"); void sl.offsetWidth; sl.classList.add("is-shining"); confetti(); })
-          .to($(".gc-seal", sl), { rotationY: 360, duration: 1, ease: "power2.inOut" });
+          .to($(".gc-seal", sl), { rotationY: 360, duration: 1, ease: "power2.inOut" })
+          .fromTo($(".gmedal__glint", sl), { attr: { x: -60 } }, { attr: { x: 150 }, duration: .9, ease: "power2.inOut" }, "-=.3");
       }
       return tl;
     }
@@ -844,6 +843,8 @@
       if (e.key === "ArrowLeft") { e.preventDefault(); if (cur > 0) userGo(cur - 1); }
     });
     if (!animate) return;
+    gsap.to(".gmedal__burst", { rotation: 360, duration: 30, ease: "none", repeat: -1, svgOrigin: "60 60" });
+    gsap.fromTo(".gmedal__glint", { attr: { x: -60 } }, { attr: { x: 150 }, duration: 1.1, ease: "power2.inOut", repeat: -1, repeatDelay: 2.8 });
     pulse = gsap.to(nextBtn, { boxShadow: "0 0 0 12px rgba(245,165,36,0), 0 10px 24px -10px rgba(0,0,0,.7)", startAt: { boxShadow: "0 0 0 0 rgba(245,165,36,.45), 0 10px 24px -10px rgba(0,0,0,.7)" }, duration: 1.4, repeat: -1, ease: "power2.out" });
     root.addEventListener("pointerenter", function () { hovering = true; if (prog) prog.pause(); });
     root.addEventListener("pointerleave", function () { hovering = false; if (prog) prog.resume(); else restart(); });
