@@ -731,3 +731,4 @@ body.intro-on { overflow: hidden; }
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 93%, transparent 100%), linear-gradient(transparent 0, #000 6%);
   -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 93%, transparent 100%), linear-gradient(transparent 0, #000 6%); mask-composite: intersect; }
 .contact__text { position: relative; z-index: 6; }
+.contact__lede strong { color: var(--text); font-weight: 600; }
