@@ -725,3 +725,9 @@ body.intro-on { overflow: hidden; }
 .contact__cta .btn i { margin-left: .5rem; }
 [data-theme="light"] .avail { color: #15803D; background: rgba(21,128,61,.08); border-color: rgba(21,128,61,.3); }
 [data-theme="light"] .avail__dot, [data-theme="light"] .avail__dot::after { background: #16A34A; }
+
+/* keep the contact scene inside its box so it never covers the headline */
+.contact__scene svg { overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 93%, transparent 100%), linear-gradient(transparent 0, #000 6%);
+  -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 93%, transparent 100%), linear-gradient(transparent 0, #000 6%); mask-composite: intersect; }
+.contact__text { position: relative; z-index: 6; }
