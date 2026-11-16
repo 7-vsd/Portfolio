@@ -1,1247 +1,634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Vipul Dhange – AI & Data Science Engineer. Machine Learning, Computer Vision, GenAI specialist based in Pune, India." />
-  <meta name="keywords" content="Vipul Dhange, AI Engineer, Data Science, Machine Learning, Computer Vision, GenAI, Python, TensorFlow, Portfolio" />
-  <meta name="author" content="Vipul Dhange" />
-  <meta property="og:title" content="Vipul Dhange | AI & Data Science Engineer" />
-  <meta property="og:description" content="AI & Data Science Engineer building intelligent systems with ML, Computer Vision & GenAI." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#050a14" />
-  <title>Vipul Dhange | AI & Data Science Engineer</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- Critical inline styles to prevent FOUC -->
-  <style>
-    body.loading #navbar,
-    body.loading section,
-    body.loading #backTop {
-      visibility: hidden !important;
-      opacity: 0 !important;
-    }
-    #cinematic-loader {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      background: transparent;
-      display: flex;
-    }
-  </style>
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/loader.css" />
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vipul Dhange · AI & Data Science Engineer</title>
+  <meta name="description" content="Vipul Dhange, AI & Data Science Engineer from Pune. Power BI dashboards, forecasting and recommendation models, and GenAI agents.">
+  <meta name="theme-color" content="#0D1530">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230D1530'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' fill='%23F5A524' text-anchor='middle'%3EVD%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="vendor/fa/css/fontawesome.min.css">
+  <link rel="stylesheet" href="vendor/fa/css/solid.min.css">
+  <link rel="stylesheet" href="vendor/fa/css/brands.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-theme="dark" class="loading">
-  <script>
-    // Lock body immediately to prevent scrolling during load
-    document.body.style.overflow = 'hidden';
-  </script>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
 
-  <!-- Neural Network Background (fixed for entire page) -->
-  <canvas id="neuralCanvas"></canvas>
-
-  <!-- ====== CINEMATIC AI LOADER ====== -->
-  <div id="cinematic-loader">
-    <div class="cl-dark-overlay"></div>
-    <div class="cl-grid"></div>
-    <div class="cl-scanline"></div>
-    <div class="cl-transition-overlay"></div>
-
-    <!-- Corner HUD -->
-    <div class="cl-corner tl"></div>
-    <div class="cl-corner tr"></div>
-    <div class="cl-corner bl"></div>
-    <div class="cl-corner br"></div>
-    <div class="cl-hud-tag tl">SYS:ONLINE &nbsp;|&nbsp; AI-v4.7</div>
-    <div class="cl-hud-tag tr">VIPUL_DHANGE.PORTFOLIO</div>
-
-    <!-- Scanning rings -->
-    <div class="cl-ring ring1"></div>
-    <div class="cl-ring ring2"></div>
-
-    <!-- SCENE -->
-    <div class="cl-scene">
-
-      <!-- Left holographic panel: Neural Net -->
-      <div class="cl-holo cl-holo-left">
-        <div class="holo-header">NEURAL NET</div>
-        <canvas id="holoNeuralCanvas" width="160" height="90"></canvas>
-      </div>
-
-      <!-- Center: Bot + Desk -->
-      <div class="cl-workspace">
-        <!-- AI Bot -->
-        <div class="cl-bot">
-          <div class="bot-aura"></div>
-          <div class="bot-head">
-            <div class="bot-visor">
-              <div class="bot-blink"></div>
-            </div>
-            <div class="bot-ear left"></div>
-            <div class="bot-ear right"></div>
-          </div>
-          <div class="bot-neck"></div>
-          <div class="bot-body">
-            <div class="bot-chest-light"></div>
-            <div class="bot-arm left"></div>
-            <div class="bot-arm right"></div>
-          </div>
-        </div>
-
-        <!-- Desk with laptop -->
-        <div class="cl-desk">
-          <div class="cl-laptop">
-            <div class="laptop-lid">
-              <div class="screen-inner">
-                <div class="screen-topbar">
-                  <span class="stb-dot"></span>
-                  <span class="stb-dot"></span>
-                  <span class="stb-dot"></span>
-                  <span class="stb-title">terminal — python3</span>
-                </div>
-                <div class="cl-terminal" id="cl-terminal-lines"></div>
-                <span class="cl-terminal-cursor"></span>
-              </div>
-            </div>
-            <div class="laptop-hinge"></div>
-            <div class="laptop-base">
-              <div class="key-row"></div>
-              <div class="key-row"></div>
-              <div class="key-row"></div>
-            </div>
-          </div>
-          <div class="desk-accessories">
-            <div class="desk-item"><span class="di-icon">☕</span>coffee.py</div>
-            <div class="desk-item"><span class="di-icon">📊</span>model.h5</div>
-            <div class="desk-item"><span class="di-icon">🧠</span>neural.pkl</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right holographic panel: ML Metrics -->
-      <div class="cl-holo cl-holo-right">
-        <div class="holo-header">ML METRICS</div>
-        <div class="holo-metrics">
-          <div class="hm-bar">
-            <div class="hm-label"><span>Accuracy</span><span>92%</span></div>
-            <div class="hm-track"><div class="hm-fill" data-w="92%"></div></div>
-          </div>
-          <div class="hm-bar">
-            <div class="hm-label"><span>Precision</span><span>88%</span></div>
-            <div class="hm-track"><div class="hm-fill" data-w="88%"></div></div>
-          </div>
-          <div class="hm-bar">
-            <div class="hm-label"><span>Recall</span><span>85%</span></div>
-            <div class="hm-track"><div class="hm-fill" data-w="85%"></div></div>
-          </div>
-          <div class="hm-bar">
-            <div class="hm-label"><span>F1 Score</span><span>90%</span></div>
-            <div class="hm-track"><div class="hm-fill" data-w="90%"></div></div>
-          </div>
-          <div style="margin-top:10px;">
-            <div class="holo-header" style="margin-bottom:8px;">ACHIEVEMENTS</div>
-            <div class="holo-stats">
-              <div class="hs-item"><span class="hs-label">Projects</span><span class="hs-val">7+</span></div>
-              <div class="hs-item"><span class="hs-label">Models</span><span class="hs-val">15+</span></div>
-              <div class="hs-item"><span class="hs-label">Published</span><span class="hs-val">JETIR</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <!-- /SCENE -->
-
-    <!-- Loading UI -->
-    <div class="cl-ui">
-      <div class="cl-brand">
-        <span class="cl-brand-vd">VD</span>
-        <div class="cl-brand-info">
-          <span class="cl-brand-name">VIPUL DHANGE</span>
-          <span class="cl-brand-role">AI &amp; DATA SCIENCE ENGINEER</span>
-        </div>
-      </div>
-      <p class="cl-status" id="cl-status">Initializing AI Systems…</p>
-      <div class="cl-progress-wrap">
-        <div class="cl-progress-bar">
-          <div class="cl-progress-fill" id="cl-progress-fill"></div>
-        </div>
-        <span class="cl-pct" id="cl-pct">0%</span>
-      </div>
-      <div class="cl-data-stream" id="cl-data-stream"></div>
-    </div>
-
-  </div>
-  <!-- ====== /CINEMATIC LOADER ====== -->
-
-  <!-- ======================== NAVBAR ======================== -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a href="#hero" class="nav-logo">
-        <span class="logo-vd">VD</span>
-        <span class="logo-pulse"></span>
-      </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#experience" class="nav-link">Experience</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#research" class="nav-link">Research</a></li>
-        <li><a href="#certifications" class="nav-link">Certifications</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top" aria-label="Vipul Dhange, back to top"><span>VD</span></a>
+    <nav aria-label="Sections">
+      <ul class="nav__links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
-      <div class="nav-right">
-        <a href="Vipul_Dhange_Resume.pdf" download class="nav-cta">
-          <i class="fas fa-download"></i> Resume
-        </a>
-        <button class="hamburger" id="hamburger" aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-    <!-- Mobile menu -->
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#research">Research</a>
-      <a href="#certifications">Certs</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
+    </nav>
+    <a class="btn btn--small magnetic" href="assets/Vipul_Dhange_Resume.pdf" download>Download resume</a>
+    <span class="nav__progress" aria-hidden="true"></span>
+  </header>
 
-  <!-- ======================== HERO ======================== -->
-  <section id="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-grid">
-      <!-- Left Column: Content -->
-      <div class="hero-content">
-        <p class="hero-greeting">-- Hello, I'm</p>
-        <h1 class="hero-name">
-          <span class="name-v">Vipul</span> <span class="name-d">Dhange</span>
-        </h1>
-        <p class="hero-title">Artificial Intelligence &amp; Data Science Engineer</p>
-        <p class="hero-bio">
-          Building intelligent AI systems with Python, ML &amp; Computer Vision. From recommendation engines to
-          n8n automation workflows, I turn complex problems into deployed solutions. Fresh graduate with real-world
-          experience, ready to make impact.
-        </p>
-        <div class="hero-available">
-          <span class="avail-dot"></span>
-          Available For Full-Time Opportunities
+  <main id="main">
+    <!-- ================= HERO: the analyst at work ================= -->
+    <section class="hero" id="top">
+      <div class="hero__inner">
+        <div class="hero__text">
+          <p class="hero__hello" data-hero>Hi, I'm</p>
+          <h1 class="hero__name" aria-label="Vipul Dhange">
+            <span class="line"><span class="split" data-hero-split>Vipul</span></span>
+            <span class="line"><span class="split" data-hero-split>Dhange</span></span>
+          </h1>
+          <p class="hero__role" data-hero>AI &amp; Data Science Engineer</p>
+          <p class="hero__lede" data-hero>I turn messy business data into dashboards people trust, forecasts they can plan with, and AI agents that take care of the busywork.</p>
+          <div class="hero__cta" data-hero>
+            <a class="btn magnetic" href="#projects">See my work</a>
+            <a class="btn btn--ghost magnetic" href="#contact">Hire me</a>
+          </div>
         </div>
-        <div class="hero-actions">
-          <a href="#projects" class="btn-primary">View Projects <i class="fas fa-arrow-right"></i></a>
-          <a href="#contact" class="btn-outline">Lets Connect <i class="fas fa-bolt"></i></a>
+
+        <div class="scene-wrap">
+          <div class="chip chip--1" aria-hidden="true"><span class="k">SELECT</span> region, SUM(sales)</div>
+          <div class="chip chip--2" aria-hidden="true">model.fit(X_train, y_train)</div>
+          <div class="chip chip--3" aria-hidden="true">Gmail ➜ Agent ➜ Calendar</div>
+          <div class="chip chip--4" aria-hidden="true">forecast = model.predict(next_q)</div>
+
+          <svg class="scene" id="scene" viewBox="0 0 1200 800" role="img" aria-label="Illustration of Vipul at his desk analysing data on two monitors">
+            <defs>
+              <linearGradient id="cone" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#F5A524" stop-opacity=".38"/>
+                <stop offset="1" stop-color="#F5A524" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="glow" x1="1" y1="0" x2="0" y2="0">
+                <stop offset="0" stop-color="#4CC9F0" stop-opacity=".12"/>
+                <stop offset="1" stop-color="#4CC9F0" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1A2350"/>
+                <stop offset="1" stop-color="#2B2A5C"/>
+              </linearGradient>
+              <linearGradient id="glow2" x1="1" y1="0" x2="0" y2="0">
+                <stop offset="0" stop-color="#7FDBFF" stop-opacity=".35"/>
+                <stop offset="1" stop-color="#4CC9F0" stop-opacity="0"/>
+              </linearGradient>
+              <clipPath id="winClip"><rect x="96" y="96" width="318" height="268" rx="4"/></clipPath>
+            </defs>
+
+            <!-- room -->
+            <rect class="s-floor" x="0" y="700" width="1200" height="100"/>
+            <g id="window">
+              <rect x="90" y="90" width="330" height="280" rx="8" fill="url(#sky)" stroke="#2A3466" stroke-width="10"/>
+              <g clip-path="url(#winClip)">
+                <circle cx="360" cy="150" r="22" fill="#F4E9C9" opacity=".9"/>
+                <path fill="#141B3D" d="M96 364V250h40v-40h36v60h30v-90h44v120h26v-50h40v-40h30v74h30v-34h42v114z"/>
+                <g id="cityLights" fill="#F5A524">
+                  <rect x="110" y="262" width="6" height="8"/><rect x="146" y="226" width="6" height="8"/><rect x="158" y="246" width="6" height="8"/>
+                  <rect x="214" y="196" width="6" height="8"/><rect x="226" y="226" width="6" height="8"/><rect x="214" y="270" width="6" height="8"/>
+                  <rect x="286" y="276" width="6" height="8"/><rect x="306" y="240" width="6" height="8"/><rect x="318" y="262" width="6" height="8"/>
+                  <rect x="346" y="296" width="6" height="8"/><rect x="386" y="282" width="6" height="8"/><rect x="398" y="312" width="6" height="8"/>
+                </g>
+              </g>
+              <line x1="255" y1="90" x2="255" y2="370" stroke="#2A3466" stroke-width="8"/>
+            </g>
+
+            <!-- pendant lamp -->
+            <g id="lamp">
+              <line x1="770" y1="0" x2="770" y2="92" stroke="#3A4270" stroke-width="3"/>
+              <path id="lightCone" d="M738 120 L560 470 L1000 470 L802 120 Z" fill="url(#cone)"/>
+              <path d="M730 122 Q770 70 810 122 Z" fill="#F5A524"/>
+              <ellipse cx="770" cy="122" rx="40" ry="6" fill="#FFD27A"/>
+            </g>
+
+            <!-- chair (behind man) -->
+            <g id="chair">
+              <rect x="212" y="300" width="48" height="196" rx="22" fill="#262C4A"/>
+              <rect x="218" y="476" width="176" height="26" rx="12" fill="#2C3356"/>
+              <rect x="298" y="502" width="14" height="128" fill="#1A1F38"/>
+              <path d="M228 646 L382 646" stroke="#1A1F38" stroke-width="12" stroke-linecap="round"/>
+              <circle cx="232" cy="664" r="11" fill="#1A1F38"/><circle cx="378" cy="664" r="11" fill="#1A1F38"/>
+            </g>
+
+            <!-- desk back parts -->
+            <rect x="412" y="488" width="14" height="214" fill="#2D2420"/>
+
+            <!-- main monitor -->
+            <g id="monitor">
+              <rect x="752" y="415" width="22" height="55" fill="#1A2036"/>
+              <rect x="714" y="460" width="98" height="10" rx="4" fill="#1A2036"/>
+              <rect x="585" y="185" width="360" height="235" rx="12" fill="#0B1022" stroke="#2A3358" stroke-width="3"/>
+              <rect id="screen" x="598" y="198" width="334" height="209" rx="6" fill="#0D1530"/>
+              <g id="screenUI">
+                <circle cx="612" cy="211" r="3.5" fill="#FF6B6B"/><circle cx="623" cy="211" r="3.5" fill="#F5A524"/><circle cx="634" cy="211" r="3.5" fill="#4ADE80"/>
+                <text x="648" y="215" class="s-tiny">sales_dashboard.pbix</text>
+                <g class="kpi"><rect x="610" y="226" width="98" height="40" rx="5"/><text x="618" y="241" class="s-tiny">Revenue</text><text x="618" y="259" class="s-kpi" id="kpi1">₹4.2M</text></g>
+                <g class="kpi"><rect x="716" y="226" width="98" height="40" rx="5"/><text x="724" y="241" class="s-tiny">Growth</text><text x="724" y="259" class="s-kpi s-kpi--up" id="kpi2">+12.4%</text></g>
+                <g class="kpi"><rect x="822" y="226" width="98" height="40" rx="5"/><text x="830" y="241" class="s-tiny">Churn</text><text x="830" y="259" class="s-kpi s-kpi--warn" id="kpi3">3.1%</text></g>
+                <g id="sbars"></g>
+                <path id="sline" d="" fill="none" stroke="#4CC9F0" stroke-width="2.5" stroke-linecap="round"/>
+                <path id="sfc" d="" fill="none" stroke="#F5A524" stroke-width="2.5" stroke-dasharray="2 5" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <!-- second monitor: code -->
+            <g id="monitor2">
+              <rect x="1022" y="390" width="14" height="80" fill="#1A2036"/>
+              <rect x="996" y="462" width="66" height="8" rx="3" fill="#1A2036"/>
+              <rect x="958" y="236" width="142" height="160" rx="10" fill="#0B1022" stroke="#2A3358" stroke-width="3"/>
+              <rect x="968" y="246" width="122" height="140" rx="5" fill="#0D1530"/>
+              <g id="code"></g>
+            </g>
+
+            <!-- laptop (lid hinges at its right end) -->
+            <g id="laptop">
+              <rect x="466" y="456" width="128" height="10" rx="3" fill="#8A93B8"/>
+              <rect x="466" y="463" width="128" height="3" fill="#6E7799"/>
+              <g id="lapLid" transform="rotate(106 594 456)">
+                <rect x="466" y="447" width="128" height="9" rx="3" fill="#A3ABCC"/>
+                <rect id="lapScreen" x="470" y="454" width="120" height="3" rx="1" fill="#4CC9F0"/>
+              </g>
+              <path id="lapGlow" d="M584 330 L588 452 L382 300 L382 222 Z" fill="url(#glow2)"/>
+            </g>
+
+            <!-- man -->
+            <g id="man">
+              <!-- far leg -->
+              <path d="M300 492 L452 500" stroke="#171C33" stroke-width="44" stroke-linecap="round"/>
+              <path d="M452 500 L458 668" stroke="#171C33" stroke-width="38" stroke-linecap="round"/>
+              <path d="M440 668 h44 a14 14 0 0 1 14 14 v6 h-58z" fill="#0B0E1C"/>
+              <!-- far arm -->
+              <g id="armFar">
+                <path d="M342 334 L408 424" stroke="#222B4D" stroke-width="32" stroke-linecap="round"/>
+                <g id="foreFar"><path d="M408 424 L522 444" stroke="#222B4D" stroke-width="26" stroke-linecap="round"/>
+                  <circle cx="532" cy="444" r="12" fill="#A86F4B"/></g>
+              </g>
+              <!-- torso -->
+              <path id="torso" d="M262 332 C252 392 260 452 280 498 L384 498 C396 452 398 382 378 326 C352 300 286 300 262 332 Z" fill="#2E3A66"/>
+              <path d="M268 340 C262 400 268 450 284 494" stroke="#253158" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <!-- near leg -->
+              <path d="M312 496 L474 506" stroke="#1F2540" stroke-width="50" stroke-linecap="round"/>
+              <path d="M474 506 L480 670" stroke="#1F2540" stroke-width="42" stroke-linecap="round"/>
+              <path d="M460 672 h50 a16 16 0 0 1 16 16 v6 h-66z" fill="#10132A"/>
+              <!-- neck + head -->
+              <rect x="318" y="268" width="28" height="44" rx="8" fill="#A86F4B"/>
+              <path d="M300 318 C318 300 352 300 368 318" stroke="#3A4880" stroke-width="12" fill="none" stroke-linecap="round"/>
+              <g id="head">
+                <ellipse cx="336" cy="238" rx="41" ry="47" fill="#C98B62"/>
+                <ellipse cx="318" cy="246" rx="8" ry="12" fill="#A86F4B"/>
+                <path d="M374 240 q12 8 2 16" fill="#C98B62" stroke="#A86F4B" stroke-width="2"/>
+                <path id="hair" d="M294 250 C284 196 326 172 362 188 C384 198 388 218 380 226 C366 212 336 210 320 226 C314 236 310 254 302 266 Z" fill="#1B1A22"/>
+                <path d="M300 262 C302 284 316 296 330 300 C318 288 312 276 312 262 Z" fill="#1B1A22" opacity=".85"/>
+                <g id="eye"><ellipse cx="362" cy="236" rx="3.6" ry="5" fill="#141824"/></g>
+                <path d="M352 222 q10 -5 20 0" stroke="#1B1A22" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <rect x="349" y="226" width="26" height="19" rx="6" fill="#4CC9F0" fill-opacity=".14" stroke="#E6ECFA" stroke-width="2.5"/>
+                <path d="M349 233 L322 238" stroke="#E6ECFA" stroke-width="2.5"/>
+                <path id="mouth" d="M360 268 q6 3 11 -1" stroke="#7A4A33" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              </g>
+              <!-- near arm -->
+              <g id="armNear">
+                <path d="M352 338 L396 430" stroke="#34427A" stroke-width="38" stroke-linecap="round"/>
+                <g id="foreNear"><path d="M396 430 L504 456" stroke="#34427A" stroke-width="31" stroke-linecap="round"/>
+                  <rect x="498" y="446" width="12" height="20" rx="4" fill="#2A3566"/>
+                  <ellipse cx="520" cy="458" rx="15" ry="11" fill="#C98B62"/></g>
+              </g>
+              <!-- screen light on face -->
+              <path d="M600 200 L600 410 L372 300 L372 200 Z" fill="url(#glow)"/>
+            </g>
+
+            <!-- desk -->
+            <g id="desk">
+              <rect x="400" y="468" width="740" height="22" rx="4" fill="#4A3B33"/>
+              <rect x="900" y="490" width="220" height="212" fill="#3A2E28"/>
+              <rect x="916" y="510" width="188" height="70" rx="4" fill="#43352E"/><rect x="990" y="540" width="40" height="6" rx="3" fill="#6B5446"/>
+              <rect x="916" y="596" width="188" height="90" rx="4" fill="#43352E"/><rect x="990" y="636" width="40" height="6" rx="3" fill="#6B5446"/>
+            </g>
+
+            <!-- mug + steam -->
+            <g id="mug">
+              <rect x="858" y="436" width="30" height="34" rx="5" fill="#F5A524"/>
+              <path d="M888 444 q14 0 14 10 q0 10 -14 10" stroke="#F5A524" stroke-width="5" fill="none"/>
+              <g id="steam" stroke="#C9D3F0" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6">
+                <path d="M866 426 q-6 -10 0 -20 q6 -10 0 -20"/>
+                <path d="M880 426 q-6 -10 0 -20 q6 -10 0 -20"/>
+              </g>
+            </g>
+
+            <!-- plant -->
+            <g id="plant">
+              <path d="M1112 430 h50 l-6 40 h-38z" fill="#6B5446"/>
+              <g id="leaves" fill="#3FA37A">
+                <path d="M1136 430 C1110 400 1104 370 1112 350 C1130 372 1138 400 1136 430Z"/>
+                <path d="M1138 430 C1150 392 1170 372 1186 368 C1180 396 1160 420 1138 430Z"/>
+                <path d="M1137 430 C1130 392 1138 358 1150 340 C1158 370 1150 404 1137 430Z" fill="#2F8A63"/>
+              </g>
+            </g>
+
+            <!-- ===== intro-only characters (hidden in the hero) ===== -->
+            <g id="stand" class="rig">
+              <ellipse cx="620" cy="702" rx="78" ry="11" fill="#070B1C"/>
+              <path d="M592 460 L590 688" stroke="#1F2540" stroke-width="42" stroke-linecap="round"/>
+              <path d="M648 460 L650 688" stroke="#1F2540" stroke-width="42" stroke-linecap="round"/>
+              <ellipse cx="584" cy="694" rx="28" ry="11" fill="#10132A"/><ellipse cx="656" cy="694" rx="28" ry="11" fill="#10132A"/>
+              <g id="standArmL"><path d="M560 302 L540 386" stroke="#34427A" stroke-width="34" stroke-linecap="round"/><path d="M540 386 L536 458" stroke="#34427A" stroke-width="30" stroke-linecap="round"/><circle cx="536" cy="470" r="15" fill="#C98B62"/></g>
+              <g id="bagBack" opacity="0"><rect x="536" y="292" width="168" height="176" rx="34" fill="#C77D12"/><rect x="536" y="380" width="168" height="10" fill="#A86510"/></g>
+              <path d="M558 300 C550 370 556 430 562 470 L678 470 C684 430 690 370 682 300 C660 272 580 272 558 300Z" fill="#2E3A66"/>
+              <path d="M585 420 h70 l-8 34 h-54z" fill="#273360"/>
+              <path d="M606 296 v34 M634 296 v34" stroke="#E6ECFA" stroke-width="3" stroke-linecap="round"/>
+              <g id="bagStraps" opacity="0" stroke="#A86510" stroke-width="11" fill="none" stroke-linecap="round"><path d="M578 294 C570 340 572 400 580 444"/><path d="M662 294 C670 340 668 400 660 444"/></g>
+              <g id="standArmR"><path d="M680 302 L700 386" stroke="#34427A" stroke-width="34" stroke-linecap="round"/>
+                <g id="standForeR"><path d="M700 386 L704 458" stroke="#34427A" stroke-width="30" stroke-linecap="round"/><circle cx="704" cy="470" r="15" fill="#C98B62"/></g></g>
+              <rect x="606" y="240" width="28" height="42" rx="8" fill="#A86F4B"/>
+              <path d="M582 290 C600 306 640 306 658 290" stroke="#3A4880" stroke-width="12" fill="none" stroke-linecap="round"/>
+              <g id="standHead">
+                <ellipse cx="576" cy="206" rx="9" ry="13" fill="#A86F4B"/><ellipse cx="664" cy="206" rx="9" ry="13" fill="#A86F4B"/>
+                <ellipse cx="620" cy="200" rx="44" ry="50" fill="#C98B62"/>
+                <path d="M576 198 C568 140 612 120 644 134 C674 146 680 174 664 198 C660 176 646 166 620 166 C594 166 582 178 576 198Z" fill="#1B1A22"/>
+                <path d="M596 184 q10 -6 20 0 M624 184 q10 -6 20 0" stroke="#1B1A22" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <g id="standEyes"><ellipse cx="604" cy="204" rx="4" ry="5.5" fill="#141824"/><ellipse cx="636" cy="204" rx="4" ry="5.5" fill="#141824"/></g>
+                <rect x="588" y="192" width="30" height="22" rx="7" fill="#4CC9F0" fill-opacity=".12" stroke="#E6ECFA" stroke-width="3"/>
+                <rect x="622" y="192" width="30" height="22" rx="7" fill="#4CC9F0" fill-opacity=".12" stroke="#E6ECFA" stroke-width="3"/>
+                <path d="M618 201 h4" stroke="#E6ECFA" stroke-width="3"/>
+                <path id="mouthC" d="M607 230 q13 11 26 0" stroke="#7A4A33" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <ellipse id="mouthO" cx="620" cy="234" rx="9" ry="7" fill="#5A2E22" opacity="0"/>
+              </g>
+            </g>
+
+            <g id="bagFloor" class="rig">
+              <path d="M548 618 q22 -26 44 0" stroke="#A86510" stroke-width="7" fill="none"/>
+              <rect x="526" y="612" width="88" height="90" rx="22" fill="#C77D12"/>
+              <rect x="542" y="650" width="56" height="34" rx="10" fill="#A86510"/>
+            </g>
+
+            <g id="bubble" class="rig">
+              <path d="M716 150 L664 192 L748 154Z" fill="#F5F7FF"/>
+              <rect x="690" y="52" width="360" height="108" rx="26" fill="#F5F7FF"/>
+              <text id="b1" x="718" y="98" class="s-b1"></text>
+              <text id="b2" x="718" y="138" class="s-b2"></text>
+            </g>
+
+            <g id="walker" class="rig">
+              <g id="wArmF"><path d="M2 -196 L4 -100" stroke="#222B4D" stroke-width="30" stroke-linecap="round"/><path d="M4 -100 L10 -22" stroke="#222B4D" stroke-width="26" stroke-linecap="round"/><circle cx="10" cy="-12" r="12" fill="#A86F4B"/></g>
+              <g id="wLegF"><path d="M0 0 L0 112" stroke="#171C33" stroke-width="40" stroke-linecap="round"/><path d="M0 112 L0 214" stroke="#171C33" stroke-width="36" stroke-linecap="round"/><path d="M-14 212 h40 a12 12 0 0 1 12 12 v6 h-52z" fill="#0B0E1C"/></g>
+              <path d="M-34 -200 C-42 -140 -38 -60 -32 6 L32 6 C38 -60 42 -140 32 -200 C12 -224 -14 -224 -34 -200Z" fill="#2E3A66"/>
+              <g id="wLegN"><path d="M0 0 L0 112" stroke="#1F2540" stroke-width="44" stroke-linecap="round"/><path d="M0 112 L0 214" stroke="#1F2540" stroke-width="40" stroke-linecap="round"/><path d="M-14 214 h44 a13 13 0 0 1 13 13 v6 h-57z" fill="#10132A"/></g>
+              <rect x="-12" y="-242" width="26" height="46" rx="8" fill="#A86F4B"/>
+              <g id="wHead">
+                <ellipse cx="2" cy="-268" rx="41" ry="47" fill="#C98B62"/>
+                <ellipse cx="-16" cy="-260" rx="8" ry="12" fill="#A86F4B"/>
+                <path d="M40 -266 q12 8 2 16" fill="#C98B62" stroke="#A86F4B" stroke-width="2"/>
+                <path d="M-40 -256 C-50 -310 -8 -334 28 -318 C50 -308 54 -288 46 -280 C32 -294 2 -296 -14 -280 C-20 -270 -24 -252 -32 -240 Z" fill="#1B1A22"/>
+                <ellipse cx="28" cy="-270" rx="3.6" ry="5" fill="#141824"/>
+                <rect x="15" y="-280" width="26" height="19" rx="6" fill="#4CC9F0" fill-opacity=".14" stroke="#E6ECFA" stroke-width="2.5"/>
+                <path d="M15 -273 L-12 -268" stroke="#E6ECFA" stroke-width="2.5"/>
+                <path d="M26 -238 q6 3 11 -1" stroke="#7A4A33" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              </g>
+              <g id="wArmN"><path d="M0 -194 L2 -98" stroke="#34427A" stroke-width="34" stroke-linecap="round"/><path d="M2 -98 L8 -20" stroke="#34427A" stroke-width="30" stroke-linecap="round"/><circle cx="8" cy="-8" r="13" fill="#C98B62"/></g>
+            </g>
+          </svg>
         </div>
-        <div class="hero-socials">
-          <a href="mailto:dhange.vipul3082@gmail.com" aria-label="Email" class="soc-link">
-            <i class="fas fa-envelope"></i>
+      </div>
+      <p class="hero__scroll" data-hero aria-hidden="true">Scroll to explore</p>
+    </section>
+
+    <!-- ================= ABOUT: inside the screen ================= -->
+    <section class="section about" id="about">
+      <div class="wrap">
+        <h2 class="title"><span class="split">A bit about me</span></h2>
+        <div class="bento">
+          <article class="tile tile--intro">
+            <p class="tile__big">I work on both sides of data: the reporting that keeps a business honest, and the models that tell it what comes next.</p>
+            <p>I learned both during two internships. At Elenco, I validated data with SQL and built the Power BI dashboards my team used every week. At AI Variant, I built predictive models and worked hands-on with LLMs and prompt engineering. I'm ready to join a team full-time, and I'm happy to relocate.</p>
+          </article>
+          <article class="tile tile--stat">
+            <p class="stat"><span class="count" data-to="21">21</span></p>
+            <p class="stat__label">months I spent interning in data analysis and data science</p>
+          </article>
+          <article class="tile tile--stat tile--gold">
+            <span class="medal" aria-hidden="true"></span>
+            <p class="stat stat--word">Gold medal</p>
+            <p class="stat__label">I earned it in the MeitY Master Program in Data Science, Government of India</p>
+          </article>
+          <article class="tile tile--stat">
+            <p class="stat"><span class="count" data-to="7.95" data-dec="2">7.95</span></p>
+            <p class="stat__label">impact factor of JETIR, the journal that published my GenAI research</p>
+          </article>
+          <article class="tile tile--meta">
+            <dl>
+              <div><dt>I live in</dt><dd>Pune, Maharashtra</dd></div>
+              <div><dt>I'm available</dt><dd>Immediately, and open to relocating</dd></div>
+              <div><dt>I speak</dt><dd>English, Hindi, Marathi, Kannada</dd></div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section class="section experience" id="experience">
+      <div class="wrap">
+        <h2 class="title"><span class="split">Where I've worked</span></h2>
+        <div class="timeline">
+          <div class="timeline__rail" aria-hidden="true"><span class="timeline__fill"></span></div>
+          <article class="tl-item tl-item--right">
+            <span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card">
+              <p class="tl-date">Jun 2025 to Mar 2026 · 9 months</p>
+              <h3>Data Science Intern</h3>
+              <p class="tl-org">AI Variant, Bengaluru</p>
+              <ul>
+                <li>I built predictive models on large datasets, ran trend analysis and data validation, and turned the results into insights that guided business decisions.</li>
+                <li>I worked with generative AI, large language models and prompt engineering to improve our AI-driven solutions.</li>
+              </ul>
+              <ul class="tags"><li>Predictive modelling</li><li>LLMs</li><li>Prompt engineering</li><li>Python</li></ul>
+            </div>
+          </article>
+          <article class="tl-item tl-item--left">
+            <span class="tl-dot" aria-hidden="true"></span>
+            <div class="tl-card">
+              <p class="tl-date">May 2024 to Apr 2025 · 1 year</p>
+              <h3>Data Analysis Intern</h3>
+              <p class="tl-org">Elenco Corporation, Pune</p>
+              <ul>
+                <li>I analysed data, validated it with SQL and ran predictive analytics to keep reporting accurate across systems.</li>
+                <li>I built and monitored Power BI dashboards that tracked project performance, resource utilization, CI/CD pipeline metrics and MLOps workflows.</li>
+              </ul>
+              <ul class="tags"><li>SQL</li><li>Power BI</li><li>Data validation</li><li>CI/CD metrics</li></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EDUCATION ================= -->
+    <section class="section education" id="education">
+      <div class="wrap">
+        <h2 class="title"><span class="split">Where I studied</span></h2>
+        <p class="section__lede">My path from school in Gunjoti to a degree in artificial intelligence and data science.</p>
+        <div class="edu-stack">
+          <article class="ecard" style="--i:0">
+            <div class="ecard__viz">
+              <svg class="escene escene--school" viewBox="0 0 320 220" aria-hidden="true">
+                <g class="tw" fill="#E6ECFA"><circle cx="30" cy="30" r="1.6"/><circle cx="292" cy="24" r="1.4"/><circle cx="250" cy="44" r="1.2"/><circle cx="70" cy="18" r="1.2"/><circle cx="200" cy="16" r="1.5"/></g>
+                <rect x="0" y="182" width="320" height="38" fill="#131D40"/><line x1="0" y1="182" x2="320" y2="182" stroke="#24305E" stroke-width="2"/>
+                <line x1="58" y1="58" x2="58" y2="182" stroke="#9AA6C7" stroke-width="4" stroke-linecap="round"/>
+                <path class="flag" d="M60 60 h44 l-9 12 l9 12 h-44z" fill="#4CC9F0"/>
+                <rect x="95" y="102" width="130" height="80" rx="4" fill="#22306A"/>
+                <path d="M84 106 L160 60 L236 106 Z" fill="#F5A524"/>
+                <rect x="146" y="34" width="28" height="30" fill="#22306A"/>
+                <path d="M141 37 L160 20 L179 37 Z" fill="#F5A524"/>
+                <g class="bell"><path d="M153 56 q0 -13 7 -13 q7 0 7 13 z" fill="#FFD27A"/><circle cx="160" cy="57" r="2.5" fill="#FFD27A"/></g>
+                <g class="win" fill="#4CC9F0"><rect x="108" y="118" width="24" height="18" rx="2"/><rect x="188" y="118" width="24" height="18" rx="2"/><rect x="108" y="148" width="24" height="18" rx="2"/><rect x="188" y="148" width="24" height="18" rx="2"/></g>
+                <rect x="147" y="140" width="26" height="42" rx="3" fill="#B97A10"/><circle cx="167" cy="162" r="2" fill="#FFD27A"/>
+                <g class="tree"><rect x="263" y="150" width="8" height="32" fill="#6B4E3D"/><circle cx="267" cy="140" r="22" fill="#3FA37A"/><circle cx="256" cy="150" r="13" fill="#2F8A63"/></g>
+              </svg>
+            </div>
+            <div class="ecard__body">
+              <p class="ecard__meta"><i class="fa-solid fa-school" aria-hidden="true"></i> 2017 to 2018</p>
+              <h3>Secondary School Certificate (SSC)</h3>
+              <p class="ecard__school">Shrikrishna Vidyalaya, Gunjoti</p>
+              <p class="ecard__line">I completed my secondary schooling here.</p>
+            </div>
+            <p class="ecard__score"><strong><span class="count" data-to="93">93</span>%</strong><span>Score</span></p>
+          </article>
+          <article class="ecard" style="--i:1">
+            <div class="ecard__viz">
+              <svg class="escene escene--hs" viewBox="0 0 320 220" aria-hidden="true">
+                <g class="tw" fill="#E6ECFA"><circle cx="30" cy="30" r="1.6"/><circle cx="292" cy="24" r="1.4"/><circle cx="250" cy="44" r="1.2"/><circle cx="70" cy="18" r="1.2"/><circle cx="200" cy="16" r="1.5"/></g>
+                <rect x="0" y="182" width="320" height="38" fill="#131D40"/><line x1="0" y1="182" x2="320" y2="182" stroke="#24305E" stroke-width="2"/>
+                <rect x="140" y="72" width="130" height="110" rx="4" fill="#22306A"/>
+                <rect x="185" y="34" width="40" height="42" rx="3" fill="#2A3A7A"/>
+                <path d="M180 36 L205 18 L230 36 Z" fill="#F5A524"/>
+                <circle cx="205" cy="56" r="14" fill="#F5F7FF"/>
+                <line class="hhand" x1="205" y1="56" x2="205" y2="48" stroke="#0D1530" stroke-width="3" stroke-linecap="round"/>
+                <line class="mhand" x1="205" y1="56" x2="205" y2="44" stroke="#F5A524" stroke-width="2" stroke-linecap="round"/>
+                <g class="win" fill="#4CC9F0"><rect x="153" y="88" width="20" height="16" rx="2"/><rect x="195" y="88" width="20" height="16" rx="2"/><rect x="237" y="88" width="20" height="16" rx="2"/><rect x="153" y="116" width="20" height="16" rx="2"/><rect x="237" y="116" width="20" height="16" rx="2"/><rect x="153" y="144" width="20" height="16" rx="2"/><rect x="237" y="144" width="20" height="16" rx="2"/></g>
+                <rect x="192" y="138" width="26" height="44" rx="3" fill="#B97A10"/>
+                <g class="flask">
+                  <path d="M58 182 h52 q8 0 4 -7 l-14 -24 h-32 l-14 24 q-4 7 4 7z" fill="#4ADE80" opacity=".85"/>
+                  <path d="M74 112 h20 M76 112 v26 l-24 40 q-4 6 4 6 h56 q8 0 4 -6 l-24 -40 v-26" fill="none" stroke="#E6ECFA" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+                  <g class="bub" fill="#4ADE80"><circle cx="82" cy="160" r="4"/><circle cx="88" cy="166" r="3"/><circle cx="80" cy="170" r="3.5"/><circle cx="86" cy="158" r="2.5"/></g>
+                </g>
+              </svg>
+            </div>
+            <div class="ecard__body">
+              <p class="ecard__meta"><i class="fa-solid fa-flask" aria-hidden="true"></i> 2018 to 2020</p>
+              <h3>Higher Secondary Certificate (HSC), Science</h3>
+              <p class="ecard__school">Pune International Junior College, Vidyanagar, Pune</p>
+              <p class="ecard__line">I studied science here before moving into engineering.</p>
+            </div>
+            <p class="ecard__score"><strong><span class="count" data-to="61">61</span>%</strong><span>Score</span></p>
+          </article>
+          <article class="ecard ecard--main" style="--i:2">
+            <div class="ecard__viz">
+              <svg class="escene escene--college" viewBox="0 0 320 220" aria-hidden="true">
+                <g class="tw" fill="#E6ECFA"><circle cx="30" cy="30" r="1.6"/><circle cx="292" cy="24" r="1.4"/><circle cx="250" cy="44" r="1.2"/><circle cx="70" cy="18" r="1.2"/><circle cx="200" cy="16" r="1.5"/></g>
+                <rect x="0" y="182" width="320" height="38" fill="#131D40"/><line x1="0" y1="182" x2="320" y2="182" stroke="#24305E" stroke-width="2"/>
+                <rect x="66" y="170" width="188" height="12" fill="#2A3A7A"/>
+                <rect x="74" y="160" width="172" height="10" fill="#2A3A7A"/>
+                <g fill="#22306A"><rect x="84" y="106" width="16" height="54"/><rect x="118" y="106" width="16" height="54"/><rect x="152" y="106" width="16" height="54"/><rect x="186" y="106" width="16" height="54"/><rect x="220" y="106" width="16" height="54"/></g>
+                <rect x="74" y="96" width="172" height="12" fill="#2A3A7A"/>
+                <path d="M68 98 L160 58 L252 98 Z" fill="#F5A524"/>
+                <circle cx="160" cy="84" r="8" fill="#0D1530"/>
+                <g class="conf"><rect x="150" y="40" width="5" height="9" fill="#4CC9F0"/><rect x="168" y="38" width="5" height="9" fill="#F5A524"/><rect x="140" y="46" width="5" height="9" fill="#4ADE80"/><rect x="178" y="46" width="5" height="9" fill="#E85D75"/><rect x="160" y="34" width="5" height="9" fill="#A78BFA"/></g>
+                <g class="cap">
+                  <path d="M130 50 L160 38 L190 50 L160 62 Z" fill="#0F1428" stroke="#E6ECFA" stroke-width="1.5"/>
+                  <path d="M144 56 v10 q16 8 32 0 v-10" fill="#0F1428"/>
+                  <path d="M160 50 L184 54 v14" stroke="#F5A524" stroke-width="2.5" fill="none"/><circle cx="184" cy="70" r="3.5" fill="#F5A524"/>
+                </g>
+              </svg>
+            </div>
+            <div class="ecard__body">
+              <p class="ecard__meta"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Nov 2020 to May 2024</p>
+              <h3>B.E. in Artificial Intelligence and Data Science</h3>
+              <p class="ecard__school">D Y Patil College of Engineering, Akurdi, Pune</p>
+              <p class="ecard__line">I specialised in artificial intelligence and data science, the foundation for everything I build today.</p>
+            </div>
+            <p class="ecard__score ecard__score--amber"><strong><span class="count" data-to="7.76" data-dec="2">7.76</span></strong><span>CGPA</span></p>
+          </article>
+          <article class="ecard" style="--i:3">
+            <div class="ecard__viz">
+              <svg class="escene escene--course" viewBox="0 0 320 220" aria-hidden="true">
+                <g class="tw" fill="#E6ECFA"><circle cx="30" cy="30" r="1.6"/><circle cx="292" cy="24" r="1.4"/><circle cx="250" cy="44" r="1.2"/><circle cx="70" cy="18" r="1.2"/><circle cx="200" cy="16" r="1.5"/></g>
+                <rect x="0" y="182" width="320" height="38" fill="#131D40"/><line x1="0" y1="182" x2="320" y2="182" stroke="#24305E" stroke-width="2"/>
+                <rect x="88" y="48" width="144" height="98" rx="8" fill="#0B1022" stroke="#2A3358" stroke-width="3"/>
+                <rect x="97" y="57" width="126" height="80" rx="4" fill="#0D1530"/>
+                <g class="cbars"><rect x="106" y="110" width="12" height="20" fill="#3A4880"/><rect x="124" y="100" width="12" height="30" fill="#3A4880"/><rect x="142" y="94" width="12" height="36" fill="#3A4880"/><rect x="160" y="84" width="12" height="46" fill="#4CC9F0"/><rect x="178" y="74" width="12" height="56" fill="#4CC9F0"/></g>
+                <path class="cline" d="M106 100 L130 90 L148 86 L166 72 L196 64 L214 62" fill="none" stroke="#F5A524" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M70 150 h180 l-14 12 h-152z" fill="#A3ABCC"/><rect x="140" y="150" width="40" height="4" rx="2" fill="#7C84A3"/>
+                <g class="badge"><path d="M246 86 l-8 26 l10 -6 l6 9 l4 -25z M262 86 l8 26 l-10 -6 l-6 9 l-4 -25z" fill="#CF3E2A"/><circle cx="254" cy="78" r="18" fill="#4ADE80"/><path d="M245 78 l6 6 l11 -12" stroke="#0D1530" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+              </svg>
+            </div>
+            <div class="ecard__body">
+              <p class="ecard__meta"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Completed Mar 2026</p>
+              <h3>Data Science Course</h3>
+              <p class="ecard__school">ExcelR</p>
+              <p class="ecard__line">I took this course to sharpen my hands-on skills in data science and analytics.</p>
+            </div>
+            <p class="ecard__score ecard__score--green"><strong><i class="fa-solid fa-check" aria-hidden="true"></i></strong><span>Completed</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS (horizontal) ================= -->
+    <section class="projects" id="projects">
+      <div class="projects__pin">
+        <div class="projects__head wrap">
+          <h2 class="title"><span class="split">Things I've built</span></h2>
+          <div class="projects__nav">
+            <button class="pnav" type="button" id="pPrev" aria-label="Previous project"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+            <p class="projects__count" aria-live="polite"><span id="pCur">1</span> / 5</p>
+            <button class="pnav" type="button" id="pNext" aria-label="Next project"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <div class="projects__track" id="pTrack">
+          <article class="pcard pcard--feature">
+            <div class="pcard__viz"><svg class="viz viz--bi" viewBox="0 0 320 200" aria-hidden="true"></svg></div>
+            <div class="pcard__body">
+              <p class="pcard__meta">Nov 2026 · Latest</p>
+              <h3>NEXUS BI</h3>
+              <p>I built a business intelligence platform that finds trends in business data and predicts what comes next. I process the data with Python and SQL in PostgreSQL, forecast with machine learning, and present everything in Power BI dashboards built with DAX.</p>
+              <ul class="tags"><li>Python</li><li>PostgreSQL</li><li>Power BI</li><li>DAX</li><li>ML</li></ul>
+              <p class="pcard__links"><a class="pcard__view" href="https://github.com/7-vsd/NEXUS-BI" target="_blank" rel="noopener">View project <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></p>
+            </div>
+          </article>
+          <article class="pcard">
+            <div class="pcard__viz"><svg class="viz viz--agent" viewBox="0 0 320 200" aria-hidden="true"></svg></div>
+            <div class="pcard__body">
+              <p class="pcard__meta">May 2026</p>
+              <h3>AI Executive Agent</h3>
+              <p>I built an AI assistant that reads email, books calendar slots and handles daily admin tasks, and it remembers past conversations. I connected OpenRouter, the Gmail API and Google Calendar through n8n, so the agent can take action instead of just replying.</p>
+              <ul class="tags"><li>n8n</li><li>OpenRouter</li><li>Gmail API</li><li>Calendar API</li><li>AI agents</li></ul>
+              <p class="pcard__links"><a class="pcard__view" href="https://github.com/7-vsd/AI_Executive_Agent" target="_blank" rel="noopener">View project <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></p>
+            </div>
+          </article>
+          <article class="pcard">
+            <div class="pcard__viz"><svg class="viz viz--rec" viewBox="0 0 320 200" aria-hidden="true"></svg></div>
+            <div class="pcard__body">
+              <p class="pcard__meta">Feb 2026</p>
+              <h3>Course Recommender</h3>
+              <p>I built a system that suggests online courses to match each learner's interests. I compared five content-based, collaborative and hybrid approaches, including SVD, on Precision@K, RMSE and coverage, and presented the results in a Streamlit dashboard.</p>
+              <ul class="tags"><li>Python</li><li>SVD</li><li>Streamlit</li><li>Recommenders</li></ul>
+              <p class="pcard__links"><a class="pcard__view" href="https://github.com/7-vsd/Online_Course_Recommendation_System" target="_blank" rel="noopener">View project <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pcard__demo" href="https://onlinecourserecommendationsystem-vipul-dhange.streamlit.app/" target="_blank" rel="noopener">Live demo</a></p>
+            </div>
+          </article>
+          <article class="pcard">
+            <div class="pcard__viz"><svg class="viz viz--stock" viewBox="0 0 320 200" aria-hidden="true"></svg></div>
+            <div class="pcard__body">
+              <p class="pcard__meta">Dec 2025</p>
+              <h3>Apple Stock Forecasting</h3>
+              <p>I forecast Apple's share price and compared five models side by side: XGBoost, Random Forest, SARIMA, LSTM and GRU. I handled the full EDA and feature engineering, and deployed the app on Streamlit.</p>
+              <ul class="tags"><li>LSTM</li><li>GRU</li><li>SARIMA</li><li>XGBoost</li><li>Streamlit</li></ul>
+              <p class="pcard__links"><a class="pcard__view" href="https://github.com/7-vsd/AAPL_TimeSeries_Forcasting" target="_blank" rel="noopener">View project <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pcard__demo" href="https://vipul-dhange-aapl-stock-forecast.streamlit.app/" target="_blank" rel="noopener">Live demo</a></p>
+            </div>
+          </article>
+          <article class="pcard">
+            <div class="pcard__viz"><svg class="viz viz--cluster" viewBox="0 0 320 200" aria-hidden="true"></svg></div>
+            <div class="pcard__body">
+              <p class="pcard__meta">Mar 2026</p>
+              <h3>Global Development Platform</h3>
+              <p>I grouped countries by their economic and development indicators using six clustering algorithms, then used PCA, t-SNE and UMAP to show the clusters on interactive maps.</p>
+              <ul class="tags"><li>Scikit-learn</li><li>UMAP</li><li>Plotly</li><li>Streamlit</li></ul>
+              <p class="pcard__links"><a class="pcard__view" href="https://github.com/7-vsd/Global_Development_AI_Platform" target="_blank" rel="noopener">View project <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pcard__demo" href="https://aiintelligence-global-development-platform-vipul-dhange.streamlit.app/" target="_blank" rel="noopener">Live demo</a></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SKILLS ================= -->
+    <section class="section skills" id="skills">
+      <div class="wrap">
+        <h2 class="title"><span class="split">My toolkit</span></h2>
+        <p class="section__lede">These are the tools and techniques I use every day, from cleaning raw data to shipping AI agents.</p>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__row"><span>Python</span><span>SQL</span><span>Power BI</span><span>DAX</span><span>PostgreSQL</span><span>Pandas</span><span>NumPy</span><span>Scikit-learn</span><span>Time-series</span><span>Statistics</span><span>ETL</span><span>Dimensional modelling</span></div>
+        <div class="marquee__row marquee__row--rev"><span>LLMs</span><span>RAG</span><span>LangChain</span><span>AI agents</span><span>Tool calling</span><span>Prompt engineering</span><span>OpenAI APIs</span><span>FastAPI</span><span>n8n</span><span>Streamlit</span><span>Git</span><span>CI/CD</span></div>
+      </div>
+      <div class="wrap skills__grid">
+        <div class="skill"><h3>Languages and ML</h3><p>Python, SQL, machine learning, statistics, Pandas, NumPy, scikit-learn, time-series forecasting</p></div>
+        <div class="skill"><h3>Data science</h3><p>Data preprocessing, EDA, feature engineering, model evaluation, data structures and algorithms</p></div>
+        <div class="skill"><h3>Analysis and BI</h3><p>Statistical analysis, data cleaning and reconciliation, data validation, ETL, dimensional modelling, Power BI, DAX, MIS automation</p></div>
+        <div class="skill"><h3>Generative AI</h3><p>LLMs, prompt engineering, RAG, LangChain (basic), agentic AI, AI agents, tool calling</p></div>
+        <div class="skill"><h3>APIs and tools</h3><p>OpenAI APIs, FastAPI, API integration, n8n, Streamlit, Git and GitHub, CI/CD, Jupyter</p></div>
+      </div>
+    </section>
+
+    <!-- ================= RESEARCH + CERTS ================= -->
+    <section class="section research" id="research">
+      <div class="wrap">
+        <h2 class="title"><span class="split">What I've published and earned</span></h2>
+        <div class="research__grid">
+          <article class="paper tilt">
+            <p class="paper__venue">JETIR · Vol. 12, Issue 6 · June 2025</p>
+            <h3>Redefining Intelligence: The Rise of Voice, Vision and GenAI in the New Technological Era</h3>
+            <p>In this peer-reviewed paper, I explore how generative AI is changing voice, vision and text, with uses in education, healthcare and design. I also look at India's AI ecosystem (BharatGen, Sarvam-1 and Bhashini) and at governance for multilingual deployment.</p>
+            <p class="pcard__links">
+              <a href="https://drive.google.com/file/d/1UcDDY5VNvSM6b-8dprYipGcTHht0QUs7/view?usp=sharing" target="_blank" rel="noopener">Read the paper</a>
+              <a href="https://doi.org/10.56975/jetir.v12i6.564988" target="_blank" rel="noopener">DOI link</a>
+            </p>
+            <span class="paper__stamp" aria-hidden="true">UGC approved<br>IF 7.95</span>
+          </article>
+          <ul class="certs">
+            <li class="cert cert--gold">
+              <span class="medal" aria-hidden="true"></span>
+              <div><h3><a href="https://fsp-assessment-certificates.s3.ap-southeast-1.amazonaws.com/%27/s3/buckets/fsp-assessment-certificates%27/Vipul%2BDhange_157434391.pdf.pdf" target="_blank" rel="noopener">Master Program in Data Science, gold medal</a></h3><p>MeitY, Government of India · Mar 2026</p></div>
+            </li>
+            <li class="cert"><span class="medal" aria-hidden="true"></span><div><h3>Data Science Course</h3><p>ExcelR · Mar 2026</p></div></li>
+            <li class="cert"><span class="medal" aria-hidden="true"></span><div><h3><a href="https://www.tutorialspoint.com/market/certificate.jsp/TP-HM9SYYJU" target="_blank" rel="noopener">Business Analytics Certification</a></h3><p>Tutorials Point · Oct 2024</p></div></li>
+            <li class="cert"><span class="medal" aria-hidden="true"></span><div><h3><a href="https://www.udemy.com/certificate/UC-136e4ca1-c50f-42cd-8485-be1e69e7bc5b/" target="_blank" rel="noopener">Machine Learning A-Z: AI, Python &amp; R</a></h3><p>Udemy · Oct 2023</p></div></li>
+            <li class="cert"><span class="medal" aria-hidden="true"></span><div><h3><a href="https://www.coursera.org/account/accomplishments/specialization/certificate/LYNFXCG9DJ4W" target="_blank" rel="noopener">Google Data Analytics Professional Certificate</a></h3><p>Coursera and Google · Oct 2022</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="contact" id="contact">
+      <div class="wrap contact__grid">
+        <div class="contact__text">
+          <h2 class="contact__title"><span class="split">Let's work together.</span></h2>
+          <p class="contact__lede">I'm looking for a full-time role in data analysis, data science or applied AI. Hover over or tap the icons around me to see my contact details, then click one to reach me straight away.</p>
+          <div class="contact__cta">
+            <a class="btn magnetic" href="mailto:dhange.vipul3082@gmail.com">Email me</a>
+            <a class="btn btn--ghost magnetic" href="assets/Vipul_Dhange_Resume.pdf" download>Download my resume</a>
+          </div>
+        </div>
+        <div class="contact__stage" id="cStage">
+          <div class="contact__scene" id="cScene"></div>
+          <a class="orb orb--phone" href="tel:+917058826386" aria-label="Call me on +91 70588 26386">
+            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+            <span class="orb__card"><strong>Call me</strong>+91 70588 26386</span>
           </a>
-          <a href="tel:+917058826386" aria-label="Phone" class="soc-link">
-            <i class="fas fa-phone"></i>
+          <a class="orb orb--mail" href="mailto:dhange.vipul3082@gmail.com" aria-label="Email me at dhange.vipul3082@gmail.com">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <span class="orb__card"><strong>Email me</strong>dhange.vipul3082@gmail.com</span>
           </a>
-          <a href="https://www.linkedin.com/in/vipul-dhange-827b14253/" target="_blank" rel="noopener" aria-label="LinkedIn" class="soc-link">
-            <i class="fab fa-linkedin-in"></i>
+          <a class="orb orb--github" href="https://github.com/7-vsd" target="_blank" rel="noopener" aria-label="See my code on GitHub: github.com/7-vsd">
+            <i class="fa-brands fa-github" aria-hidden="true"></i>
+            <span class="orb__card"><strong>See my code</strong>github.com/7-vsd</span>
           </a>
-          <a href="https://github.com/7-vsd" target="_blank" rel="noopener" aria-label="GitHub" class="soc-link">
-            <i class="fab fa-github"></i>
+          <a class="orb orb--linkedin" href="https://www.linkedin.com/in/vipul-dhange-827b14253/" target="_blank" rel="noopener" aria-label="Connect with me on LinkedIn">
+            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+            <span class="orb__card"><strong>Connect with me</strong>linkedin.com/in/vipul-dhange</span>
           </a>
         </div>
       </div>
+    </section>
+  </main>
 
-      <!-- Right Column: Visual -->
-      <div class="hero-visual">
-        <div class="av-wrapper">
-          <div class="av-ring r1"></div>
-          <div class="av-ring r2"></div>
-          <div class="av-ring r3"></div>
-          <div class="av-core">
-            <span>VD</span>
-          </div>
-          <div class="av-float fc1 glass-card">
-            <i class="fas fa-diagram-project"></i>
-            <div>
-              <b>n8n</b>
-              <small>AI Automation</small>
-            </div>
-          </div>
-          <div class="av-float fc2 glass-card">
-            <i class="fas fa-briefcase"></i>
-            <div>
-              <b><span class="hstat-n" data-count="18">0</span>+ Months</b>
-              <small>Internship Exp</small>
-            </div>
-          </div>
-          <div class="av-float fc3 glass-card">
-            <i class="fas fa-book-open"></i>
-            <div>
-              <b><span class="hstat-n" data-count="1">0</span> Research</b>
-              <small>Publication</small>
-            </div>
-          </div>
-          <div class="av-float fc4 glass-card">
-            <i class="fas fa-laptop-code"></i>
-            <div>
-              <b><span class="hstat-n" data-count="7">0</span>+</b>
-              <small>Projects</small>
-            </div>
-          </div>
-          <div class="av-float fc5 glass-card">
-            <i class="fas fa-rocket"></i>
-            <div>
-              <b><span class="hstat-n" data-count="2">0</span>+ AI Projects</b>
-              <small>Deployed</small>
-            </div>
-          </div>
-          <div class="av-float fc6 glass-card">
-            <i class="fas fa-chart-pie"></i>
-            <div>
-              <b><span class="hstat-n" data-count="5">0</span>+ Dashboards</b>
-              <small>Built</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="hero-scroll-hint">
-      <div class="scroll-line"><div class="scroll-ball"></div></div>
-      <span>Scroll</span>
-    </div> -->
-  </section>
-
-  <!-- ======================== ABOUT ======================== -->
-  <section id="about" class="section section-alt">
-    <div class="container">
-      <div class="sec-header">
-        <span class="sec-tag">Who I Am</span>
-        <h2 class="sec-title">About <em>Me</em></h2>
-        <div class="sec-line"></div>
-      </div>
-
-      <div class="about-layout">
-        <!-- Left Column: Highlight Cards -->
-        <div class="about-highlights">
-          <!-- Education Card -->
-          <div class="highlight-card glass-card">
-            <div class="hc-icon">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <div class="hc-content">
-              <h3 class="hc-title">Education</h3>
-              <p class="hc-degree">B.E. AI &amp; Data Science</p>
-              <p class="hc-college">D Y Patil College, Akurdi, Pune</p>
-              <div class="hc-meta">
-                <span class="hc-year"><i class="fas fa-calendar"></i> June 2024</span>
-                <span class="hc-cgpa"><i class="fas fa-star"></i> 7.76 CGPA</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Experience Card -->
-          <div class="highlight-card glass-card">
-            <div class="hc-icon">
-              <i class="fas fa-briefcase"></i>
-            </div>
-            <div class="hc-content">
-              <h3 class="hc-title">Experience</h3>
-              <p class="hc-exp-item"><strong>AI Variant</strong> - Data Science Intern</p>
-              <p class="hc-exp-item"><strong>Elenco Corp</strong> - Data Analyst Intern</p>
-              <p class="hc-exp-item"><strong>Elewayte-Wipro</strong> - ML Intern</p>
-              <div class="hc-meta">
-                <span><i class="fas fa-clock"></i> 18+ Months Total</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Achievements Card -->
-          <div class="highlight-card glass-card">
-            <div class="hc-icon">
-              <i class="fas fa-trophy"></i>
-            </div>
-            <div class="hc-content">
-              <h3 class="hc-title">Achievements</h3>
-              <div class="hc-achievement">
-                <i class="fas fa-book-open"></i>
-                <span>Published in <strong>JETIR</strong> (IF: 7.95)</span>
-              </div>
-              <div class="hc-achievement">
-                <i class="fas fa-project-diagram"></i>
-                <span>7+ ML/AI Projects Completed</span>
-              </div>
-              <div class="hc-achievement">
-                <i class="fas fa-chart-line"></i>
-                <span>5+ Dashboards Built</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column: Bio & Details -->
-        <div class="about-main">
-          <div class="about-bio">
-            <p>
-              My journey into AI started with a fascination for how machines learn and adapt. Through academic and real-world 
-              projects—from recommendation systems to computer vision—I learned that impactful AI starts with understanding
-              the problem, not just the algorithms.
-            </p>
-            <p>
-              I approach challenges with a <strong>data-first mindset</strong>explore deeply, experiment boldly, and iterate 
-              based on results. Whether debugging neural networks or designing dashboards, I focus on <strong>building practical
-              solutions</strong> with real business impact.
-            </p>
-            <p>
-              I’m looking for opportunities to <strong>grow alongside experienced engineers</strong>, solve meaningful problems,
-              and contribute to AI systems that make a difference. I thrive in collaborative, curiosity-driven environments
-              focused on continuous learning.
-            </p>
-          </div>
-
-          <!-- Contact Info -->
-          <div class="about-contact">
-            <div class="ac-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <span class="ac-value">Pune, Maharashtra, India</span>
-            </div>
-            <div class="ac-item">
-              <i class="fas fa-envelope"></i>
-              <span class="ac-value">dhange.vipul3082@gmail.com</span>
-            </div>
-            <div class="ac-item">
-              <i class="fas fa-phone"></i>
-              <span class="ac-value">+91 7058826386</span>
-            </div>
-            <div class="ac-item">
-              <i class="fas fa-language"></i>
-              <span class="ac-value">English, Hindi, Marathi, Kannada</span>
-            </div>
-            <div class="ac-item">
-              <i class="fas fa-user-check"></i>
-              <span class="ac-value">Immediately Available | Open to Relocation</span>
-            </div>
-          </div>
-
-          <!-- Soft Skills -->
-          <div class="about-skills-section">
-            <h4 class="about-skills-title">
-              <i class="fas fa-lightbulb"></i> Soft Skills
-            </h4>
-            <div class="about-soft">
-              <span class="soft-pill">Problem Solving</span>
-              <span class="soft-pill">Critical Thinking</span>
-              <span class="soft-pill">Leadership</span>
-              <span class="soft-pill">Research-Oriented</span>
-              <span class="soft-pill">Innovation</span>
-              <span class="soft-pill">Team Collaboration</span>
-              <span class="soft-pill">Public Speaking</span>
-              <span class="soft-pill">Adaptable</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================== SKILLS ======================== -->
-  <section id="skills" class="section">
-    <div class="container">
-      <div class="sec-header">
-        <span class="sec-tag">Capabilities</span>
-        <h2 class="sec-title">Technical <em>Skills</em></h2>
-        <div class="sec-line"></div>
-      </div>
-      <div class="skills-grid">
-        <!-- Card 1: Languages -->
-        <div class="skill-card glass-card">
-          <div class="sc-header">
-            <div class="sc-icon"><i class="fas fa-code"></i></div>
-            <h3>Programming Languages</h3>
-          </div>
-          <div class="sc-bars">
-            <div class="bar-item">
-              <div class="bar-label"><span>Python</span><span>75%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="75"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>SQL / MySQL</span><span>80%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>HTML / CSS</span><span>70%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="70"></div></div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 2: Libraries & Frameworks -->
-        <div class="skill-card glass-card">
-          <div class="sc-header">
-            <div class="sc-icon"><i class="fas fa-layer-group"></i></div>
-            <h3>Libraries &amp; Frameworks</h3>
-          </div>
-          <div class="sc-bars">
-            <div class="bar-item">
-              <div class="bar-label"><span>TensorFlow / Keras</span><span>70%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="70"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>Scikit-learn</span><span>75%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="75"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>NumPy / Pandas</span><span>80%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>OpenCV</span><span>85%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="85"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>Streamlit / Flask</span><span>80%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 3: ML & Deep Learning -->
-        <div class="skill-card glass-card">
-          <div class="sc-header">
-            <div class="sc-icon"><i class="fas fa-brain"></i></div>
-            <h3>ML &amp; Deep Learning</h3>
-          </div>
-          <div class="sc-bars">
-            <div class="bar-item">
-              <div class="bar-label"><span>Machine Learning</span><span>75%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="75"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>Deep Learning (CNN / LSTM / GRU)</span><span>70%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="70"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>GenAI</span><span>65%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="65"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>NLP / LLMs</span><span>65%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="65"></div></div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 4: ML Algorithms -->
-        <div class="skill-card glass-card">
-          <div class="sc-header">
-            <div class="sc-icon"><i class="fas fa-project-diagram"></i></div>
-            <h3>ML Algorithms</h3>
-          </div>
-          <div class="sc-tags">
-            <span class="stag">Linear Regression</span>
-            <span class="stag">Clustering</span>
-            <span class="stag">Logistic Regression</span>
-            <span class="stag">Random Forest</span>
-            <span class="stag">XGBoost</span>
-            <span class="stag">Gradient Boosting</span>
-            <span class="stag">SVM</span>
-            <span class="stag">KNN</span>
-            <span class="stag">Decision Tree</span>
-            <span class="stag">Naive Bayes</span>
-            <span class="stag">K-Means</span>
-            <span class="stag">Timeseries Forecasting</span>
-            <span class="stag">SARIMA</span>
-          </div>
-        </div>
-        <!-- Card 5: Data Analytics -->
-        <div class="skill-card glass-card">
-          <div class="sc-header">
-            <div class="sc-icon"><i class="fas fa-chart-bar"></i></div>
-            <h3>Data Analytics &amp; Visualization</h3>
-          </div>
-          <div class="sc-bars">
-            <div class="bar-item">
-              <div class="bar-label"><span>Power BI</span><span>80%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>Tableau</span><span>75%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="75"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>EDA &amp; Feature Engineering</span><span>78%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="78"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>Matplotlib / Seaborn / SciPy</span><span>85%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="85"></div></div>
-            </div>
-            <div class="bar-item">
-              <div class="bar-label"><span>Advanced Excel</span><span>80%</span></div>
-              <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 6: Cloud & Dev Tools -->
-        <div class="skill-card glass-card">
-          <div class="sc-header">
-            <div class="sc-icon"><i class="fas fa-toolbox"></i></div>
-            <h3>Cloud &amp; Dev Tools</h3>
-          </div>
-          <div class="sc-tags">
-            <span class="stag">AWS (Basics)</span>
-            <span class="stag">Google Cloud (Basics)</span>
-            <span class="stag">Google OAuth 2.0</span>
-            <span class="stag">PySpark (Basics)</span>
-            <span class="stag">Git</span>
-            <span class="stag">Jupyter Notebook</span>
-            <span class="stag">PyCharm</span>
-            <span class="stag">Figma</span>
-            <span class="stag">Canva</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================== EXPERIENCE ======================== -->
-  <section id="experience" class="section section-alt">
-    <div class="container">
-      <div class="sec-header">
-        <span class="sec-tag">Career</span>
-        <h2 class="sec-title">Work <em>Experience</em></h2>
-        <div class="sec-line"></div>
-      </div>
-      <div class="timeline">
-        <!-- Item 1: AI Variant (current) -->
-        <div class="tl-item">
-          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-          <div class="tl-card glass-card">
-            <div class="tl-top">
-              <div class="tl-logo"><i class="fas fa-microchip"></i></div>
-              <div class="tl-meta">
-                <h3>Data Science Intern</h3>
-                <span class="tl-company">AI Variant, Bangalore</span>
-                <div class="tl-pills">
-                  <span class="tl-pill">Remote</span>
-                </div>
-              </div>
-              <div class="tl-date">
-                <i class="fas fa-calendar-alt"></i>
-                June 2025 – Nov 2025
-              </div>
-            </div>
-            <div class="tl-tools">
-              <span class="tool-tag">Python</span>
-              <span class="tool-tag">PySpark</span>
-              <span class="tool-tag">AWS</span>
-              <span class="tool-tag">ML</span>
-              <span class="tool-tag">Deep Learning</span>
-            </div>
-            <ul class="tl-bullets">
-              <li>Implemented ML models including <strong>Linear Regression, Random Forest, SVM, and Gradient Boosting</strong> on real datasets</li>
-              <li>Built Deep Learning models using <strong>CNN, LSTM, and GRU</strong> architectures with hyperparameter optimization</li>
-              <li>Worked on AI prediction systems using Python, PySpark, and AWS cloud platform</li>
-              <li>Improved model accuracy through cross-validation, evaluation metrics, and data preprocessing techniques</li>
-              <li>Contributed to end-to-end ML pipeline development for business intelligence applications</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Item 2: Elenco Corporation -->
-        <div class="tl-item">
-          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-          <div class="tl-card glass-card">
-            <div class="tl-top">
-              <div class="tl-logo"><i class="fas fa-building"></i></div>
-              <div class="tl-meta">
-                <h3>Data Analyst Intern</h3>
-                <span class="tl-company">Elenco Corporation, Pune</span>
-                <div class="tl-pills">
-                  <span class="tl-pill">Hybrid</span>
-                </div>
-              </div>
-              <div class="tl-date">
-                <i class="fas fa-calendar-alt"></i>
-                Aug 2024 – Apr 2025
-              </div>
-            </div>
-            <div class="tl-tools">
-              <span class="tool-tag">Python</span>
-              <span class="tool-tag">SQL</span>
-              <span class="tool-tag">Power BI</span>
-              <span class="tool-tag">Excel</span>
-              <span class="tool-tag">NLP</span>
-            </div>
-            <ul class="tl-bullets">
-              <li>Performed data analysis using Python, SQL, and Excel to <strong>identify trends, patterns, and operational insights</strong>, supporting data-driven business decisions</li>
-              <li>Built interactive <strong>Power BI dashboards</strong> to monitor <strong>KPIs</strong>, project performance, delivery status, and resource utilization for weekly operational reviews</li>
-              <li>Conducted data cleaning, validation, and reconciliation across multiple datasets to ensure reporting accuracy and maintain data integrity</li>
-              <li>Applied statistical analysis and machine learning techniques, including <strong>regression and NLP-based analysis</strong>, to generate actionable insights and improve reporting efficiency</li>
-              <li>Translated complex analytical findings into clear executive summaries and business reports aligned with operational and strategic objectives</li>
-              <li>Collaborated with cross-functional teams and implementation managers to validate reporting logic, data assumptions, and dashboard accuracy against real-world workflows</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Item 3: Elewayte / Wipro -->
-        <div class="tl-item">
-          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-          <div class="tl-card glass-card">
-            <div class="tl-top">
-              <div class="tl-logo"><i class="fas fa-laptop-code"></i></div>
-              <div class="tl-meta">
-                <h3>Machine Learning Intern</h3>
-                <span class="tl-company">Elewayte – Wipro (Online Course)</span>
-                <div class="tl-pills">
-                  <span class="tl-pill">Online</span>
-                </div>
-              </div>
-              <div class="tl-date">
-                <i class="fas fa-calendar-alt"></i>
-                Feb 2024 – Apr 2024
-              </div>
-            </div>
-            <div class="tl-tools">
-              <span class="tool-tag">Python</span>
-              <span class="tool-tag">SQL</span>
-              <span class="tool-tag">ML</span>
-              <span class="tool-tag">OpenCV</span>
-            </div>
-            <ul class="tl-bullets">
-              <li>Learned and implemented <strong>7+ ML algorithms</strong> and preprocessing techniques on real-world case studies</li>
-              <li>Developed <strong>Color Detection</strong> using OpenCV reducing manual processing time by <em class="num">40%</em></li>
-              <li>Trained and evaluated models on <em class="num">5,000+</em> records, achieving <em class="num">85%+</em> pilot accuracy</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================== PROJECTS ======================== -->
-  <section id="projects" class="section">
-    <div class="container">
-      <div class="sec-header">
-        <span class="sec-tag">Portfolio</span>
-        <h2 class="sec-title">Featured <em>Projects</em></h2>
-        <div class="sec-line"></div>
-      </div>
-      <div class="proj-grid">
-        <!-- AI Executive Agent (newest) -->
-        <div class="proj-card glass-card featured-card">
-          <div class="proj-glow"></div>
-          <div class="proj-top">
-            <div class="proj-icon"><i class="fas fa-robot"></i></div>
-            <div class="proj-badges">
-              <span class="badge-feat">Latest</span>
-              <span class="proj-yr">May 2026</span>
-            </div>
-          </div>
-          <h3 class="proj-name">AI Executive Agent</h3>
-          <p class="proj-sub">AI Automation · Gmail & Calendar Integration · Productivity</p>
-          <p class="proj-desc">
-            Intelligent productivity assistant automating executive workflows with <strong>AI-powered email management</strong>,
-            calendar scheduling, and task automation. Integrates <strong>Gmail API</strong> and <strong>Google Calendar API</strong>
-            with OpenRouter for contextual AI responses. Features conversational memory, workflow automation, and
-            real-time chat interface for autonomous task execution.
-          </p>
-          <div class="proj-metrics">
-            <div class="pm"><span class="pm-v">2</span><span class="pm-l">APIs</span></div>
-            <div class="pm"><span class="pm-v">AI</span><span class="pm-l">Memory System</span></div>
-            <div class="pm"><span class="pm-v">n8n</span><span class="pm-l">Automation</span></div>
-          </div>
-          <div class="proj-tech">
-            <span class="ptag">Python</span>
-            <span class="ptag">OpenRouter API</span>
-            <span class="ptag">Gmail API</span>
-            <span class="ptag">Calendar API</span>
-            <span class="ptag">HTML/CSS/JS</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://github.com/7-vsd/AI_Executive_Agent" target="_blank" rel="noopener" class="proj-link">
-              <i class="fab fa-github"></i> View Project
-            </a>
-          </div>
-        </div>
-        <!-- Global Development AI Platform -->
-        <div class="proj-card glass-card">
-          <div class="proj-glow"></div>
-          <div class="proj-top">
-            <div class="proj-icon"><i class="fas fa-globe-americas"></i></div>
-            <div class="proj-badges">
-              <span class="proj-yr">March 2026</span>
-            </div>
-          </div>
-          <h3 class="proj-name">Global Development AI Intelligence Platform</h3>
-          <p class="proj-sub">ML Clustering · Interactive Analytics · Streamlit</p>
-          <p class="proj-desc">
-            AI-powered interactive analytics platform for clustering countries using global economic and development indicators.
-            Implements <strong>6 ML clustering algorithms</strong> (KMeans, DBSCAN, Agglomerative, Gaussian Mixture, Spectral, Mean Shift)
-            with dimensionality reduction (PCA, t-SNE, UMAP), interactive choropleth maps, and automated AI insights generation.
-            Features futuristic glassmorphism UI with real-time KPI analytics.
-          </p>
-          <div class="proj-metrics">
-            <div class="pm"><span class="pm-v">6</span><span class="pm-l">ML Algorithms</span></div>
-            <div class="pm"><span class="pm-v">3</span><span class="pm-l">Reduction Methods</span></div>
-            <div class="pm"><span class="pm-v">Live</span><span class="pm-l">Streamlit App</span></div>
-          </div>
-          <div class="proj-tech">
-            <span class="ptag">Python</span>
-            <span class="ptag">Scikit-learn</span>
-            <span class="ptag">Plotly</span>
-            <span class="ptag">Streamlit</span>
-            <span class="ptag">UMAP</span>
-            <span class="ptag">PCA</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://github.com/7-vsd/Global_Development_AI_Platform" target="_blank" rel="noopener" class="proj-link">
-              <i class="fab fa-github"></i> View Project
-            </a>
-            <a href="https://aiintelligence-global-development-platform-vipul-dhange.streamlit.app/" target="_blank" rel="noopener" class="proj-link proj-link-live">
-              <i class="fas fa-external-link-alt"></i> Live Demo
-            </a>
-          </div>
-        </div>
-        <!-- Course Recommendation -->
-        <div class="proj-card glass-card">
-          <div class="proj-glow"></div>
-          <div class="proj-top">
-            <div class="proj-icon"><i class="fas fa-graduation-cap"></i></div>
-            <div class="proj-badges">
-              <span class="proj-yr">Feb 2026</span>
-            </div>
-          </div>
-          <h3 class="proj-name">Online Course Recommendation System</h3>
-          <p class="proj-sub">AI Recommendation · Streamlit · Collaborative Filtering</p>
-          <p class="proj-desc">
-            Intelligent AI-powered recommendation platform for personalized online course suggestions.
-            Built and compared <strong>5 recommendation models</strong> — Content-Based (TF-IDF), KNN+PCA,
-            User-Based Collaborative Filtering, Matrix Factorization (SVD), and a Hybrid system.
-            Deployed with <strong>Streamlit</strong> for interactive use.
-          </p>
-          <div class="proj-metrics">
-            <div class="pm"><span class="pm-v">5</span><span class="pm-l">Models Built</span></div>
-            <div class="pm"><span class="pm-v">KNN</span><span class="pm-l">Best Model</span></div>
-            <div class="pm"><span class="pm-v">Live</span><span class="pm-l">Streamlit App</span></div>
-          </div>
-          <div class="proj-tech">
-            <span class="ptag">Python</span>
-            <span class="ptag">TensorFlow</span>
-            <span class="ptag">NumPy</span>
-            <span class="ptag">Streamlit</span>
-            <span class="ptag">Collaborative Filtering</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://github.com/7-vsd/Online_Course_Recommendation_System" target="_blank" rel="noopener" class="proj-link">
-              <i class="fab fa-github"></i> View Project
-            </a>
-            <a href="https://onlinecourserecommendationsystem-vipul-dhange.streamlit.app/" target="_blank" rel="noopener" class="proj-link proj-link-live">
-              <i class="fas fa-external-link-alt"></i> Live Demo
-            </a>
-          </div>
-        </div>
-        <!-- Apple Stock Prediction -->
-        <div class="proj-card glass-card">
-          <div class="proj-glow"></div>
-          <div class="proj-top">
-            <div class="proj-icon"><i class="fas fa-chart-line"></i></div>
-            <div class="proj-badges">
-              <span class="proj-yr">Dec 2025</span>
-            </div>
-          </div>
-          <h3 class="proj-name">Apple Stock Market Prediction</h3>
-          <p class="proj-sub">Time-Series Forecasting · LSTM · GRU</p>
-          <p class="proj-desc">
-            Time-series forecasting system predicting Apple stock market trends using ML &amp; Deep Learning.
-            Built and evaluated <strong>5 models</strong> — XGBoost, Random Forest, SARIMA, LSTM, GRU —
-            with full EDA, feature engineering, and deployed on <strong>Streamlit</strong>.
-          </p>
-          <div class="proj-metrics">
-            <div class="pm"><span class="pm-v">5</span><span class="pm-l">Models</span></div>
-            <div class="pm"><span class="pm-v">LSTM</span><span class="pm-l">Best DL Model</span></div>
-            <div class="pm"><span class="pm-v">Live</span><span class="pm-l">Streamlit App</span></div>
-          </div>
-          <div class="proj-tech">
-            <span class="ptag">Python</span>
-            <span class="ptag">LSTM</span>
-            <span class="ptag">GRU</span>
-            <span class="ptag">XGBoost</span>
-            <span class="ptag">SARIMA</span>
-            <span class="ptag">Streamlit</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://github.com/7-vsd/AAPL_TimeSeries_Forcasting" target="_blank" rel="noopener" class="proj-link">
-              <i class="fab fa-github"></i> View Project
-            </a>
-            <a href="https://vipul-dhange-aapl-stock-forecast.streamlit.app/" target="_blank" rel="noopener" class="proj-link proj-link-live">
-              <i class="fas fa-external-link-alt"></i> Live Demo
-            </a>
-          </div>
-        </div>
-        <!-- EngiPilot -->
-        <div class="proj-card glass-card">
-          <div class="proj-glow"></div>
-          <div class="proj-top">
-            <div class="proj-icon"><i class="fas fa-compass"></i></div>
-            <div class="proj-badges">
-              <span class="proj-yr">Mar 2024</span>
-            </div>
-          </div>
-          <h3 class="proj-name">EngiPilot – AI Career Guidance</h3>
-          <p class="proj-sub">ML Recommendation · MySQL · Figma</p>
-          <p class="proj-desc">
-            AI-powered career guidance platform inspired by Coursera/Udemy with an ML-based
-            recommendation engine achieving <strong>92% accuracy</strong> for career path prediction
-            across Engineering, Medical, Commerce &amp; Arts domains. Designed with 10+ Figma screens.
-          </p>
-          <div class="proj-metrics">
-            <div class="pm"><span class="pm-v">92%</span><span class="pm-l">Model Acc.</span></div>
-            <div class="pm"><span class="pm-v">10+</span><span class="pm-l">UI Screens</span></div>
-            <div class="pm"><span class="pm-v">+25%</span><span class="pm-l">vs Rule-Based</span></div>
-          </div>
-          <div class="proj-tech">
-            <span class="ptag">ML</span>
-            <span class="ptag">MySQL</span>
-            <span class="ptag">Figma</span>
-            <span class="ptag">Python</span>
-          </div>
-        </div>
-        <!-- Traffic Sign -->
-        <div class="proj-card glass-card">
-          <div class="proj-glow"></div>
-          <div class="proj-top">
-            <div class="proj-icon"><i class="fas fa-traffic-light"></i></div>
-            <div class="proj-badges">
-              <span class="proj-yr">Dec 2022</span>
-            </div>
-          </div>
-          <h3 class="proj-name">Traffic Sign Recognition</h3>
-          <p class="proj-sub">Computer Vision · CNN</p>
-          <p class="proj-desc">
-            CNN-based traffic sign recognition trained on <strong>12,631+ images</strong> across 45+
-            preprocessed datasets achieving 89% model accuracy. Built confusion matrices with 90%+ F1-score
-            for 3 major sign categories.
-          </p>
-          <div class="proj-metrics">
-            <div class="pm"><span class="pm-v">89%</span><span class="pm-l">CNN Accuracy</span></div>
-            <div class="pm"><span class="pm-v">12k+</span><span class="pm-l">Images</span></div>
-            <div class="pm"><span class="pm-v">90%+</span><span class="pm-l">F1 Score</span></div>
-          </div>
-          <div class="proj-tech">
-            <span class="ptag">CNN</span>
-            <span class="ptag">TensorFlow</span>
-            <span class="ptag">OpenCV</span>
-            <span class="ptag">Python</span>
-          </div>
-        </div>
-        <!-- COVID -->
-        <div class="proj-card glass-card">
-          <div class="proj-glow"></div>
-          <div class="proj-top">
-            <div class="proj-icon"><i class="fas fa-lungs"></i></div>
-            <div class="proj-badges">
-              <span class="proj-yr">Nov 2021</span>
-            </div>
-          </div>
-          <h3 class="proj-name">COVID-19 X-Ray Detection</h3>
-          <p class="proj-sub">Medical AI · Deep Learning</p>
-          <p class="proj-desc">
-            AI-based medical imaging solution for COVID-19 detection from chest X-rays achieving
-            <strong>~95% accuracy</strong>. Reduced radiologist verification effort by ~50% and
-            outperformed SVM/Logistic Regression by ~30% with data augmentation techniques.
-          </p>
-          <div class="proj-metrics">
-            <div class="pm"><span class="pm-v">95%</span><span class="pm-l">Detection Acc.</span></div>
-            <div class="pm"><span class="pm-v">50%</span><span class="pm-l">Effort Saved</span></div>
-            <div class="pm"><span class="pm-v">+30%</span><span class="pm-l">vs Baseline</span></div>
-          </div>
-          <div class="proj-tech">
-            <span class="ptag">CNN</span>
-            <span class="ptag">Python</span>
-            <span class="ptag">Data Augmentation</span>
-            <span class="ptag">Medical AI</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================== RESEARCH ======================== -->
-  <section id="research" class="section section-alt">
-    <div class="container">
-      <div class="sec-header">
-        <span class="sec-tag">Academia</span>
-        <h2 class="sec-title">Research <em>Publication</em></h2>
-        <div class="sec-line"></div>
-      </div>
-      <div class="research-card glass-card">
-        <div class="research-glow"></div>
-        <div class="research-layout">
-          <div class="res-left">
-            <div class="res-icon"><i class="fas fa-book-open"></i></div>
-            <div class="res-if">
-              <span class="if-val">7.95</span>
-              <span class="if-label">Impact Factor</span>
-            </div>
-            <span class="res-ugc">UGC Approved</span>
-          </div>
-          <div class="res-right">
-            <div class="res-journal">
-              Journal of Emerging Technologies and Innovative Research (JETIR)
-              <span class="res-vol">Vol. 12, Issue 6 &middot; June 2025</span>
-            </div>
-            <h3 class="res-title">
-              Redefining Intelligence: The Rise of Voice, Vision and GenAI in the New Technological Era
-            </h3>
-            <p class="res-abstract">
-              A peer-reviewed analysis of Generative AI's role in multimodal interaction (voice, vision, text).
-              Explores AI applications in education, healthcare, and design, while examining India's AI ecosystem —
-              BharatGen, Sarvam-1, and Bhashini — and their impact on the digital economy.
-            </p>
-            <div class="res-doi">
-              <span>DOI:</span>
-              <span>10.56975/jetir.v12i6.564988</span>
-            </div>
-            <div class="res-topics">
-              <span class="rtag">GenAI</span>
-              <span class="rtag">Voice AI</span>
-              <span class="rtag">Computer Vision</span>
-              <span class="rtag">India AI</span>
-              <span class="rtag">BharatGen</span>
-              <span class="rtag">Multimodal</span>
-            </div>
-            <div class="res-action">
-              <a href="https://www.researchgate.net/publication/393010690_Redefining_Intelligence_The_Rise_of_Voice_Vision_and_Generative_AI_in_the_New_Technological_Era" target="_blank" rel="noopener" class="res-btn">
-                <i class="fa-brands fa-researchgate"></i> View Research Paper
-              </a>
-              <a href="https://www.jetir.org/certificatemanager.php?a_rid=564988" target="_blank" rel="noopener" class="res-btn">
-                <i class="fa-solid fa-medal"></i> View Certificate
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================== CERTIFICATIONS ======================== -->
-  <section id="certifications" class="section">
-    <div class="container">
-      <div class="sec-header">
-        <span class="sec-tag">Achievements</span>
-        <h2 class="sec-title">Certifi<em>cations</em></h2>
-        <div class="sec-line"></div>
-      </div>
-
-      <!-- ALTERNATIVE LAYOUT: List Version (currently hidden) -->
-      <div class="cert-list">
-        <!-- Data Science Programme -->
-        <div class="cert-list-item glass-card">
-          <div class="cert-list-left">
-            <div class="cert-list-icon"><i class="fas fa-database"></i></div>
-            <div class="cert-list-badge">
-              <i class="fas fa-award"></i>
-              <span>Dec 2025</span>
-            </div>
-          </div>
-          <div class="cert-list-content">
-            <div class="cert-list-header">
-              <h3>Data Science Programme</h3>
-              <span class="cert-list-org">ExcelR Bangalore</span>
-              <span class="cert-list-duration"><i class="fas fa-clock"></i> 6 Months</span>
-            </div>
-            <p class="cert-list-desc">
-              Advanced Data Science and Analytics certification covering Python, SQL, Machine Learning, and Data Visualization.
-              Developed expertise in building predictive models, feature engineering, and creating interactive dashboards with Power BI and Tableau.
-              Gained hands-on experience in transforming complex datasets into actionable business insights through AI-driven solutions.
-            </p>
-            <a href="Vipul Dhange.pdf" target="_blank" rel="noopener" class="cert-link">
-              View Certificate <i class="fas fa-external-link-alt"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Business Analytics -->
-        <div class="cert-list-item glass-card">
-          <div class="cert-list-left">
-            <div class="cert-list-icon"><i class="fas fa-chart-bar"></i></div>
-            <div class="cert-list-badge">
-              <i class="fas fa-award"></i>
-              <span>Oct 2024</span>
-            </div>
-          </div>
-          <div class="cert-list-content">
-            <div class="cert-list-header">
-              <h3>Business Analytics Certification 2024</h3>
-              <span class="cert-list-org">Tutorialspoint</span>
-              <span class="cert-list-duration"><i class="fas fa-clock"></i> 63 hours</span>
-            </div>
-            <p class="cert-list-desc">
-              Comprehensive certification in business analytics and data-driven decision-making.
-              Developed expertise in Advanced Excel, Tableau, and Power BI for dashboard creation,
-              KPI analysis, and business intelligence reporting.
-            </p>
-            <a href="https://www.tutorialspoint.com/market/certificate.jsp/TP-HM9SYYJU" target="_blank" rel="noopener" class="cert-link">
-              View Certificate <i class="fas fa-external-link-alt"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Machine Learning A-Z -->
-        <div class="cert-list-item glass-card">
-          <div class="cert-list-left">
-            <div class="cert-list-icon"><i class="fas fa-robot"></i></div>
-            <div class="cert-list-badge">
-              <i class="fas fa-award"></i>
-              <span>Oct 2023</span>
-            </div>
-          </div>
-          <div class="cert-list-content">
-            <div class="cert-list-header">
-              <h3>Machine Learning A-Z™: AI, Python &amp; R + ChatGPT</h3>
-              <span class="cert-list-org">Udemy</span>
-              <span class="cert-list-duration"><i class="fas fa-clock"></i> 43 hours</span>
-            </div>
-            <p class="cert-list-desc">
-              Complete hands-on ML certification covering supervised/unsupervised learning, deep learning,
-              NLP, and model deployment. Built practical ML projects using Python, R, and AWS cloud services,
-              with real-world applications in predictive analytics.
-            </p>
-            <a href="https://www.udemy.com/certificate/UC-136e4ca1-c50f-42cd-8485-be1e69e7bc5b/" target="_blank" rel="noopener" class="cert-link">
-              View Certificate <i class="fas fa-external-link-alt"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Google Data Analytics -->
-        <div class="cert-list-item glass-card">
-          <div class="cert-list-left">
-            <div class="cert-list-icon"><i class="fab fa-google"></i></div>
-            <div class="cert-list-badge">
-              <i class="fas fa-award"></i>
-              <span>Oct 2022</span>
-            </div>
-          </div>
-          <div class="cert-list-content">
-            <div class="cert-list-header">
-              <h3>Google Data Analytics Professional Certificate</h3>
-              <span class="cert-list-org">Coursera | Google</span>
-              <span class="cert-list-duration"><i class="fas fa-clock"></i> 180 hours</span>
-            </div>
-            <p class="cert-list-desc">
-              Industry-recognized certification covering the complete data analysis lifecycle.
-              Gained practical skills in SQL, Tableau, R Programming, data cleaning, visualization,
-              and business insights generation through capstone projects and case studies.
-            </p>
-            <a href="https://www.coursera.org/account/accomplishments/professional-cert/LYNFXCG9DJ4W" target="_blank" rel="noopener" class="cert-link">
-              View Certificate <i class="fas fa-external-link-alt"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================== CONTACT ======================== -->
-  <section id="contact" class="section section-alt">
-    <div class="container">
-      <div class="sec-header">
-        <span class="sec-tag">Get In Touch</span>
-        <h2 class="sec-title">Let's <em>Connect</em></h2>
-        <div class="sec-line"></div>
-      </div>
-      <div class="contact-grid">
-        <div class="contact-left">
-          <div class="contact-links">
-            <a href="mailto:dhange.vipul3082@gmail.com" class="cl-item glass-card">
-              <div class="cl-icon"><i class="fas fa-envelope"></i></div>
-              <div><span class="cl-label">Email</span><span class="cl-val">dhange.vipul3082@gmail.com</span></div>
-            </a>
-            <a href="tel:+917058826386" class="cl-item glass-card">
-              <div class="cl-icon"><i class="fas fa-phone"></i></div>
-              <div><span class="cl-label">Phone</span><span class="cl-val">+91 7058826386</span></div>
-            </a>
-            <a href="https://www.linkedin.com/in/vipul-dhange-827b14253/" target="_blank" rel="noopener" class="cl-item glass-card">
-              <div class="cl-icon"><i class="fab fa-linkedin-in"></i></div>
-              <div><span class="cl-label">LinkedIn</span><span class="cl-val">linkedin.com/in/vipul-dhange</span></div>
-            </a>
-            <a href="https://github.com/7-vsd" target="_blank" rel="noopener" class="cl-item glass-card">
-              <div class="cl-icon"><i class="fab fa-github"></i></div>
-              <div><span class="cl-label">GitHub</span><span class="cl-val">github.com/7-vsd</span></div>
-            </a>
-          </div>
-        </div>
-        <form class="contact-form glass-card" id="contactForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fname">Name</label>
-              <input type="text" id="fname" name="name" placeholder="Your Name" required />
-            </div>
-            <div class="form-group">
-              <label for="femail">Email</label>
-              <input type="email" id="femail" name="email" placeholder="your@email.com" required />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="fsubject">Subject</label>
-            <input type="text" id="fsubject" name="subject" placeholder="Job Opportunity / Collaboration" />
-          </div>
-          <div class="form-group">
-            <label for="fmessage">Message</label>
-            <textarea id="fmessage" name="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
-          </div>
-          <button type="submit" class="btn-primary full">
-            Send Message <i class="fas fa-paper-plane"></i>
-          </button>
-          <p class="form-note">Submitting opens your email client</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================== FOOTER ======================== -->
-  <footer id="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <p class="footer-name">Vipul Dhange</p>
-          <p class="footer-role">AI &amp; Data Science Engineer</p>
-        </div>
-        <div class="footer-links">
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#experience">Experience</a>
-          <a href="#projects">Projects</a>
-          <a href="#research">Research</a>
-          <a href="#certifications">Certifications</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <div class="footer-socials">
-          <a href="mailto:dhange.vipul3082@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-          <a href="tel:+917058826386" aria-label="Phone"><i class="fas fa-phone"></i></a>
-          <a href="https://www.linkedin.com/in/vipul-dhange-827b14253/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="https://github.com/7-vsd" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        </div>
-        <p class="footer-copy">&copy; 2026 Vipul Dhange. All rights reserved.</p>
-      </div>
-    </div>
+  <footer class="footer wrap">
+    <p>© 2026 Vipul Dhange. I designed and built this site with data and coffee.</p>
+    <p class="footer__links"><button class="replay" type="button" id="replay">Replay intro</button><a href="#top">Back to top</a></p>
   </footer>
 
-  <!-- Back to top -->
-  <button id="backTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
-
-  <!-- Loader must run first -->
-  <script src="js/loader.js"></script>
-
-  <!-- Other Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/dist/typed.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="js/vendor/lenis.min.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
