@@ -92,6 +92,26 @@
     navLinks.forEach(function (l) { var s = $(l.getAttribute("href")); if (s) io.observe(s); });
   }
 
+  /* ---------------- light / dark theme ---------------- */
+  var themeBtn = $("#themeToggle"), metaTheme = $('meta[name="theme-color"]');
+  function applyTheme(light, animateIt) {
+    var root = document.documentElement;
+    if (light) root.setAttribute("data-theme", "light"); else root.removeAttribute("data-theme");
+    themeBtn.innerHTML = light ? '<i class="fa-solid fa-moon" aria-hidden="true"></i>' : '<i class="fa-solid fa-sun" aria-hidden="true"></i>';
+    themeBtn.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+    if (metaTheme) metaTheme.setAttribute("content", light ? "#EEF2F7" : "#0D1530");
+    if (animateIt && animate) {
+      gsap.fromTo(themeBtn.firstChild, { rotation: -90, scale: .4 }, { rotation: 0, scale: 1, duration: .5, ease: "back.out(2.5)" });
+      gsap.fromTo(".moon", { scale: .3, transformOrigin: "50% 50%" }, { scale: 1, duration: .8, ease: "back.out(2)" });
+    }
+  }
+  applyTheme(document.documentElement.getAttribute("data-theme") === "light", false);
+  themeBtn.addEventListener("click", function () {
+    var light = document.documentElement.getAttribute("data-theme") !== "light";
+    applyTheme(light, true);
+    try { localStorage.setItem("vd-theme", light ? "light" : "dark"); } catch (e) {}
+  });
+
   /* ---------------- cursor + magnetic buttons ---------------- */
   if (animate && finePointer) {
     var cur = $(".cursor"), dot = $(".cursor__dot"), ring = $(".cursor__ring");
@@ -504,9 +524,9 @@
     var halo = el("circle", { cx: 160, cy: 62, r: 25, fill: "none", stroke: "#F5A524", "stroke-width": 2, opacity: 0 }, s);
     txt(s, 160, 66, "Agent", "v-text v-text--dark", "middle");
     var pu = ed.map(function () { return el("circle", { class: "v-pulse", r: 4.5, cx: 160, cy: 62, opacity: 0 }, s); });
-    var ub = el("rect", { x: 14, y: 128, width: 210, height: 26, rx: 13, fill: "#24305E" }, s);
+    var ub = el("rect", { x: 14, y: 128, width: 210, height: 26, rx: 13, fill: "#24305E", class: "v-ub" }, s);
     var ut = txt(s, 28, 145, "", "v-text");
-    var ab = el("rect", { x: 96, y: 162, width: 210, height: 26, rx: 13, fill: "#F5A524" }, s);
+    var ab = el("rect", { x: 96, y: 162, width: 210, height: 26, rx: 13, fill: "#F5A524", class: "v-ab" }, s);
     var at = txt(s, 110, 179, "", "v-text v-text--dark");
     function typeTo(node, text, dur) { var o = { n: 0 }; return gsap.to(o, { n: text.length, duration: dur, ease: "none", onUpdate: function () { node.textContent = text.slice(0, Math.round(o.n)); } }); }
     var chats = [["Move my 3 pm meeting to Friday", "Done. Your calendar is updated."], ["Summarise today's unread emails", "You have 4 emails. 2 need replies."]];
@@ -540,9 +560,9 @@
       var g = el("g", {}, s);
       var r = el("rect", { x: 108, y: 0, width: 200, height: 28, rx: 8, class: "v-row" }, g);
       txt(g, 118, 18, n, "v-text v-text--sm");
-      el("rect", { x: 222, y: 11, width: 60, height: 6, rx: 3, fill: "#24305E" }, g);
+      el("rect", { x: 222, y: 11, width: 60, height: 6, rx: 3, fill: "#24305E", class: "v-track" }, g);
       var bar = el("rect", { x: 222, y: 11, width: 30, height: 6, rx: 3, fill: "#4CC9F0" }, g);
-      var rank = el("circle", { cx: 296, cy: 14, r: 8, fill: "#F5A524", opacity: 0 }, g);
+      var rank = el("circle", { cx: 296, cy: 14, r: 8, fill: "#F5A524", opacity: 0, class: "v-rank" }, g);
       var rt = txt(g, 296, 18, "", "v-text v-text--dark v-text--sm", "middle");
       gsap.set(g, { y: 18 + i * 34 });
       return { g: g, r: r, bar: bar, rank: rank, rt: rt, score: .5 };
