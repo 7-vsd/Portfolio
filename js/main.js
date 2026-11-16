@@ -641,23 +641,15 @@
     var l = builders[key](s);
     return animate ? l : null;
   });
-  // a project's animation runs only while it is the one in view, or while it is hovered
-  var projActive = false, hovered = [], running = [];
-  function updateLoops() {
-    loops.forEach(function (l, k) {
-      if (!l) return;
-      var on = projActive && (k === pIndex || hovered[k]);
-      if (on && !running[k]) { l.restart(); if (l.extra) l.extra.play(); running[k] = true; }
-      else if (!on && running[k]) { l.pause(); if (l.extra) l.extra.pause(); running[k] = false; }
-    });
+  // every project animation starts when Projects first appears, then keeps running
+  var loopsStarted = false;
+  function updateLoops() {}
+  function startLoops() {
+    if (loopsStarted) return; loopsStarted = true;
+    loops.forEach(function (l) { if (!l) return; l.play(); if (l.extra) l.extra.play(); });
   }
   if (animate) {
-    ScrollTrigger.create({ trigger: "#projects", start: "top 75%", end: "bottom 25%",
-      onToggle: function (st) { projActive = st.isActive; updateLoops(); } });
-    $$(".pcard").forEach(function (c, k) {
-      c.addEventListener("pointerenter", function (e) { if (e.pointerType === "touch") return; hovered[k] = true; if (k !== pIndex) { running[k] = false; } updateLoops(); });
-      c.addEventListener("pointerleave", function () { hovered[k] = false; updateLoops(); });
-    });
+    ScrollTrigger.create({ trigger: "#projects", start: "top bottom", once: true, onEnter: startLoops });
   }
 
   /* =====================================================
